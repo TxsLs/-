@@ -1,0 +1,83 @@
+.banner {
+	background-color: #127CEC;
+	background-image: url('../images/banner_bg.png');
+}
+
+.banner .operate {
+	float: right;
+	width: 350px;
+	margin-top: 10px;
+}
+
+.banner .operate img {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.banner .operate>img {
+	width: 32px;
+	height: 32px;
+	margin-top: -8px;
+}
+
+.banner .operate>a {
+	color: #FDFEFF;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.banner .title {
+	margin-top: 5px;
+}
+
+.banner .title>img {
+	float: left;
+	margin-top: -5px;
+	margin-left: 50px;
+	margin-right: 20px;
+}
+
+#mainMenu {
+	margin-top: -20px;
+}
+
+.panel-tree .panel-body {
+	padding: 0px;
+	padding-top: 10px;
+	background-color: #87CEFA;
+}
+
+#leftSearcher {
+	margin-left: 30px;
+	width: 200px;
+	font-size: 14px;
+}
+
+#leftMenu {
+	border-top: 1px solid graytext;
+	border-bottom: 1px solid graytext;
+	margin: 0px;
+	width: 100%;
+	height: 720px;
+	font-size: 16px;
+	overflow: auto;
+	border: 0px;
+}
+
+#actionTitle {
+	color: #8C8C8C;
+}
+
+#content {
+	border: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 720px;
+}
+
+/* 左边树菜单用到 */
+.treeview .list-group {
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0) !important;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0) !important;
+}
