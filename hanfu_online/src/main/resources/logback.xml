@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60000" debug="false">
+	<!-- 变量 -->
+	<property name="app_name" value="spring-boot" />
+	<property name="package_name" value="org.study.spring" />
+	<property name="log_dir" value="${user.home}/logs/${app_name}" />
+	
+	<contextName>${app_name}</contextName>
+	<timestamp key="curr_time" datePattern="yyyy-MM-dd HH:mm:ss_SSS" />	
+
+	<!-- 控制台 -->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="${app_name}_root"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log_dir}/${app_name}_root.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>
+				${log_dir}/${app_name}_root_%i.log
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>5</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>10MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="${app_name}_detail"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log_dir}/${app_name}_detail.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>
+				${log_dir}/${app_name}_detail_%i.log
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>10MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<root level="error">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="${app_name}_root" />
+	</root>
+	
+	<logger name="org.springframework" additivity="false" level="info">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="${app_name}_detail" />
+	</logger>
+	<logger name="org.quincy.rock" additivity="false" level="debug">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="${app_name}_detail" />
+	</logger>
+	<logger name="${package_name}" additivity="false" level="debug">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="${app_name}_detail" />
+	</logger>
+</configuration>
