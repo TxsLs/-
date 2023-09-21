@@ -43,7 +43,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/employee")
 public class EmployeeController extends BaseController<Employee, EmployeeService> {
 
-	@ApiOperation(value = "添加员工实体", notes = "允许文件上传")
+	@ApiOperation(value = "添加员工实体", notes = "允许文件上传！")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "代码", required = true, paramType = "form"),
 			@ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = true, paramType = "form", dataType = "int"),
