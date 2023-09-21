@@ -26,7 +26,7 @@ public abstract class Entity extends BaseEntity<Long> {
 	 * 主键id。
 	 */
 	@ApiModelProperty(value="主键id",position = 0)
-	@PrimaryKey(name = "f_id")
+	@PrimaryKey("f_id")
 	private Long id;
 
 	/** 

@@ -20,9 +20,7 @@ import lombok.Setter;
 @ApiModel(description = "顾客实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
 @Table(name = "t_customer", alias = "u")
 public class Customer extends Entity {
-	public Customer(String code, String password2, List<GrantedAuthority> authList) {
-		// TODO Auto-generated constructor stub
-	}
+
 
 	/**
 	 * serialVersionUID。

@@ -14,10 +14,6 @@ import org.study.spring.service.ProductService;
 @Service
 public class ProductServiceImpl extends BaseService<Product, ProductDao> implements ProductService {
 
-	public PageSet<Product> queryPageByCondition(Map<String, Object> condition, Sort parse, int pageNum, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 
 }

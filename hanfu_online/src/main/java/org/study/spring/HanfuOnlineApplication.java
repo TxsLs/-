@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-@SuppressWarnings("deprecation")
+//@SuppressWarnings("deprecation")
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 //@SpringBootApplication
 @MapperScan(basePackages = "org.study.spring.dao")
@@ -18,3 +18,4 @@ public class HanfuOnlineApplication {
 	}
 
 }
+
