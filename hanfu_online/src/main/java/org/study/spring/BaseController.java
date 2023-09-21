@@ -108,7 +108,7 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	@RequestMapping(value = "/queryOne", method = { RequestMethod.GET })
 	public @ResponseBody Result<T> queryOne(@RequestParam long id) {
 		log.debug("call queryOne");
-		T vo = this.service().findOne(id);
+		T vo = this.service().findOne(id, "password");
 		return Result.toResult(vo);
 	}
 
@@ -118,7 +118,7 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	@RequestMapping(value = "/queryByName", method = { RequestMethod.GET })
 	public @ResponseBody Result<T> queryByName(@RequestParam String propName, @RequestParam Object propValue) {
 		log.debug("call queryByName");
-		T vo = this.service().findByName(propName, propValue);
+		T vo = this.service().findByName(propName, propValue, "password");
 		return Result.toResult(vo);
 	}
 

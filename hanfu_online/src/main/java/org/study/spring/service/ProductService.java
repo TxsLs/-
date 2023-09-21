@@ -10,6 +10,5 @@ import org.study.spring.entity.Customer;
 
 public interface ProductService extends Service<Product> {
 
-	PageSet<Product> queryPageByCondition(Map<String, Object> condition, Sort parse, int pageNum, int pageSize);
 
 }

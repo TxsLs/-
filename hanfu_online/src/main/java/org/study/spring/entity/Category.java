@@ -18,12 +18,14 @@ public class Category extends Entity {
 	 */
 	private static final long serialVersionUID = -7748107279747664901L;
 
-	@ApiModelProperty(value = "代码", required = true, position = 1)
-	private String code;
 
-	@ApiModelProperty(value = "名称", required = true, position = 2)
+
+	@ApiModelProperty(value = "名称", required = true, position = 1)
 	private String name;
 
-	@ApiModelProperty(value = "父类id", position = 3)
+	@ApiModelProperty(value = "父类id", position = 2)
 	private String parentId;
+	
+	@ApiModelProperty(value = "代码", required = true, position = 3)
+	private String code;
 }
