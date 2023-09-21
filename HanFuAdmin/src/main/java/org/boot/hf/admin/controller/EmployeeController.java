@@ -62,7 +62,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		return Result.of(result);
 	}
 
-	@ApiOperation(value = "更新员工实体", notes = "允许文件上传")
+	@ApiOperation(value = "更新员工实体", notes = "允许文件上传！")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "要更新实体的主键id", required = true, paramType = "form", dataType = "long"),
 			@ApiImplicitParam(name = "code", value = "代码", required = false, paramType = "form"),
