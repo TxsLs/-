@@ -77,5 +77,5 @@ encoder:
     use-captcha: false
     
 #logging:
-#  config: classpath:logback.xml
+##  config: classpath:logback.xml
   
