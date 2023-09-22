@@ -2,10 +2,6 @@ package org.boot.hf.admin.entity;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
-
 import org.boot.hf.admin.Entity;
 import org.quincy.rock.core.dao.annotation.Column;
 import org.quincy.rock.core.dao.annotation.IgnoreUpdate;

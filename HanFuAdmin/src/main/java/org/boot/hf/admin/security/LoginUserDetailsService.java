@@ -34,14 +34,19 @@ public class LoginUserDetailsService implements UserDetailsService {
 	 * loadUserByUsername。
 	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
 	 */
+	@SuppressWarnings("unused")
 	@Override
 	public UserDetails loadUserByUsername(String code) throws UsernameNotFoundException {
 		Employee user = service.findByCode(code);
-		if (user == null)
-			throw new UsernameNotFoundException("用户名不存在!");
+		int admin = user.getAdmin();
 		List<GrantedAuthority> authList = new ArrayList<>();
-		//authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+		if (user == null) {
+			throw new UsernameNotFoundException("用户名不存在!");
+		} else if (admin == 0) {
+			authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+		} else {
+			authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
 		User su = new User(code, user.getPassword(), authList);
 		return su;
 	}
