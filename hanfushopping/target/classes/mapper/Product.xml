@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.ProductDao">
+	
+	<resultMap id="resultMap" type="Product">
+		<id property="id" column="id" javaType="long" />
+	</resultMap>
+	
+	<select id="getPhoto" resultType="Photo">
+		select f_id id, f_photo	photo,f_photo_file photoFile 
+		from t_product
+		where f_id=#{id}
+	</select>
+
+	<update id="updatePhoto" parameterType="Photo">
+		update t_product set f_photo=#{photo}
+		where f_id=#{id}
+	</update>
+	
+<!-- 	<update id="updateSelfInfo" parameterType="Product">
+		update t_product
+		<set>
+			<if test="name!=null">
+				f_name=#{name},
+			</if>
+			<if test="descr!=null">
+				f_desc=#{descr},
+			</if>
+			<if test="gender!=null">
+				f_gender=#{gender},
+			</if>
+			<if test="sfzh!=null">
+				f_sfzh=#{sfzh},
+			</if>
+			<if test="birthday!=null">
+				f_birthday=#{birthday},
+			</if>			
+			<if test="phone!=null">
+				f_phone=#{phone},
+			</if>
+			<if test="email!=null">
+				f_email=#{email},
+			</if>			
+			<if test="loves!=null">
+				f_loves=#{loves},
+			</if>
+		</set>
+		where f_id=#{id}
+	</update> -->
+</mapper>

@@ -1,0 +1,57 @@
+{
+  "groups": [
+    {
+      "name": "encoder.crypt",
+      "type": "com.example.demo.config.PasswordConfig",
+      "sourceType": "com.example.demo.config.PasswordConfig"
+    },
+    {
+      "name": "rock.idgen",
+      "type": "com.example.demo.config.IdGeneratorProperties",
+      "sourceType": "com.example.demo.config.IdGeneratorProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "encoder.crypt.enable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.example.demo.config.PasswordConfig"
+    },
+    {
+      "name": "encoder.crypt.strength",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.demo.config.PasswordConfig"
+    },
+    {
+      "name": "encoder.crypt.use-captcha",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.example.demo.config.PasswordConfig"
+    },
+    {
+      "name": "rock.idgen.cache",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.demo.config.IdGeneratorProperties"
+    },
+    {
+      "name": "rock.idgen.initial",
+      "type": "java.lang.Long",
+      "sourceType": "com.example.demo.config.IdGeneratorProperties"
+    },
+    {
+      "name": "rock.idgen.key-field-name",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.config.IdGeneratorProperties"
+    },
+    {
+      "name": "rock.idgen.table",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.config.IdGeneratorProperties"
+    },
+    {
+      "name": "rock.idgen.value-field-name",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.config.IdGeneratorProperties"
+    }
+  ],
+  "hints": []
+}
