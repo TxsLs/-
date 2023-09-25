@@ -21,11 +21,9 @@ public class Product extends Entity{
 	@IgnoreInsert
 	@ApiModelProperty(value = "账号", required = false,position = 1)
 	private String code;
-	
 	@IgnoreInsert
 	@ApiModelProperty(value = "商品名称", required = true, position = 2)
 	private String name;
-	
 	@IgnoreInsert
 	@ApiModelProperty(value = "商品描述", required = false,position = 3)
 	private String description;
@@ -45,4 +43,6 @@ public class Product extends Entity{
 	@IgnoreInsert
 	@ApiModelProperty(value = "商家编号", required = false,position = 7)
 	private Long merchant_id;
+
+	
 }
