@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "t_merchant", alias = "m")
 public class Merchant extends Entity {
 	
-	private static final long serialVersionUID = 6839230938734074806L;
+	private static final long serialVersionUID = 683923093074806L;
 
 	@ApiModelProperty(value = "名称", required = true, position = 1)
 	private String name;
@@ -45,6 +45,5 @@ public class Merchant extends Entity {
 	@IgnoreInsert
 	@ApiModelProperty(value = "账号", required = false,position = 7)
 	private String code;
-
 
 }
