@@ -45,6 +45,4 @@ public class Product extends Entity{
 	@IgnoreInsert
 	@ApiModelProperty(value = "商家编号", required = false,position = 7)
 	private Long merchant_id;
-
-	
 }
