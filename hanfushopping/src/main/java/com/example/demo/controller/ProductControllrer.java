@@ -1,37 +1,21 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import javax.servlet.http.HttpSession;
-import org.apache.commons.io.FilenameUtils;
-import org.quincy.rock.core.dao.sql.Sort;
-import org.quincy.rock.core.util.IOUtil;
-import org.quincy.rock.core.util.MapUtil;
-import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.BaseController;
-import com.example.demo.entity.Merchant;
 import com.example.demo.entity.Photo;
 import com.example.demo.entity.Product;
-import com.example.demo.service.MerchantService;
 import com.example.demo.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 @Slf4j

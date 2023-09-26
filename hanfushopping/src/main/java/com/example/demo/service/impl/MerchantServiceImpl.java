@@ -19,10 +19,6 @@ public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> impl
 	public Merchant findByCode(String code) {
 		return this.dao().findByName("code", code);
 	}
-
-	
-	
-	
 	
 	@Override
 	public boolean insert(Merchant entity, boolean ignoreNullValue, String... excluded) {
