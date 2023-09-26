@@ -30,4 +30,49 @@ public class ProductServiceImpl extends BaseService<Product, ProductDao> impleme
 	public boolean updatePhoto(Photo photo) {
 		return dao().updatePhoto(photo) > 0;
 	}
+	/*
+		@Override
+		@Transactional
+		public boolean changeSelfPassword(String code, String oldPassword, String newPassword) {
+			User vo = this.findByCode(code);
+			if (vo == null || !passwordEncoder.matches(oldPassword, vo.getPassword()))
+				return false;
+			else {
+				String encodedPassword = passwordEncoder.encode(newPassword);
+				return dao().changePassword(code, encodedPassword) > 0;
+			}
+		}
+	
+		@Override
+		@Transactional
+		public boolean changePassword(String code, String newPassword) {
+			String encodedPassword = passwordEncoder.encode(newPassword);
+			return dao().changePassword(code, encodedPassword) > 0;
+		}
+	
+		@Override
+		public User checkPassword(String code, String password) {
+			User vo = this.findByCode(code);
+			if (vo == null || !passwordEncoder.matches(password, vo.getPassword()))
+				return null;
+			else {
+				return vo;
+			}
+		}*/
+
+
+	/*	@Override
+		@Transactional
+		public boolean updateSelfInfo(User vo) {
+			return dao().updateSelfInfo(vo) > 0;
+		}
+	
+		@Override
+		public boolean insert(Product entity, boolean ignoreNullValue, String... excluded) {
+			if (StringUtil.isEmpty(entity.getPassword())) {
+				entity.setPassword("111111");
+			}
+			entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+			return super.insert(entity, ignoreNullValue, excluded);
+		}*/
 }

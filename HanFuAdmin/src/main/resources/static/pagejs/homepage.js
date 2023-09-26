@@ -14,12 +14,12 @@ $(function($) {
 	});
 
 	$("#btnLogout").click((evt) => {
-		 _root.logout({}, (rtn) => {
-		// 	if (rtn.hasError || !rtn.result) {
-		// 		alert("注销登录出错!");
-		// 	} else {
+		_root.logout({}, (rtn) => {
+			if (rtn.hasError || !rtn.result) {
+				alert("注销登录出错!");
+			} else {
 				location.href = "index.html";
-			//}
+			}
 		});
 	});
 
