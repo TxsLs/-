@@ -9,8 +9,6 @@ import com.example.demo.BaseService;
 import com.example.demo.dao.MerchantDao;
 import com.example.demo.entity.Merchant;
 import com.example.demo.service.MerchantService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 @Service
 public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> implements MerchantService {
@@ -20,10 +18,6 @@ public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> impl
 		return this.dao().findByName("code", code);
 	}
 
-	
-	
-	
-	
 	@Override
 	public boolean insert(Merchant entity, boolean ignoreNullValue, String... excluded) {
 
