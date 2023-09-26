@@ -67,7 +67,7 @@ public class PublicControler {
 
 		user = service.findByCode(username);
 		if (user == null) {
-			return Result.toResult("1020", "该账号不存在，请注册！");
+			return Result.toResult("1004", "该账号不存在，请注册！");
 		}
 		user = service.checkPassword(username, password);
 		if (user == null) {

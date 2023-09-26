@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.boot.hf.admin.AppUtils;
-import org.boot.hf.admin.security.LoginUserDetailsService;
 import org.quincy.rock.core.cache.ObjectCache;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +25,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,7 +33,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.DefaultFilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -55,7 +51,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @Configuration
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class SpringSecurityConfig {
-
 	@Bean
 	public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
 			PasswordEncoder passwordEncoder) {
@@ -103,7 +98,7 @@ public class SpringSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(@Nullable HttpSecurity http,
-			PersistentTokenRepository tokenRepository, UserDetailsService loginUserDetailsService) throws Exception {
+			PersistentTokenRepository tokenRepository, UserDetailsService userDetailsService) throws Exception {
 		if (http == null)
 			return null;
 		//允许匿名通过的url
@@ -134,8 +129,7 @@ public class SpringSecurityConfig {
 					AppUtils.writeJson(resp, result.result(false));
 				}).permitAll();
 		//logout
-		http.logout().logoutUrl("/logout").invalidateHttpSession(true)
-				.clearAuthentication(true).permitAll();
+		http.logout().permitAll();
 		//captcha
 		http.addFilterBefore((req, resp, chain) -> {
 			HttpServletRequest request = ((HttpServletRequest) req);
@@ -152,11 +146,9 @@ public class SpringSecurityConfig {
 			}
 			chain.doFilter(req, resp);
 		}, UsernamePasswordAuthenticationFilter.class);
-
 		//rememberMe
 		http.rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(3600).rememberMeParameter("rememberMe")
 				.rememberMeCookieName("rememberMe").key(PasswordConfig.SECURE_KEY_STRING);
-
 		//session
 		http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(false).expiredSessionStrategy(event -> {
 			AppUtils.writeJson(event.getResponse(), Result.toResult("1009", "你被踢了!").result(Boolean.FALSE));
@@ -164,5 +156,4 @@ public class SpringSecurityConfig {
 		//
 		return http.headers().frameOptions().sameOrigin().and().csrf().disable().build();
 	}
-
 }
