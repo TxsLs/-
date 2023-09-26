@@ -7,8 +7,8 @@ $(function() {
 	$("#imgCaptcha").click((evt) => {
 		$(evt.target).attr("src", _root.url("captcha.jpg?") + Math.random());
 	}).trigger("click");
-	var err=rock.getUrlParam("error");
-	if (err==1)
+	var err = rock.getUrlParam("error");
+	if (err == 1)
 		alert("登录失败!");
 });
 
@@ -26,7 +26,7 @@ function submitForm($frm) {
 			if (!$.isPlainObject(rtn))
 				alert(rtn, "未返回对象!");
 			else if (rtn.hasError) {
-				if (rtn.errorCode == "1001" || rtn.errorCode == "1002") {
+				if (rtn.errorCode == "1020" || rtn.errorCode == "1001" || rtn.errorCode == "1002") {
 					alert(rock.errorText(rtn, "登录错误!"));
 					$("#username").focus();
 				} else if (rtn.errorCode == "1003") {

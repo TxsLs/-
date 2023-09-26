@@ -18,23 +18,23 @@ var mvc_base_url = "/hanfu/";
  * @param svrNames 服务名列表
  * @return 工程对象
  */
-rock.initSvr = function (svrNames) {
-	return rock.initService("spring_boot", mvc_base_url, svrNames);
+rock.initSvr = function(svrNames) {
+	return rock.initService("springboot", mvc_base_url, svrNames);
 }
 
 /**
  * 初始化基本的方法
  * @param services 业务服务对象 
  */
-rock.initBasicMethod = function (services) {
+rock.initBasicMethod = function(services) {
 	if (!$.isArray(services))
 		services = [services];
-	services.forEach(function (service, i) {
+	services.forEach(function(service, i) {
 		service.addPostMethod("add", false);
 		service.addPostMethod("update", false);
 		service.addPostMethod("updateMap", false);
 		service.addGetMethod("remove", true);
-		service.addGetMethod("removeMore", true);				
+		service.addGetMethod("removeMore", true);
 		service.addGetMethod("exists", true);
 		service.addGetMethod("existsByName", true);
 		//
@@ -48,6 +48,6 @@ rock.initBasicMethod = function (services) {
 
 var mvc = rock.initSvr("_root");
 var _root = mvc.findService("_root");
-_root.addGetMethod("loginUser",true);
-_root.addPostMethod("login",true);
-_root.addGetMethod("logout",true);
+_root.addGetMethod("loginUser", true);
+_root.addPostMethod("login", true);
+_root.addGetMethod("logout", true);

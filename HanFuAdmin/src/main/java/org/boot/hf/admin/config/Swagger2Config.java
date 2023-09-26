@@ -31,7 +31,7 @@ public class Swagger2Config {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("spring-boot系统接口文档").description("spring-boot系统接口文档 by mex2000").version("1.0")
+		return new ApiInfoBuilder().title("springboot系统接口文档").description("springboot系统接口文档 by Txs").version("1.0")
 				.build();
 	}
 }

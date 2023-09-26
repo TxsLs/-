@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.boot.hf.admin.AppUtils;
-import org.boot.hf.admin.security.LoginUserDetailsService;
 import org.quincy.rock.core.cache.ObjectCache;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +20,12 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,7 +34,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.DefaultFilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -53,6 +50,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 	* @since 1.0
 	*/
 @Configuration
+//@EnableWebSecurity
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class SpringSecurityConfig {
 
@@ -82,7 +80,7 @@ public class SpringSecurityConfig {
 		return new SessionRegistryImpl();
 	}
 
-	@Bean
+	//@Bean
 	public AccessDecisionManager accessDecisionManager() {
 		//投票决定请求是否通过
 		RoleVoter voter = new RoleVoter();
@@ -103,7 +101,7 @@ public class SpringSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(@Nullable HttpSecurity http,
-			PersistentTokenRepository tokenRepository, UserDetailsService loginUserDetailsService) throws Exception {
+			PersistentTokenRepository tokenRepository, UserDetailsService userDetailsService) throws Exception {
 		if (http == null)
 			return null;
 		//允许匿名通过的url
@@ -117,7 +115,7 @@ public class SpringSecurityConfig {
 			Result<Boolean> result = Result.toResult("1008", "未授权!", e);
 			AppUtils.writeJson(resp, result.result(false));
 		});
-		
+
 		//login
 		http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").defaultSuccessUrl("/loginSuccess", true)
 				.failureHandler((req, resp, e) -> {
@@ -125,17 +123,21 @@ public class SpringSecurityConfig {
 					if (e instanceof LockedException) {
 						result = Result.toResult("1004", "账户被锁定!");
 					} else if (e instanceof DisabledException) {
-						result = Result.toResult("1005", "账户被禁用!");
-					} else if (e instanceof AccountExpiredException || e instanceof CredentialsExpiredException) {
+						result = Result.toResult("1005", "账户被禁用!请联系管理员邮箱:1034710773@qq.com!");
+					} else if (e instanceof AccountExpiredException) {
 						result = Result.toResult("1006", "账户或密码已过期!");
+					} else if (e instanceof BadCredentialsException) {
+						result = Result.toResult("1001", "账户名或密码输入错误!");
 					} else {
-						result = Result.toResult("1001", "账户名或密码输入错误!", e);
+						result = Result.toResult("1020", "账户不存在，请注册!", e);
 					}
 					AppUtils.writeJson(resp, result.result(false));
 				}).permitAll();
+
 		//logout
-		http.logout().logoutUrl("/logout").invalidateHttpSession(true)
-				.clearAuthentication(true).permitAll();
+		http.logout().logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true)
+				.deleteCookies("JSESSIONID").permitAll();
+
 		//captcha
 		http.addFilterBefore((req, resp, chain) -> {
 			HttpServletRequest request = ((HttpServletRequest) req);
@@ -155,7 +157,8 @@ public class SpringSecurityConfig {
 
 		//rememberMe
 		http.rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(3600).rememberMeParameter("rememberMe")
-				.rememberMeCookieName("rememberMe").key(PasswordConfig.SECURE_KEY_STRING);
+				.rememberMeCookieName("rememberMe").key(PasswordConfig.SECURE_KEY_STRING)
+				.userDetailsService(userDetailsService);
 
 		//session
 		http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(false).expiredSessionStrategy(event -> {

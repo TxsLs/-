@@ -63,20 +63,25 @@ public class PublicControler {
 				return Result.toResult("1003", "验证码不正确!");
 			}
 		}
-		Employee user = null;
-
-		user = service.findByCode(username);
+		Employee user = service.findByCode(username);
 		if (user == null) {
+			//throw new  NullPointerException("1020");
 			return Result.toResult("1020", "该账号不存在，请注册！");
-		}
-		user = service.checkPassword(username, password);
-		if (user == null) {
+		} else
+		//user = service.checkPassword(username, password);
+		if (service.checkPassword(username, password) == null) {
 			return Result.toResult("1001", "用户或密码不正确!");
+			//throw new BadCredentialsException( "用户或密码不正确!");
+		} else if (user.getStatus() == 0) {
+			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
+			//throw new DisabledException("您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!" );
+		} else {
+			User loginUser = new User(//spring安全的uer
+					user.getCode(), user.getPassword(), Arrays.asList());
+			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+			return Result.of(true);
 		}
-		User loginUser = new User(//spring安全的uer
-				user.getCode(), user.getPassword(), Arrays.asList());
-		session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
-		return Result.of(true);
+
 	}
 
 	@ApiOperation(value = "注销登录", notes = "")

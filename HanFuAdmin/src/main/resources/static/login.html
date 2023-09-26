@@ -10,7 +10,7 @@
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<title>登录</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/bootstrapValidator.min.css" />	
+	<link rel="stylesheet" href="css/bootstrapValidator.min.css" />
 	<link rel="stylesheet" href="pagecss/page.css" />
 	<script type="text/javascript" src="js/jquery-3.7.0.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -34,7 +34,7 @@
 						<label for="username" class="col-sm-3 control-label text-danger">账号:</label>
 						<div class="col-sm-5">
 							<input type="text" class="form-control" id="username" name="username" maxlength="20"
-								tabindex="2" placeholder="请输入工号" required data-bv-container="#err_userid"
+								tabindex="2" placeholder="请输入帐号" required data-bv-container="#err_userid"
 								pattern="^[A-Za-z0-9]{0,20}$">
 						</div>
 						<div id="err_userid" style="text-align: left;"></div>
@@ -70,12 +70,13 @@
 				</form>
 			</div>
 			<div class="panel-footer">
-				<button class="btn btn-default" tabindex="10" onclick="submitForm($('#frmLogin'))" >
-					&nbsp;登&nbsp; &nbsp; &nbsp;录&nbsp; 
+				<button class="btn btn-default" tabindex="10" onclick="submitForm($('#frmLogin'))">
+					&nbsp;登&nbsp; &nbsp; &nbsp;录&nbsp;
 				</button>
 			</div>
 		</div>
 	</div>
+
 </html>
 </body>
 
