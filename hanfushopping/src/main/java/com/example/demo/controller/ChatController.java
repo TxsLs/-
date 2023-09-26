@@ -44,6 +44,7 @@ public class ChatController extends BaseController<Chat_record, ChatService>{
 				return Result.of(result);
 			}
 	
+	
 	private boolean updatePhoto(long id, MultipartFile file) throws IOException {
 		Photo photo = new Photo();
 		photo.setId(id);
