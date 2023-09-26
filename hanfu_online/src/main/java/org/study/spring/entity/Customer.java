@@ -3,6 +3,7 @@ package org.study.spring.entity;
 import java.sql.Date;
 import java.util.List;
 
+import org.quincy.rock.core.dao.annotation.Column;
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.IgnoreUpdate;
 import org.quincy.rock.core.dao.annotation.Table;
@@ -48,19 +49,12 @@ public class Customer extends Entity {
     @ApiModelProperty(value = "创建时间", required = true, position = 7)
     private Date createTime;
 
-    
-    @ApiModelProperty(value = "附件名称", position = 8)
-    @IgnoreInsert
-	@IgnoreUpdate
-	private String additionalName;
-
-	@ApiModelProperty(value = "附件文件url", position = 9)
-	@IgnoreInsert
-	@IgnoreUpdate
-	private String additionalFile;
 	
-    @Temporary
-	@ApiModelProperty(value = "返回是否有照片", position = 10)
+	@ApiModelProperty(value = "返回是否有照片", position = 8)
+    @Column(value = "f_photo_file is not null", calculated = true)
 	private Boolean hasPhoto;
+	
+    @ApiModelProperty(value = "是否被封禁", position = 9)
+    private byte isviolate;
 
 }

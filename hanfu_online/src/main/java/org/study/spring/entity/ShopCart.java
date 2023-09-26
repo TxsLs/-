@@ -21,10 +21,10 @@ public class ShopCart extends Entity {
 	 */
 	private static final long serialVersionUID = 3786859216339013592L;
 	
-	@ApiModelProperty(value = "评价编号", position = 1)
+	@ApiModelProperty(value = "顾客编号", position = 1)
     private String customerId;
 	
-	@ApiModelProperty(value = "评价编号", position = 1)
+	@ApiModelProperty(value = "商品编号", position = 1)
     private String productId;	
 	
 	@ApiModelProperty(value = "商品数量", position = 1)

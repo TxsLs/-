@@ -16,15 +16,15 @@ import com.github.pagehelper.Page;
 @Mapper
 public interface CustomerDao extends Dao<Customer> {
 
-	/**
-	 * <b>组合条件查询。</b>
-	 * <p><b>详细说明：</b></p>
-	 * <!-- 在此添加详细说明 -->
-	 * 无。
-	 * @param condition 组合条件Map
-	 * @return 一页数据列表
-	 */
-	public Page<Customer> findPageByCondition(Map<String, Object> condition);
+//	/**
+//	 * <b>组合条件查询。</b>
+//	 * <p><b>详细说明：</b></p>
+//	 * <!-- 在此添加详细说明 -->
+//	 * 无。
+//	 * @param condition 组合条件Map
+//	 * @return 一页数据列表
+//	 */
+//	public Page<Customer> findPageByCondition(Map<String, Object> condition);
 
 	/**
 	 * <b>更新个人信息。</b>

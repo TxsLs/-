@@ -4,6 +4,16 @@ import org.study.spring.Entity;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * <b>顾客找回密码申请表</b>
+ * <p><b>详细说明：</b></p>
+ * <!-- 在此添加详细说明 -->
+ * 无。
+ * 
+ * @version 1.0
+ * @author Nymphet
+ * @since 1.0
+ */
 public class CPasswordResetRequest extends Entity {
 
 	/**
