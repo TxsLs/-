@@ -82,7 +82,7 @@ public class SpringSecurityConfig {
 		return new SessionRegistryImpl();
 	}
 
-	//@Bean
+	@Bean
 	public AccessDecisionManager accessDecisionManager() {
 		//投票决定请求是否通过
 		RoleVoter voter = new RoleVoter();

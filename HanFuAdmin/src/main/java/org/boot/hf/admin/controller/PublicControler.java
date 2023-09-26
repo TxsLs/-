@@ -80,7 +80,7 @@ public class PublicControler {
 	}
 
 	@ApiOperation(value = "注销登录", notes = "")
-	@RequestMapping(value = "/logout", method = { RequestMethod.POST })
+	@RequestMapping(value = "/logout", method = { RequestMethod.GET })
 	public @ResponseBody Result<Boolean> logout(@ApiIgnore HttpSession session) {
 		session.invalidate();
 		return Result.of(true);
