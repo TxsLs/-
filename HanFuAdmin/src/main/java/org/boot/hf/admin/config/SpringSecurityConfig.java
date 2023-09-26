@@ -117,6 +117,7 @@ public class SpringSecurityConfig {
 			Result<Boolean> result = Result.toResult("1008", "未授权!", e);
 			AppUtils.writeJson(resp, result.result(false));
 		});
+		
 		//login
 		http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").defaultSuccessUrl("/loginSuccess", true)
 				.failureHandler((req, resp, e) -> {
