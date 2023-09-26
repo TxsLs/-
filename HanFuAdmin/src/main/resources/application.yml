@@ -26,7 +26,6 @@ spring:
       
   datasource:
     name: dsMaster
-    #url: jdbc:mysql://127.0.0.1:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false
     url: jdbc:mysql://localhost:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true
     username: root
     password: 12345666
@@ -35,7 +34,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: hikari-boot
-      auto-commit: true
+      auto-commit: false
       ## 连接池能达到的最大规模(包含空闲连接的数量和使用中的连接数量)
       maximum-pool-size: 10
       ## 连接池中的最小空闲连接数

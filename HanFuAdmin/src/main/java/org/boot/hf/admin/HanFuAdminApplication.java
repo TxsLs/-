@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-@SpringBootApplication
-//@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+//@SpringBootApplication
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @MapperScan(basePackages = "org.boot.hf.admin.dao")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class HanFuAdminApplication {
