@@ -53,8 +53,8 @@ public class PublicControler {
 			@ApiImplicitParam(name = "password", value = "密码", required = true),
 			@ApiImplicitParam(name = "captcha", value = "验证码") })
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
-	public @ResponseBody Result<Boolean> login(@NotBlank @RequestParam String username,@NotBlank @RequestParam String password,
-			String captcha, @ApiIgnore HttpSession session) {
+	public @ResponseBody Result<Boolean> login(@NotBlank @RequestParam String username,
+			@NotBlank @RequestParam String password, String captcha, @ApiIgnore HttpSession session) {
 		session.removeAttribute(AppUtils.CURRENT_LOGIN_USER_KEY);
 		log.debug("call userLogin");
 		if (AppUtils.useCaptcha) {
@@ -63,7 +63,13 @@ public class PublicControler {
 				return Result.toResult("1003", "验证码不正确!");
 			}
 		}
-		Employee user = service.checkPassword(username, password);
+		Employee user = null;
+
+		user = service.findByCode(username);
+		if (user == null) {
+			return Result.toResult("1020", "该账号不存在，请注册！");
+		}
+		user = service.checkPassword(username, password);
 		if (user == null) {
 			return Result.toResult("1001", "用户或密码不正确!");
 		}

@@ -1,23 +1,24 @@
 server:
   port: 8080
   servlet:
-    context-path: /hanfu
-    application-display-name: 汉服商城
+    context-path: /spring-boot
+    application-display-name: 华裳在线
     
 spring: 
   mvc:
     pathmatch:
-      matching-strategy: ant-path-matcher  
+      matching-strategy: ant-path-matcher
   messages:
     encoding: utf-8
-    basename: i18n/message-resources  
+    basename: i18n/message-resources
+    
   security:
     user:
       name: admin
       password: 111111
       roles:
       - ADMIN
-      - USER     
+      - USER
                    
   servlet:
     multipart:
@@ -26,10 +27,9 @@ spring:
       
   datasource:
     name: dsMaster
-    #url: jdbc:mysql://127.0.0.1:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false
-    url: jdbc:mysql://localhost:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true
+    url: jdbc:mysql://localhost:3306/hanfu?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false
     username: root
-    password: 12345666
+    password: 13142333
     driver-class-name: com.mysql.cj.jdbc.Driver
     ## 使用Hikar数据源
     type: com.zaxxer.hikari.HikariDataSource
@@ -56,11 +56,11 @@ spring:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   ## 实体包(可选)
-  type-aliases-package: org.boot.hf.admin.entity
+  type-aliases-package: com.example.demo.entity
   configuration:
     call-setters-on-nulls: true
     auto-mapping-behavior: full
-
+   
 pagehelper:
   auto-dialect: true  
   
@@ -74,7 +74,7 @@ rock:
     
 encoder:
   crypt:
-    enable: true
+    enable: false
     use-captcha: false
     
 logging:
