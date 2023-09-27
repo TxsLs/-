@@ -65,16 +65,13 @@ public class PublicControler {
 		}
 		Employee user = service.findByCode(username);
 		if (user == null) {
-			//throw new  NullPointerException("1020");
 			return Result.toResult("1020", "该账号不存在，请注册！");
-		} else
-		//user = service.checkPassword(username, password);
-		if (service.checkPassword(username, password) == null) {
+		} else if (service.checkPassword(username, password) == null) {
 			return Result.toResult("1001", "用户或密码不正确!");
-			//throw new BadCredentialsException( "用户或密码不正确!");
+
 		} else if (user.getStatus() == 0) {
 			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
-			//throw new DisabledException("您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!" );
+
 		} else {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());

@@ -26,8 +26,8 @@ spring:
       
   datasource:
     name: dsMaster
-    #url: jdbc:mysql://127.0.0.1:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false
-    url: jdbc:mysql://localhost:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true
+    url: jdbc:mysql://127.0.0.1:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false
+    #url: jdbc:mysql://localhost:3306/hfstore?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true
     username: root
     password: 12345666
     driver-class-name: com.mysql.cj.jdbc.Driver
