@@ -11,13 +11,15 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 /**
  * <b>Swagger2Config。</b>
  * <p><b>详细说明：</b></p>
  * <!-- 在此添加详细说明 -->
  * 无。
+ * 
  * @version 1.0
- * @author mex2000
+ * @author Nymphet
  * @since 1.0
  */
 @Configuration

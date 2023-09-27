@@ -1,8 +1,9 @@
 package org.study.spring.entity;
 
-import org.quincy.rock.core.dao.annotation.Temporary;
+import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@ApiModel(description = "地址实体")
+@Table(name = "t_chat_record", alias = "cr")
 public class ChatRecord extends Entity {
 	
 	/**

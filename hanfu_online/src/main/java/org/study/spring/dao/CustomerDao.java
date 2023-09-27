@@ -1,16 +1,11 @@
 package org.study.spring.dao;
 
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.util.MapUtil;
 import org.study.spring.Dao;
-import org.study.spring.entity.Photo;
 import org.study.spring.entity.Customer;
-
-
-import com.github.pagehelper.Page;
+import org.study.spring.entity.Photo;
 
 
 @Mapper

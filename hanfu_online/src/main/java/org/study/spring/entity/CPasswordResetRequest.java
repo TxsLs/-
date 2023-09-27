@@ -1,8 +1,12 @@
 package org.study.spring.entity;
 
+import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <b>顾客找回密码申请表</b>
@@ -14,6 +18,10 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Nymphet
  * @since 1.0
  */
+@Getter
+@Setter
+@ApiModel(description = "用户找回密码申请实体")
+@Table(name = "t_c_password_reset_request", alias = "cp")
 public class CPasswordResetRequest extends Entity {
 
 	/**

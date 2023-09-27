@@ -16,8 +16,8 @@ import com.github.pagehelper.Page;
 
 /**
  * <b>MetaDao。</b>
- * <p><b>详细说明：</b></p>
- * <!-- 在此添加详细说明 -->
+ * <p><b>详细说明：抽取公用的dao</b></p>
+ * <!-- 注解方式生成公用的sql -->
  * 无。
  * 
  * @version 1.0

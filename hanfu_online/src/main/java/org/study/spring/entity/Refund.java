@@ -2,8 +2,10 @@ package org.study.spring.entity;
 
 import java.sql.Date;
 
+import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ApiModel(description = "退货实体")
+@Table(name = "t_refund", alias = "a")
 public class Refund  extends Entity {
 
 	/**

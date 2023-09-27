@@ -45,7 +45,7 @@ public class PublicControler {
 	@Autowired
 	private CustomerService service;
 
-	@ApiOperation(value = "用户登录", notes = "可以自己添加验证码功能")
+	@ApiOperation(value = "顾客登录", notes = "可以自己添加验证码功能")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "username", value = "用户代码", required = true),
 			@ApiImplicitParam(name = "password", value = "密码", required = true),
 			@ApiImplicitParam(name = "captcha", value = "验证码") })
@@ -53,7 +53,7 @@ public class PublicControler {
 	public @ResponseBody Result<Boolean> login(@NotBlank @RequestParam String username,
 			@NotBlank @RequestParam String password, String captcha, @ApiIgnore HttpSession session) {
 		session.removeAttribute(AppUtils.CURRENT_LOGIN_USER_KEY);
-		log.debug("call userLogin");
+		log.debug("call customerLogin");
 		if (AppUtils.useCaptcha) {
 			String code = cacheCaptcha(session);
 			if (code == null || !code.equals(captcha)) {
@@ -96,8 +96,8 @@ public class PublicControler {
 		return Result.toResult("1001", "用户或密码不正确!");
 	}
 
-	@ApiOperation(value = "返回当前用户信息", notes = "未登录则返回null")
-	@RequestMapping(value = "/loginUser", method = { RequestMethod.GET })
+	@ApiOperation(value = "返回当前顾客信息", notes = "未登录则返回null")
+	@RequestMapping(value = "/loginCustomer", method = { RequestMethod.GET })
 	public @ResponseBody Result<Customer> loginUser() {
 		log.debug("call loginUser");
 		Customer customer = null;

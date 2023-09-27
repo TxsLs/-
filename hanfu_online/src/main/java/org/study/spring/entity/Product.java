@@ -16,8 +16,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(description = "用户实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
-@Table(name = "product", alias = "p")
+@ApiModel(description = "商品实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
+@Table(name = "t_product", alias = "p")
 public class Product extends Entity {
 	
 

@@ -2,6 +2,7 @@ package org.study.spring.entity;
 
 
 
+import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
 import io.swagger.annotations.ApiModel;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(description = "商品分类实体")
+@Table(name = "t_category", alias = "cg")
 public class Category extends Entity {
 	/**
 	 * serialVersionUID。

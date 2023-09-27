@@ -20,6 +20,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import com.github.pagehelper.Page;
 
+
 /**
  * <b>AppUtils。</b>
  * <p><b>详细说明：</b></p>
@@ -27,7 +28,7 @@ import com.github.pagehelper.Page;
  * 无。
  * 
  * @version 1.0
- * @author mex2000
+ * @author Nymphet
  * @since 1.0
  */
 public abstract class AppUtils {

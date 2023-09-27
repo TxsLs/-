@@ -4,9 +4,13 @@ import java.sql.Date;
 
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.IgnoreUpdate;
+import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <b>评价实体</b>
@@ -18,6 +22,10 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Nymphet
  * @since 1.0
  */
+@Getter
+@Setter
+@ApiModel(description = "评价实体")
+@Table(name = "t_review", alias = "a")
 public class Review extends Entity {
 
 	/**
