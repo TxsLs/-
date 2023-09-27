@@ -1,8 +1,12 @@
 package org.study.spring.entity;
 
+import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <b>订单详情实体。</b>
@@ -14,16 +18,19 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Nymphet
  * @since 1.0
  */
+@Getter
+@Setter
+@ApiModel(description = "订单详情实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
+@Table(name = "t_order_detail", alias = "od")
 public class OrderDetail extends Entity {
 		
-		/**
-		 * serialVersionUID。
-		 */
-		private static final long serialVersionUID = 6839230938734074806L;
 
-		@ApiModelProperty(value = "编号", position = 0)
-	    private String code;
 		
+		/**
+	 * serialVersionUID。
+	 */
+	private static final long serialVersionUID = -8608451321835917597L;
+
 		@ApiModelProperty(value = "订单id", required = true, position = 1)
 	    private String orderId;
 

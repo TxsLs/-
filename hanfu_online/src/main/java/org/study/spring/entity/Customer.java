@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.quincy.rock.core.dao.annotation.Column;
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
+import org.quincy.rock.core.dao.annotation.IgnoreInsertUpdate;
 import org.quincy.rock.core.dao.annotation.IgnoreUpdate;
 import org.quincy.rock.core.dao.annotation.Table;
 import org.quincy.rock.core.dao.annotation.Temporary;
@@ -23,11 +24,12 @@ import lombok.Setter;
 public class Customer extends Entity {
 
 
+	
 	/**
 	 * serialVersionUID。
 	 */
-	private static final long serialVersionUID = 6839230938734074806L;
-	
+	private static final long serialVersionUID = -1097688549172692010L;
+
 	@ApiModelProperty(value = "编号", position = 1)
     private String code;
 	
@@ -46,7 +48,8 @@ public class Customer extends Entity {
     @ApiModelProperty(value = "性别", position = 6)
     private Integer gender;
 
-    @ApiModelProperty(value = "创建时间", required = true, position = 7)
+    @ApiModelProperty(value = "创建时间", position = 7)
+    @IgnoreInsertUpdate
     private Date createTime;
 
 	
