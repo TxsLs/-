@@ -10,8 +10,8 @@ if (typeof rock === "undefined") {
 /**
  * 在这里修改提供mvc rest接口的服务器url地址
  */
-var mvc_base_url = "/hanfu/";
-//var mvc_base_url = "http://localhost:8080/spring-boot/";
+//var mvc_base_url = "/hanfu/";
+var mvc_base_url = "http://localhost:8080/hanfu/";
 
 /**
  * 调用该方法初始化业务服务对象

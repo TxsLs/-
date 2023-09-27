@@ -71,8 +71,13 @@ public class PublicControler {
 
 		} else if (user.getStatus() == 0) {
 			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
-
-		} else {
+		} else if (user.getAdmin() == 0) {
+			User loginUser = new User(//spring安全的uer
+					user.getCode(), user.getPassword(), Arrays.asList());
+			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+			return Result.of(false);
+			} 
+		else {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);

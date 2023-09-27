@@ -37,6 +37,8 @@ function submitForm($frm) {
 				}
 			} else if (rtn.result) {
 				location.href = "homepage.html";
+			}else if (!rtn.result) {
+				location.href = "admin.html";
 			} else {
 				alert("用户名或密码不正确!");
 			}
