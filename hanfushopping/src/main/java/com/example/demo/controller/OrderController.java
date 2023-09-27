@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api(tags = "订单管理模块")
 @Controller
-@RequestMapping("/Order_table")
+@RequestMapping("/order_table")
 public class OrderController  extends BaseController<Order_table, OrderService>{
 
 }

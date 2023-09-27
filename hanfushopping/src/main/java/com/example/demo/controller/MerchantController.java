@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api(tags = "商家管理模块")
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/merchant")
 public class MerchantController extends BaseController<Merchant, MerchantService> {
 
 }

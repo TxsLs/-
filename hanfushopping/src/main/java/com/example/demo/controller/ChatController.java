@@ -23,7 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @Slf4j
 @Api(tags = "聊天记录管理模块")
 @Controller
-@RequestMapping("/Chat_record")
+@RequestMapping("/chat_record")
 public class ChatController extends BaseController<Chat_record, ChatService>{
 	@ApiOperation(value = "添加一个聊天记录", notes = "允许文件上传")
 	@ApiImplicitParams({
