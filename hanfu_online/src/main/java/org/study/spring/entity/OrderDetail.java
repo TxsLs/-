@@ -1,5 +1,7 @@
 package org.study.spring.entity;
 
+import org.quincy.rock.core.dao.annotation.JoinTable;
+import org.quincy.rock.core.dao.annotation.JoinTables;
 import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
@@ -22,6 +24,9 @@ import lombok.Setter;
 @Setter
 @ApiModel(description = "订单详情实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
 @Table(name = "t_order_detail", alias = "od")
+@JoinTables({ @JoinTable(name = "t_order_table", alias = "o", onExpr = "o.f_id=od.f_order_id")}
+
+		)
 public class OrderDetail extends Entity {
 		
 
