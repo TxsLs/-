@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -48,18 +47,22 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = true, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, paramType = "form"),
-			@ApiImplicitParam(name = "phone", value = "电话号", required = true, paramType = "form", dataType = "int"),
-			 })
+			@ApiImplicitParam(name = "phone", value = "电话号", required = true, paramType = "form", dataType = "int") })
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> addEmployee(@Validated({ Default.class }) @ApiIgnore Employee vo,
-			@RequestPart(value = "photo", required = false) MultipartFile file
-			) throws IOException {
+			@RequestPart(value = "photo", required = false) MultipartFile file) throws IOException {
 		log.debug("call addEmployee");
-		boolean result = this.service().insert(vo, true);
-		if (result && file != null && !file.isEmpty()) {
-			result = this.updatePhoto(vo.id(), file);
+		boolean exist = this.service().existByName("code", vo.getCode(), null);
+		boolean result = false;
+		if (!exist) {//注册账户时先判断输入的账户名是否存在
+			result = this.service().insert(vo, true);
+			if (result && file != null && !file.isEmpty()) {
+				result = this.updatePhoto(vo.id(), file);
+			}
+			return Result.of(result);
+		} else {
+			return Result.toResult("1067", "账号名已存在！请重试！");
 		}
-		return Result.of(result);
 	}
 
 	@ApiOperation(value = "更新员工实体", notes = "允许文件上传！")
@@ -70,17 +73,22 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "admin", value = "是否管理员(1-是,0-不是)", required = false, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = false, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "int"),
-			@ApiImplicitParam(name = "status", value = "工作状态(1-在职,0-离职)", required = false, paramType = "form", dataType = "int"),
-			})
+			@ApiImplicitParam(name = "status", value = "设置工作状态(1-在职,0-离职)", required = false, paramType = "form", dataType = "int") })
 	@RequestMapping(value = "/updateEmployee", method = { RequestMethod.POST })
-	public @ResponseBody Result<Boolean> updateEmployee(@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
+	public @ResponseBody Result<Boolean> updateEmployee(
+			@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
 			@RequestPart(value = "photo", required = false) MultipartFile file) throws IOException {
 		log.debug("call updateEmployee");
+		boolean exist = this.service().existByName("code", vo.getCode(), null);
 		boolean result = this.service().update(vo, true, null);
-		if (result && file != null && !file.isEmpty()) {
-			result = this.updatePhoto(vo.id(), file);
+		if (!exist) {
+			if (result && file != null && !file.isEmpty()) {
+				result = this.updatePhoto(vo.id(), file);
+			}
+			return Result.of(result);
+		} else {
+			return Result.toResult("1068", "未登录！请返回登录界面！");
 		}
-		return Result.of(result);
 	}
 
 	@ApiOperation(value = "根据员工id更新自己的信息", notes = "当前用户可以修改自己少部分个人信息")
@@ -89,21 +97,31 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "code", value = "代码", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "name", value = "名称", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = false, paramType = "form", dataType = "int"),
-			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "int"),
-			 })
+			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "int") })
 	@RequestMapping(value = "/updateSelfInfo", method = { RequestMethod.POST })
-	public @ResponseBody Result<Boolean> updateSelfInfo(@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
+	public @ResponseBody Result<Boolean> updateSelfInfo(
+			@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
 			@RequestPart(value = "photo", required = false) MultipartFile file, @ApiIgnore HttpSession session) {
 		log.debug("call updateSelfInfo");
 		boolean ok = false;
 		if (AppUtils.isLogin()) {
+
 			String code = AppUtils.getLoginUser().getUsername();
 			Employee employee = service().findByCode(code);
-			if (vo.equals(employee)) {
-				ok = this.service().updateSelfInfo(vo);
+			Boolean exist = service().existByName("code", vo.getCode(), null);
+			if (!exist) {
+				if (vo.equals(employee)) {
+					ok = this.service().updateSelfInfo(vo);
+				}
+				return Result.of(ok);
+			} else {
+				return Result.toResult("1067", "账号名已存在！请重试！");
 			}
+
+		} else {
+			return Result.toResult("1068", "未登录！请返回登录界面！");
 		}
-		return Result.of(ok);
+
 	}
 
 	@ApiOperation(value = "员工修改自己的密码", notes = "")
@@ -126,7 +144,8 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "password", value = "新密码", required = true) })
 	@RequestMapping(value = "/resetPwd", method = { RequestMethod.POST })
 	//@Secured({ "ROLE_ADMIN" })
-	public @ResponseBody Result<Boolean> resetPwd(@NotBlank @RequestParam String code,@NotBlank @RequestParam String password) {
+	public @ResponseBody Result<Boolean> resetPwd(@NotBlank @RequestParam String code,
+			@NotBlank @RequestParam String password) {
 		log.debug("call resetPwd");
 		boolean result = this.service().changePassword(code, password);
 		return Result.of(result);
@@ -165,17 +184,18 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		builder.header("Content-Disposition", "attachment; filename=" + photo.getPhotoFile());
 		return builder.body(photo.getPhoto());
 	}
+
 	//更新照片
-		private boolean updatePhoto(long id, MultipartFile file) throws IOException {
-			Photo photo = new Photo();
-			photo.setId(id);
-			if (file != null && !file.isEmpty()) {
-				photo.setPhoto(file.getBytes());
-				String extName = FilenameUtils.getExtension(file.getOriginalFilename());
-				String fileName = IOUtil.getUniqueFileName("up", "." + extName);
-				photo.setPhotoFile(fileName);
-			}
-			return this.service().updatePhoto(photo);
+	private boolean updatePhoto(long id, MultipartFile file) throws IOException {
+		Photo photo = new Photo();
+		photo.setId(id);
+		if (file != null && !file.isEmpty()) {
+			photo.setPhoto(file.getBytes());
+			String extName = FilenameUtils.getExtension(file.getOriginalFilename());
+			String fileName = IOUtil.getUniqueFileName("up", "." + extName);
+			photo.setPhotoFile(fileName);
 		}
+		return this.service().updatePhoto(photo);
+	}
 
 }

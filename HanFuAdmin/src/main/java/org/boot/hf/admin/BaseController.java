@@ -167,25 +167,6 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 		return Result.toResult(list);
 	}
 
-	@ApiOperation(value = "条件分页查询", notes = "")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "searchCode", value = "代码(支持like)，允许null"),
-			@ApiImplicitParam(name = "searchName", value = "名称(支持like)，允许null"),
-			@ApiImplicitParam(name = "sort", value = "排序规则字符串"),
-			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
-			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
-	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
-	public @ResponseBody Result<PageSet<? extends Entity>> queryPage(String searchCode, String searchName, String sort,
-			@Min(1) @RequestParam("pageNum") long pageNum, @Min(1) @RequestParam int pageSize) {
-		log.debug("call queryPage");
-		Predicate where = DaoUtil.and();
-		if (StringUtils.isNotEmpty(searchCode)) {
-			where.like("code", searchCode);
-		}
-		if (StringUtils.isNotEmpty(searchName)) {
-			where.like("name", searchName);
-		}
-		PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
-		return Result.toResult(ps);
-	}
+
 
 }

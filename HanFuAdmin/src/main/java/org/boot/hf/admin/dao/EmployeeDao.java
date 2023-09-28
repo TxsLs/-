@@ -34,9 +34,6 @@ public interface EmployeeDao extends Dao<Employee> {
 	default int changePassword(String code, String newPassword) {
 		return updateMap(MapUtil.asMap("password", newPassword), DaoUtil.and().equal("code", code));
 	}
-	
-	
-	
 
 	/**
 	 * <b>获得照片。</b>
@@ -46,10 +43,6 @@ public interface EmployeeDao extends Dao<Employee> {
 	 * @param id 主键id
 	 * @return Photo
 	 */
-	/*@Select("	select f_id id, f_photo\r\n"
-			+ "		photo,f_photo_file photoFile\r\n"
-			+ "		from t_employee\r\n"
-			+ "		where f_id=#{id}")*/
 	public Photo getPhoto(long id);
 
 	/**
@@ -60,8 +53,6 @@ public interface EmployeeDao extends Dao<Employee> {
 	 * @param photo 照片实体对象
 	 * @return 更新数据条数
 	 */
-	
-	//@Update("UPDATE t_user SET f_photo=#{photo}, f_photo_file=#{photoFile} WHERE f_id=#{id}")
 	public int updatePhoto(Photo photo);
 	
 
