@@ -2,7 +2,7 @@ server:
   port: 8080
   servlet:
     context-path: /spring-boot
-    application-display-name: 学习Spring Boot+MyBatis的例子
+    application-display-name: 汉服网络商城项目
     
 spring: 
   mvc:
@@ -27,7 +27,7 @@ spring:
     username: root
     password: 52oyh1314
     driver-class-name: com.mysql.cj.jdbc.Driver
-    ## 使用Hikar数据源
+ ## 使用Hikar数据源
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: hikari-boot
@@ -52,9 +52,10 @@ spring:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   ## 实体包(可选)
-  type-aliases-package: org.study.spring.entity
+  type-aliases-package: org.boot.hf.admin.entity
   configuration:
     call-setters-on-nulls: true
+    auto-mapping-behavior: full
 
 pagehelper:
   auto-dialect: true  
@@ -69,9 +70,8 @@ rock:
     
 encoder:
   crypt:
-    enable: false
+    enable: true
     use-captcha: false
     
 logging:
   config: classpath:logback.xml
-  
