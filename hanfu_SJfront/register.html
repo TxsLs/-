@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>注册页面</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    
+    h2 {
+      text-align: center;
+    }
+    
+    form {
+      width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f7f7f7;
+    }
+    
+    label, input[type="submit"] {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 3px;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>商家注册</h2>
+    <form action="/signup" method="POST">
+      <label for="username">用户名:</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label for="email">邮箱:</label>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="password">密码:</label>
+      <input type="password" id="password" name="password" required>
+      
+      <input type="submit" value="注册">
+    </form>
+  </div>
+</body>
+</html>
