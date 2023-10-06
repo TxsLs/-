@@ -42,7 +42,7 @@ public class ChatServiceImpl extends BaseService<Chat_record, ChatDao> implement
 	public boolean insert(Chat_record entity, boolean ignoreNullValue, String... excluded) {
 
 		Date date=DateUtil.getDateByWord("now");
-		entity.setSent_time(date);;
+		entity.setSent_time(date);
 		return super.insert(entity, ignoreNullValue, excluded);
 	}
 }

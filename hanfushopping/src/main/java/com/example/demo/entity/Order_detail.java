@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.Table;
 import com.example.demo.Entity;
 import io.swagger.annotations.ApiModel;
