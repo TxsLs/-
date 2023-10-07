@@ -1,0 +1,50 @@
+name: ✋ 问题反馈
+description: 使用 bootstrap-admin 过程中遇到的 Bug、异常或其他困惑。
+title: ""
+body:
+  - type: checkboxes
+    attributes:
+      label: 先决条件
+      options:
+        - label: 我确认已查看官方使用文档：**https://www.bootstrap-admin.top/docs** ，但没有找到相关解决方案。
+          required: true
+        - label: 我确认已在 **Issues** 中搜索过类似的问题，但没有找到相关解决方案。
+          required: true
+  - type: input
+    attributes:
+      label: 版本号
+      placeholder: 请提供您所使用的 bootstrap-admin 版本号
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 浏览器
+      placeholder: 如：Chrome 116.0.5845.188（正式版本） （64 位）
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: 问题类型
+      options:
+        - 疑是 BUG
+        - 报错提示
+        - 功能困惑
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 问题描述
+      placeholder: 请提供详细的问题描述和操作步骤等信息，以便我们也能够更轻松地将问题复现。
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 演示地址
+      placeholder: 若能提供 CodePen、Stackblitz 或自主搭建的页面演示地址，将更有助于解决问题
+  - type: checkboxes
+    attributes:
+      label: 友好承诺
+      options:
+        - label: 我承诺将本着相互尊重、理解和友善的态度进行交流，共同维护良好的开源氛围。
+          required: true

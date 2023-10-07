@@ -1,0 +1,29 @@
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-control {
+    border-radius: 10px;
+  }
+  
+  /* 修改按钮样式 */
+  .btn-outline-success {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+  }
+  .btn-outline-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  /* 修改输入框图标颜色 */
+  .bi-person,
+  .bi-person-lock,
+  .bi-shield-lock {
+    color: #6c757d;
+  }
