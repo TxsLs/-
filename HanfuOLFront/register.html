@@ -9,6 +9,7 @@
   <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
   <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
   <meta name="author" content="ajiho">
+  <!-- <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script> -->
   <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="dist/css/bootstrap-admin.min.css">
@@ -22,11 +23,19 @@
       <h2 class="text-center">华裳在线汉服商城</h2>
       <p class="text-secondary text-center">注册</p>
       <form id="form" class="form">
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white "><i class="bi bi-fingerprint"></i></span>
+            <input type="text" class="form-control" id="editCode" name="code" maxlength="20" tabindex="11"
+              data-toggle="popover" placeholder="请输入账号" title="账号必须由20字符内的英文或数字组成" required
+              data-bv-container="#err_editCode" pattern="^[A-Za-z0-9]{0,20}$">
+          </div>
+        </div>
 
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text bg-white "><i class="bi bi-person"></i></span>
-            <input type="text" class="form-control" id="editCode" name="code" maxlength="20" tabindex="11"
+            <input type="text" class="form-control" id="editName" name="name" maxlength="20" tabindex="11"
               data-toggle="popover" placeholder="请输入用户名" title="用户名必须由英文或数字组成(限制20个字符)" required
               data-bv-container="#err_editCode" pattern="^[A-Za-z0-9]{0,20}$">
           </div>
@@ -40,17 +49,14 @@
           </div>
         </div>
 
-        <div class="mb-3 d-flex justify-content-center">
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      
-            <label class="btn btn-outline-primary active">
-              <i class="bi bi-gender-male"></i>
-              <input type="radio" name="gender" value="1" checked> 男
-            </label>
-            <label class="btn btn-outline-primary">
-              <i class="bi bi-gender-female"></i>
-              <input type="radio" name="gender" value="2"> 女
-            </label>
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-gender-ambiguous"></i></span>
+            <select class="form-select" name="gender">
+              <option value="0">请选择</option>
+              <option value="1">男</option>
+              <option value="2">女</option>
+            </select>
           </div>
         </div>
 
@@ -66,10 +72,17 @@
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-phone"></i></span>
-            <input type="tel" class="form-control" id="phone" name="phone" aria-label="phone" placeholder="请输入手机号码">
+            <input type="tel" class="form-control" id="phone" name="phone" aria-label="phone" placeholder="请输入11位手机号码" maxlength="11" pattern="[0-9]{11}" required>
           </div>
         </div>
 
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-person-square"></i></span>
+            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+          </div>
+        </div>
+        
         <div class="d-grid gap-2">
           <button class="btn btn-outline-success" type="submit"><i class="bi bi-person-plus"
               onclick="submitForm($('#frmEdit'),$('#editId').val())"></i> 注册</button>
@@ -83,19 +96,76 @@
       </form>
     </div>
   </div>
-  <!-- 按钮转化 -->
-  <script>
-    document.querySelectorAll('[name="gender"]').forEach(function(radio) {
-      radio.addEventListener('change', function() {
-        document.querySelectorAll('[name="gender"]').forEach(function(radio) {
-          radio.closest('label').classList.remove('active');
-        });
-        if (this.checked) {
-          this.closest('label').classList.add('active');
+
+  <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/jquery/dist/jquery.min.js"></script>
+  <script src="lib/formvalidation/js/formValidation.js"></script>
+  <script src="lib/formvalidation/js/framework/bootstrap.js"></script>
+  <script src="lib/formvalidation/js/language/zh_CN.js"></script>
+  <script src="dist/js/bootstrap-admin.min.js"></script>
+  <script src="dist/js/app.js"></script>
+<script>
+  $(function () {
+    //前端表单验证
+    $('#form').formValidation({
+      fields: {
+        code: {
+          validators: {
+            notEmpty: true,
+          }
+        },
+        name: {
+          validators: {
+            notEmpty: true,
+          }
+        },
+        password: {
+          validators: {
+            notEmpty: true,
+          }
+        },
+        gender: {
+          validators: {
+            notEmpty: true,
+          }
+        },
+        phone: {
+          validators: {
+            notEmpty: true,
+          }
+        },
+        photo: {
+        }
+      }
+    }).on('success.form.fv', function (e) {
+      //阻止表单提交
+      e.preventDefault();
+  
+      //得到表单对象
+      let $form = $(e.target);
+      //获取数据
+      let data = $form.serialize();
+  
+      //发起ajax请求
+      $.ajax({
+        method: 'Post',
+        url: 'http://localhost:8080/spring-boot/customer/addCustomer',
+        //表单数据
+        data: data,
+      }).then(response => {
+        if (response.result) {
+          $.toasts({
+            type: 'success',
+            content: '注册成功',
+            onHidden: function () {
+              top.location.replace('login.html');
+            }
+          })
         }
       });
     });
-    </script>
-</body>
+  });
+  </script>
 
+  </body>
 </html>
