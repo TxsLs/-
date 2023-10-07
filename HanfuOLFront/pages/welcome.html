@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+    <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
     <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
     <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
     <meta name="author" content="ajiho">
@@ -12,97 +13,233 @@
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/lightgallery/css/lightgallery-bundle.min.css">
     <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-    <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+    <style>
+        /* Reset all margins and paddings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Include borders in element's total width and height */
+        }
+
+        /* Remove bullets from unordered list */
+        ul {
+            list-style: none;
+        }
+
+        .slideshow {
+            position: relative;
+            width: 100%;
+            /* Use percentage to make the slideshow responsive */
+            max-width: 1400px;
+            /* Limit maximum width to 1400 pixels */
+            height: auto;
+            /* Let the browser calculate the correct height based on the aspect ratio */
+            max-height: 300px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slideshow ul {
+            display: flex;
+            /* Use flexbox to align the images horizontally */
+            width: 600%;
+            /* Total width is 6 times the slide width */
+            height: 100%;
+            /* Full height */
+            position: relative;
+            left: 0;
+            top: 0;
+            transition: all 0.5s ease-in-out;
+            /* Add smooth animation for transitions*/
+        }
+
+        .slideshow ul li {
+            width: 16.666%;
+            /* Each slide occupies one sixth of the total width */
+            height: 16.666%;
+            /* Full height */
+
+        }
+
+        .slideshow ul li img {
+            width: 100%;
+            /* Make the image fill the entire slide */
+            height: auto;
+            /* Let the browser calculate the correct height based on the aspect ratio */
+        }
+    </style>
+
+
+    <title>商品展示页面</title>
 </head>
+
 <body class="bg-body-tertiary py-3">
-<div class="container-fluid">
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-body">
-            商品列表
-        </div>
-        <div class="card-body">
-            <div class="bsa-gallery-grid">
-                <div class="bsa-gallery-item">
-                    <div class="card border-0 shadow-sm">
-                        <img src="../dist/img/login-bg-4.jpg"
-                             class="card-img-top bsa-cursor-pointer" alt="..." data-src="../dist/img/login-bg-2.jpg">
-                        <div class="card-body">
-                            <h5 class="card-title">展示商品一号</h5>
-                            <p class="card-text">图片描述</p>
-                            <a href="javascript:" class="btn btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </a>
+    <div class="container-fluid">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-body">
+                精品汉服推荐：
+            </div>
+            <!-- 轮播图 -->
+            <footer class="slideshow">
+                <ul>
+                    <li><a href="#"><img src="../dist/img/5f4e19ff166a4.png" alt=""></a></li>
+                    <li><a href="#"><img src="../dist/img/avatar.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="../dist/img/bs.png" alt=""></a></li>
+
+                </ul>
+            </footer>
+            <div class="card-header bg-body">
+                商品列表
+            </div>
+
+            <div class="card-header bg-body search-area">
+                <form class="row row-cols-sm-auto g-3 py-2 align-items-center">
+                    <div class="col-12">
+                        <div class="row">
+                            <label for="username" class="col-sm-auto col-form-label">商品名</label>
+                            <div class="col">
+                                <input type="email" class="form-control" id="username" name="username">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="bsa-gallery-item">
-                    <div class="card border-0 shadow-sm">
-                        <img src="../dist/img/gallery2_thumb.png"
-                             class="card-img-top bsa-cursor-pointer" alt="..." data-src="../dist/img/gallery2.png">
-                        <div class="card-body">
-                            <h5 class="card-title">展示商品二号</h5>
-                            <p class="card-text">图片描述</p>
-                            <a href="javascript:" class="btn btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                    <div class="col-12">
+                        <div class="row">
+                            <label for="phone" class="col-sm-auto col-form-label">商家名</label>
+                            <div class="col">
+                                <input type="email" class="form-control" id="phone" name="phone">
+                            </div>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <label for="status" class="col-sm-auto col-form-label">商品分类</label>
+                            <div class="col">
+                                <select class="selectpicker" id="status" name="status">
+                                    <option value="0">所有</option>
+                                    <option value="1">正常</option>
+                                    <option value="2">停用</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 gap-2">
+                        <button type="button" class="btn btn-light bsa-querySearch-btn">
+                            <i class="bi bi-search"></i>搜索
+                        </button>
+                        <button type="button" class="btn btn-light bsa-reset-btn">
+                            <i class="bi bi-arrow-clockwise"></i>重置
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="card-body">
+                <div class="bsa-gallery-grid">
+                    <div class="bsa-gallery-item">
+                        <div class="card border-0 shadow-sm">
+                            <img src="../dist/img/login-bg-4.jpg" class="card-img-top bsa-cursor-pointer" alt="..."
+                                data-src="../dist/img/login-bg-2.jpg">
+                            <div class="card-body">
+                                <h5 class="card-title">展示商品一号</h5>
+                                <p class="card-text">图片描述</p>
+                                <span class="badge bg-danger">$19.99</span>
+                                <a href="javascript:" class="btn btn-primary">
+                                    加入购物车
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bsa-gallery-item">
+                        <div class="card border-0 shadow-sm">
+                            <img src="../dist/img/gallery2_thumb.png" class="card-img-top bsa-cursor-pointer" alt="..."
+                                data-src="../dist/img/gallery2.png">
+                            <div class="card-body">
+                                <h5 class="card-title">展示商品二号</h5>
+                                <p class="card-text">图片描述</p>
+                                <span class="badge bg-danger">$21.99</span>
+                                <a href="javascript:" class="btn btn-primary">
+                                    加入购物车
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
+            </div>
 
+            <div class="card-footer bg-body">
 
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="card-footer bg-body">
-
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
     </div>
-</div>
 
-<!--回到顶部开始-->
-<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
-<!--回到顶部结束-->
+    <!--回到顶部开始-->
+    <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+    <!--回到顶部结束-->
 
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../dist/js/bootstrap-admin.min.js"></script>
 
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
+    <script src="../lib/lightgallery/lightgallery.min.js"></script>
+    <script src="../lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="../lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
 
-<script src="../lib/lightgallery/lightgallery.min.js"></script>
-<script src="../lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
-<script src="../lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script>
+    <script src="../dist/js/app.js"></script>
 
-<script src="../dist/js/app.js"></script>
-<!--假数据模拟,生产环境中请直接删除该js-->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
-<script>
+    <script>
+        $(function () {
+            lightGallery(document.querySelector('.bsa-gallery-grid'), {
+                speed: 500,
+                selector: '.card-img-top',
+                mode: 'lg-slide',
+                // ... 其它设置
+            });
 
-    $(function () {
-        lightGallery(document.querySelector('.bsa-gallery-grid'), {
-            speed: 500,
-            selector: '.card-img-top',
-            mode: 'lg-slide',
-            // ... 其它设置
-        });
-    })
+        })
 
+        window.addEventListener("load", function () {
+            var a = document.querySelector(".slideshow ul");
+            // a.style.left="-1400px"
+            // console.dir(a.children[0])
+            console.log(a.children.length);
+            var num = 0;
+            var len = a.children[0].clientWidth;
+            console.log(a.children[0].clientWidth);
+            setInterval(function () {
+                if (num == a.children.length) {
+                    a.style.left = "0px";
+                    a.style.transition = "left 0s";
+                    num = 1;
+                } else {
+                    a.style.left = -len * num + "px";
+                    a.style.transition = "left 1s";
+                    num++;
+                }
 
-</script>
+            }, 1500);
+        })
+    </script>
 </body>
+
 </html>

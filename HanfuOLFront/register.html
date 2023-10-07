@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
+  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dist/css/bootstrap-admin.min.css">
+  <title>汉服网络商城注册</title>
+</head>
+
+<body class="bg-body-tertiary">
+
+  <div class="d-flex align-items-center justify-content-center">
+    <div style="width: 400px;max-width: 100%;margin-top: 12vh;" class="p-2">
+      <h2 class="text-center">华裳在线汉服商城</h2>
+      <p class="text-secondary text-center">注册</p>
+      <form id="form" class="form">
+
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white "><i class="bi bi-person"></i></span>
+            <input type="text" class="form-control" id="editCode" name="code" maxlength="20" tabindex="11"
+              data-toggle="popover" placeholder="请输入用户名" title="用户名必须由英文或数字组成(限制20个字符)" required
+              data-bv-container="#err_editCode" pattern="^[A-Za-z0-9]{0,20}$">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
+            <input type="text" class="form-control" id="editEmail" name="email" maxlength="50" tabindex="21"
+              data-toggle="popover" placeholder="请输入邮箱" title="邮箱">
+          </div>
+        </div>
+
+        <div class="mb-3 d-flex justify-content-center">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      
+            <label class="btn btn-outline-primary active">
+              <i class="bi bi-gender-male"></i>
+              <input type="radio" name="gender" value="1" checked> 男
+            </label>
+            <label class="btn btn-outline-primary">
+              <i class="bi bi-gender-female"></i>
+              <input type="radio" name="gender" value="2"> 女
+            </label>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group bsa-show_hide_password">
+            <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
+            <input type="password" class="form-control" id="password" name="password" maxlength="20" tabindex="4"
+              placeholder="请输入密码" required data-bv-container="#err_password" pattern="^[\S]{0,20}$">
+            <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-phone"></i></span>
+            <input type="tel" class="form-control" id="phone" name="phone" aria-label="phone" placeholder="请输入手机号码">
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-outline-success" type="submit"><i class="bi bi-person-plus"
+              onclick="submitForm($('#frmEdit'),$('#editId').val())"></i> 注册</button>
+        </div>
+        <div class="mt-3 text-center">
+          <p>已有账号？<a href="login.html" class="link-success text-decoration-none">立即登录</a></p>
+        </div>
+        <div class="mt-3 text-center">
+          <a href="index.html" class="link-success text-decoration-none">随便逛逛</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- 按钮转化 -->
+  <script>
+    document.querySelectorAll('[name="gender"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        document.querySelectorAll('[name="gender"]').forEach(function(radio) {
+          radio.closest('label').classList.remove('active');
+        });
+        if (this.checked) {
+          this.closest('label').classList.add('active');
+        }
+      });
+    });
+    </script>
+</body>
+
+</html>

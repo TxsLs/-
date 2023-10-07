@@ -1,4 +1,3 @@
-
 $(function() {
 	//初始化控件的输入键行为
 	rock.initInputKey("[tabindex]");
@@ -36,7 +35,7 @@ function submitForm($frm) {
 					alert(rock.errorText(rtn, "登录错误!"));
 				}
 			} else if (rtn.result) {
-				location.href = "homepage.html";
+				location.href = "index.html";
 			} else {
 				alert("用户名或密码不正确!");
 			}
