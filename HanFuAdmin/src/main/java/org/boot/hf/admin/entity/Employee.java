@@ -43,8 +43,8 @@ public class Employee extends Entity {
 	@ApiModelProperty(value = "入职时间", position = 6)
 	private Date joinTime;
 
-	@ApiModelProperty(value = "入职时间", position = 7)
-	private Integer phone;
+	@ApiModelProperty(value = "电话号", position = 7)
+	private Long phone;
 
 	@ApiModelProperty(value = "工作状态", position = 8)
 	private Integer status;

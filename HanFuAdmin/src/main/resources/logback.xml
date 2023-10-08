@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60000" debug="false">
 	<!-- 变量 -->
-	<property name="app_name" value="hanfu-store" />
+	<property name="app_name" value="hanfu-store-admin" />
 	<property name="package_name" value="org.boot.hf.admin" />
 	<property name="log_dir" value="d:/repos/log/${app_name}" />
 	

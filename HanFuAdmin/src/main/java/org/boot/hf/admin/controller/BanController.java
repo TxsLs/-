@@ -1,6 +1,7 @@
 package org.boot.hf.admin.controller;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +48,7 @@ public class BanController extends BaseController<Ban, BanService> {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "userId", value = "封禁者编号", required = true),
 			@ApiImplicitParam(name = "reason", value = "封禁理由", required = true),
 			@ApiImplicitParam(name = "endTime", value = "封禁结束时间", required = true, dataType = "datetime") })
-	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
+	@RequestMapping(value = "/addBan", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> addBan(@Validated({ Default.class }) @ApiIgnore Ban vo) {
 
 		log.debug("call addEmployee");
@@ -55,8 +56,29 @@ public class BanController extends BaseController<Ban, BanService> {
 
 		return Result.of(result);
 	}
-	
-	
+
+	@ApiOperation(value = "修改封禁信息", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "reason", value = "封禁理由", required = true),
+			@ApiImplicitParam(name = "endTime", value = "封禁结束时间", required = true, dataType = "datetime") })
+	@RequestMapping(value = "/updateBan", method = { RequestMethod.POST })
+	public @ResponseBody Result<Boolean> updateBan(@Validated({ Default.class }) @ApiIgnore Ban vo) {
+
+		log.debug("call addEmployee");
+		boolean result = this.service().update(vo, true, null, "userId", "beginTime");
+
+		return Result.of(result);
+	}
+
+	@ApiOperation(value = "删除封禁信息", notes = "")
+	@ApiImplicitParam(name = "userId", value = "主键id", required = true, dataType = "long")
+	@RequestMapping(value = "/deleteBan", method = { RequestMethod.POST })
+	public @ResponseBody Result<Boolean> deleteBan(@NotNull @RequestParam long userId) {
+
+		log.debug("call addEmployee");
+		boolean result = this.service().delete(userId);
+
+		return Result.of(result);
+	}
 
 	@ApiOperation(value = "条件分页查询", notes = "")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "searchCode", value = "代码(支持like)，允许null"),
