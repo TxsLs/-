@@ -1,5 +1,5 @@
 
-$(function() {
+$(function () {
 	//初始化控件的输入键行为
 	rock.initInputKey("[tabindex]");
 	//初始化校验器
@@ -26,6 +26,11 @@ function submitForm($frm) {
 			if (!$.isPlainObject(rtn))
 				alert(rtn, "未返回对象!");
 			else if (rtn.hasError) {
+				$.toasts({
+					type: 'faile',
+					content: '登录失败！',
+				   
+				  });
 				if (rtn.errorCode == "1020" || rtn.errorCode == "1001" || rtn.errorCode == "1002") {
 					alert(rock.errorText(rtn, "登录错误!"));
 					$("#username").focus();
@@ -36,9 +41,23 @@ function submitForm($frm) {
 					alert(rock.errorText(rtn, "登录错误!"));
 				}
 			} else if (rtn.result) {
-				location.href = "../index.html";
-			}else if (!rtn.result) {
-				location.href = "../employee.html";
+				$.toasts({
+					type: 'success',
+					content: '超级管理员登录成功！',
+					onHidden: function () {
+						location.href = "../index.html";
+					}
+				});
+
+			} else if (!rtn.result) {
+				$.toasts({
+					type: 'success',
+					content: '商城员工登录成功！',
+					onHidden: function () {
+						location.href = "../employee.html";
+					}
+				});
+
 			} else {
 				alert("用户名或密码不正确!");
 			}
