@@ -51,7 +51,7 @@
                        name="beginTime" id="beginTime">
                 <span class="input-group-text"><i class="bi bi-arrow-left-right"></i></span>
                 <input type="text" readonly class="form-control" aria-label="q"
-                       placeholder="结束时间"
+                       placeholder="更新时间"
                        name="endTime" id="endTime">
               </div>
             </div>
@@ -59,12 +59,12 @@
         </div>
         <div class="col-12">
           <div class="row">
-            <label for="status" class="col-sm-auto col-form-label">用户状态</label>
+            <label for="status" class="col-sm-auto col-form-label">商品状态</label>
             <div class="col">
               <select class="selectpicker" id="status" name="status">
                 <option value="0">所有</option>
-                <option value="1">正常</option>
-                <option value="2">停用</option>
+                <option value="1">上架</option>
+                <option value="2">下架</option>
               </select>
             </div>
           </div>
@@ -320,7 +320,7 @@
           widthUnit: 'rem'
         },
         {
-          title: '姓名',
+          title: '用户',
           field: 'name',
           align: 'center'
         },
