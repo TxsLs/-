@@ -19,8 +19,8 @@
 
   <div class="d-flex align-items-center justify-content-center">
     <div style="width: 400px; max-width: 100%; margin-top: 12vh;" class="p-2">
-      <h2 class="text-center">华裳在线汉服商城注册</h2>
-      <p class="text-secondary text-center">基于 bootstrap 5.1.3 设计的注册页面</p>
+      <h2 class="text-center">华裳在线汉服商城员工注册</h2>
+      <p class="text-secondary text-center">基于 bootstrap 5.1.3 设计的员工注册页面</p>
 
       <form id="form" class="form">
         <div class="mb-3">
@@ -29,16 +29,16 @@
             <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2"
               placeholder="请输入账号" required data-bv-container="#err_username" pattern="^[A-Za-z0-9]{0,20}$">
           </div>
-          <div id="err_username" style="text-align: left;"></div>
+
         </div>
 
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
             <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2" aria-label="name"
-              placeholder="请输入姓名" required data-bv-container="#err_username" pattern="^[A-Za-z0-9]{0,20}$">
+              placeholder="请输入姓名" required data-bv-container="#err_username" pattern="^[\u4e00-\u9fa5A-Za-z0-9]{0,20}$">
           </div>
-          <div id="err_username" style="text-align: left;"></div>
+
         </div>
 
         <div class="mb-3">
@@ -46,7 +46,7 @@
             <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
             <input type="password" class="form-control" id="password" name="password" maxlength="20" autocomplete="off"
               aria-label="password" tabindex="4" placeholder="请输入密码" required data-bv-container="#err_password"
-              aria-label="password" pattern="^[\S]{0,20}$">
+              pattern="^[\S]{0,20}$">
             <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
           </div>
 
@@ -56,12 +56,11 @@
         <div class="mb-3">
           <div class="input-group bsa-show_hide_password">
             <span class="input-group-text bg-white"><i class="bi bi-shield-check"></i></span>
-            <input type="password" class="form-control" id="confirm-password" name="confirm-password" maxlength="20"
-              autocomplete="off" aria-label="confirm-password" tabindex="5" placeholder="请再次输入密码" required
-              oninput="checkPassword()">
+            <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" maxlength="20"
+              autocomplete="off" tabindex="4" placeholder="请再次输入密码" required data-bv-container="#err_confirmpassword">
             <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
           </div>
-          <div id="err_password" style="text-align: left; color: red"></div>
+          <!-- <div id="err_confirmpassword" style="text-align: left;"></div> -->
         </div>
 
         <div class="mb-3">
@@ -85,7 +84,7 @@
             <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" placeholder="请输入电话号码" required
               data-bv-container="#err_phone" maxlength="11">
           </div>
-          <div id="err_phone" style="text-align: left;"></div>
+          <!-- <div id="err_phone" style="text-align: left;"></div> -->
         </div>
 
 
@@ -179,6 +178,8 @@
   <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
   <script src="../dist/js/bootstrap-admin.min.js"></script>
   <script src="../dist/js/app.js"></script>
+
+
   <!-- 按钮转化 -->
   <!-- <script>
     document.querySelectorAll('[name="gender"]').forEach(function (radio) {
@@ -198,30 +199,51 @@
 
 
 
-  <script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script>
+  <!-- <script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script> -->
   <script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
   <script type="text/javascript" src="../dist/js/common.js"></script>
+
+
+
+
+
+  <!-- 引入 Bootstrap Validator CSS -->
+  <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"> -->
+
+
+
+  <!-- 引入 Bootstrap Validator JavaScript -->
+  <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script> -->
+
+
   <script>
 
 
 
 
-    function checkPassword() {
-      var password = document.getElementById("password").value;
-      var confirmPassword = document.getElementById("confirm-password").value;
-      var errorContainer = document.getElementById("err_password");
+    // function checkPassword() {
+    //   var password = document.getElementById("password").value;
+    //   var confirmPassword = document.getElementById("confirmpassword").value;
+    //   var errorContainer = document.getElementById("err_password");
 
-      if (password !== confirmPassword) {
-        errorContainer.innerText = "两次输入的密码不一致！";
-      } else {
-        errorContainer.innerText = "";
-      }
-    }
+    //   if (password !== confirmPassword) {
+    //     errorContainer.innerText = "两次输入的密码不一致！";
+    //   } else {
+    //     errorContainer.innerText = "";
+    //   }
+    // }
+
 
 
     $(function () {
       //前端表单验证
+
+
       $('#form').formValidation({
+
+
+
+
         fields: {
           code: {
             validators: {
@@ -259,6 +281,24 @@
               }
             }
           },
+
+          confirmpassword: {
+            validators: {
+              notEmpty: {
+                message: '密码不能为空'
+              },
+              stringLength: {
+                min: 6,
+                max: 20,
+                message: '密码长度必须在6到20个字符之间'
+              },
+              identical: {//相同
+                field: 'password',
+                message: '两次密码不一致'
+              }
+            }
+          },
+
           gender: {
             validators: {
               notEmpty: {
@@ -289,8 +329,24 @@
           }
         }
       }).on('success.form.fv', function (e) {
+
+        /*  // 检查密码是否一致
+          var password = document.getElementById("password").value;
+          var confirmPassword = document.getElementById("confirmpassword").value;
+  
+          if (password !== confirmPassword) {
+            // 密码不一致，提示错误信息
+            $.toasts({
+              type: 'error',
+              content: '密码不一致！',
+  
+            });
+            return false;
+          }*/
+
         //阻止表单提交
         e.preventDefault();
+
 
         //得到表单对象
         let $form = $(e.target);
@@ -317,22 +373,37 @@
           if (response.result) {
             $.toasts({
               type: 'success',
-              content: '注册成功',
+              content: '注册成功！',
               onHidden: function () {
                 location.href = 'login.html';
               }
             });
-          } else if(response.hasError){
+          } else if (response.hasError) {
+            // $.toasts({
+            //   type: 'danger',
+            //   content: '注册失败！',
+            //   // onHidden: function () {
+            //   //   location.href = 'register.html';
+            //   // }
+            // });
+            // if (response.errorCode == "1067") {
+            //   alert(rock.errorText(response, "注册错误!"));
+            //   $("#code").focus();
+
+            // }
+            var errorMessage = rock.errorText(response, "注册错误!");
             $.toasts({
-              type: 'faile',
-              content: '注册失败',
-             
+              type: 'danger',
+              content: errorMessage,
+              displayTime: 10000, // 将显示时间设置为 3 秒钟
+              onShown: function () {
+                if (response.errorCode === "1067") {
+                  $("#code").focus();
+                }
+              }
             });
-            if (response.errorCode == "1067" ) {
-					alert(rock.errorText(response, "注册错误!"));
-					$("#code").focus();
-				} 
-           
+
+
           }
         });
       });

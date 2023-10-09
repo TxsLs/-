@@ -9,7 +9,10 @@ $(function () {
 	}).trigger("click");
 	var err = rock.getUrlParam("error");
 	if (err == 1)
-		alert("登录失败!");
+	$.toasts({
+		type: 'danger',
+		content: '登录失败！',
+	  });
 });
 
 
@@ -26,16 +29,23 @@ function submitForm($frm) {
 			if (!$.isPlainObject(rtn))
 				alert(rtn, "未返回对象!");
 			else if (rtn.hasError) {
-				$.toasts({
-					type: 'faile',
-					content: '登录失败！',
-				   
-				  });
+				
 				if (rtn.errorCode == "1020" || rtn.errorCode == "1001" || rtn.errorCode == "1002") {
-					alert(rock.errorText(rtn, "登录错误!"));
+					
+					$.toasts({
+						type: 'danger',
+						content: '登录失败！',
+					  });
+					  alert(rock.errorText(rtn, "登录错误!"));
 					$("#username").focus();
 				} else if (rtn.errorCode == "1003") {
-					alert(rock.errorText(rtn, "登录错误!"));
+					
+					$.toasts({
+						type: 'danger',
+						content: '登录失败！',
+					   
+					  });
+					  alert(rock.errorText(rtn, "登录错误!"));
 					$("#captch").focus();
 				} else {
 					alert(rock.errorText(rtn, "登录错误!"));
@@ -59,11 +69,20 @@ function submitForm($frm) {
 				});
 
 			} else {
-				alert("用户名或密码不正确!");
+				$.toasts({
+					type: 'danger',
+					content: '用户名密码不正确！',
+					
+				});
 			}
 		});
 	} else {
-		alert("请检查输入数据是否正确!");
+		$.toasts({
+			type: 'warning',
+			content: '请检查输入数据是否正确!',
+			
+		});
+		//alert("请检查输入数据是否正确!");
 		var $first = bv.getInvalidFields().eq(0);
 		$first.focus();
 	}

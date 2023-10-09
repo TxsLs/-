@@ -115,7 +115,10 @@
 <script src="../dist/js/bootstrap-admin.min.js"></script>
 <script src="../dist/js/app.js"></script>
 <!--假数据模拟,生产环境中请直接删除该js-->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
+<!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
+<script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script>
+<script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
+<script type="text/javascript" src="../dist/js/common.js"></script>
 
 <script>
   $(document).ready(function () {
@@ -153,9 +156,19 @@
       //设置高度就可以固定表头
       // height: 500,
       //请求地址
-      url: '/user',
+      url: 'http://127.0.0.1:8080/hanfu/employee/queryAll',
       responseHandler: function (res) {
-        return res.data;
+        var data = {};
+			if (res.hasError) {
+				alert(rock.errorText(res, "无法获得数据列表!"));
+			}
+			else {
+				var ps = res.result;
+				data.total = ps.totalCount;
+				data.rows = ps.content;
+			}
+       // alert(res.data);
+        return data;
       },
       //固定列功能开启
       fixedColumns: true,
@@ -320,47 +333,50 @@
           widthUnit: 'rem'
         },
         {
+          title: '账号',
+          field: 'code',
+          align: 'center',
+        },
+        {
           title: '姓名',
           field: 'name',
           align: 'center'
         },
+       
         {
-          title: '角色',
-          field: 'role_id',
-          align: 'center',
-          formatter: formatRole
-        },
-        {
-          title: '用户名',
-          field: 'username',
+          title: '是否是管理员',
+          field: 'admin',
           align: 'center',
         },
         {
           title: '性别',
           field: 'gender',
           align: 'center',
-          formatter: formatGender
+         // formatter: formatGender
+        },
+         {
+          title: '角色',
+          field: 'password',
+          align: 'center',
+          formatter: formatRole
+        },
+        {
+          title: '加入时间',
+          field: 'joinTime',
+          align: 'center',
         },
         {
           title: '手机',
           field: 'phone',
           align: 'center',
         },
-        {
-          title: '邮箱',
-          field: 'email',
-          align: 'center',
-        },
-        {
-          title: '加入时间',
-          field: 'create_at',
-          align: 'center',
-        },
+       
+       
         {
           title: '状态',
           field: 'status',
           align: 'center',
-          formatter: formatStatus,
+         // formatter: formatStatus,
           events: {
             'click .form-switch': function (event, value, row, index) {
               event.preventDefault();
