@@ -253,7 +253,7 @@
               stringLength: {
                 min: 1,
                 max: 20,
-                message: '用户名长度必须在6到20个字符之间'
+                message: '用户名长度必须在1到20个字符之间'
               }
             }
           },
@@ -265,7 +265,7 @@
               stringLength: {
                 min: 1,
                 max: 20,
-                message: '用户名长度必须在6到20个字符之间'
+                message: '用户名长度必须在1到20个字符之间'
               }
             }
           },
@@ -287,14 +287,10 @@
               notEmpty: {
                 message: '密码不能为空'
               },
-              stringLength: {
-                min: 6,
-                max: 20,
-                message: '密码长度必须在6到20个字符之间'
-              },
+
               identical: {//相同
                 field: 'password',
-                message: '两次密码不一致'
+                message: '两次输入的密码不一致'
               }
             }
           },
@@ -379,18 +375,6 @@
               }
             });
           } else if (response.hasError) {
-            // $.toasts({
-            //   type: 'danger',
-            //   content: '注册失败！',
-            //   // onHidden: function () {
-            //   //   location.href = 'register.html';
-            //   // }
-            // });
-            // if (response.errorCode == "1067") {
-            //   alert(rock.errorText(response, "注册错误!"));
-            //   $("#code").focus();
-
-            // }
             var errorMessage = rock.errorText(response, "注册错误!");
             $.toasts({
               type: 'danger',
@@ -405,6 +389,19 @@
 
 
           }
+          // $.toasts({
+            //   type: 'danger',
+            //   content: '注册失败！',
+            //   // onHidden: function () {
+            //   //   location.href = 'register.html';
+            //   // }
+            // });
+            // if (response.errorCode == "1067") {
+            //   alert(rock.errorText(response, "注册错误!"));
+            //   $("#code").focus();
+
+            // }
+            
         });
       });
     });

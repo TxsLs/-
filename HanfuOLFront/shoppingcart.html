@@ -50,9 +50,12 @@
 						<label for="name" class="form-label">姓名</label>
 						<input type="text" class="form-control" id="name">
 					</div>
-					<div class="mb-3">
-						<label for="email" class="form-label">邮箱</label>
-						<input type="email" class="form-control" id="email">
+					<div class="form-group">
+						<label for="searchAddress" class="control-label">地址：</label>
+						<select class="form-control" id="searchAddress" name="address" tabindex="1"
+							data-toggle="popover" title="请选择地址">
+							<option value="" selected>全部</option>
+						</select>
 					</div>
 					<button type="submit" class="btn btn-primary">确认结算</button>
 				</form>
@@ -83,7 +86,7 @@
 		</div>
 	</div>
 
-	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="lib/jquery/dist/jquery.min.js"></script>
 	<script>
 		$(function () {
 			// 更新订单总额

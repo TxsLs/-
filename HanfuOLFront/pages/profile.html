@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+    <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+    <meta name="author" content="ajiho">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+    <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+<body class="bg-body-tertiary py-3">
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-body">
+            设置我的资料
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <form id="form">
+                        <div class="row mb-3">
+                            <label for="role" class="col-sm-3 col-form-label text-sm-end">我的角色</label>
+                            <div class="col-sm-9">
+                                <select class="form-select" name="role" aria-label="role" id="role">
+                                    <option value="1" selected>超级管理员</option>
+                                    <option value="2" disabled>普通管理员</option>
+                                    <option value="3" disabled>审核员</option>
+                                    <option value="4" disabled>编辑员</option>
+                                </select>
+                                <div class="form-text">当前角色不可更改为其它角色</div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-3">
+                            <label for="username" class="col-sm-3 col-form-label text-sm-end">用户名</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="username" name="username" readonly value="admin88" disabled>
+                                <div class="form-text">不可修改。一般用于后台登入名</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="nickname" name="nickname" value="欲饮琵琶码上催" >
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
+                            <div class="col-sm-9">
+                                <div class="d-flex align-items-center h-100">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                                        <label class="form-check-label" for="inlineRadio1">男</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <label class="form-check-label" for="inlineRadio2">女</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
+                            <div class="col-sm-9">
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="avatar" name="avatar" >
+                                    <label class="input-group-text" for="avatar"><i class="bi bi-cloud-upload"></i> 上传图片</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="phone" class="col-sm-3 col-form-label text-sm-end">手机</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="phone" name="phone" value="19978451354" >
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="email" class="col-sm-3 col-form-label text-sm-end">邮箱</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="email" name="email" value="lujiahao@88.com" >
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="desc" class="col-sm-3 col-form-label text-sm-end">备注</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="desc" rows="3" name="desc"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-9 offset-sm-3">
+                                <button type="submit" class="btn btn-primary">确认修改</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal-dialog">
+			<div class="modal-content" style="width: 800px;">
+				<div class="modal-header">
+					<span class="close" data-dismiss="modal"><img src="images/close_btn.png" /></span>
+					<h4 class="modal-title" align="left">修改用户信息</h4>
+				</div>
+				<div class="modal-body">
+					<form id="frmEdit" name="frmEdit" class="form-horizontal" role="form" type="">
+						<input type="hidden" class="form-control" id="editId" name="id" value="">
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label for="editCode" class="col-sm-4 control-label text-danger">工号:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="editCode" name="code" maxlength="20"
+										tabindex="11" data-toggle="popover" placeholder="请输入工号"
+										title="工号必须由英文或数字组成(限制20个字符)" required data-bv-container="#err_editCode"
+										pattern="^[A-Za-z0-9]{0,20}$">
+								</div>
+								<div id="err_editCode"></div>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label for="editName" class="col-sm-4 control-label text-danger">姓名:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="editName" name="name" maxlength="50"
+										tabindex="12" data-toggle="popover" placeholder="请输入姓名" title="不能超过50个字符"
+										required data-bv-container="#err_editName">
+								</div>
+								<div id="err_editName"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label for="editDeptId" class="col-sm-4 control-label">部门:</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="editDeptId" name="deptId" tabindex="13"
+										data-toggle="popover" title="请选择部门">
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label for="editJobId" class="col-sm-4 control-label">职务:</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="editJobId" name="jobId" tabindex="14"
+										data-toggle="popover" title="请选择职务">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label for="editBirthday" class="col-sm-4 control-label text-danger">出生日期:</label>
+								<div class="col-sm-8">
+									<div class="input-group date">
+										<input type="text" class="form-control" id="editBirthday" name="birthday"
+											readonly tabindex="15" data-toggle="popover" title="出生日期" required
+											data-bv-container="#err_editBirthday" />
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+									<div id="err_editBirthday"></div>
+								</div>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label for="editWorkstateId" class="col-sm-4 control-label">工作状态:</label>
+								<div class="col-sm-6">
+									<select class="form-control" id="editWorkstateId" name="workstateId" tabindex="16"
+										data-toggle="popover" title="请选择工作状态">
+									</select>
+								</div>
+							</div>							
+						</div>
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label for="editGender" class="col-sm-4 control-label">性别:</label>
+								<div class="col-sm-6">
+									<div class="btn-group" id="editGender" data-toggle="buttons" title="请选择性别">
+										<label class="btn btn-default">
+											<input type="radio" name="gender" value="1" tabindex="19"> 男
+										</label>
+										<label class="btn btn-default">
+											<input type="radio" name="gender" value="2" tabindex="19"> 女
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label for="editSfzh" class="col-sm-4 control-label text-danger">身份证号:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="editSfzh" name="sfzh" maxlength="18"
+										tabindex="18" data-toggle="popover" placeholder="" title="身份证号" required
+										data-bv-container="#err_editSfzh">
+								</div>
+								<div id="err_editSfzh"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 form-group">
+								<label for="editEmail" class="col-sm-4 control-label">邮箱:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="editEmail" name="email" maxlength="50"
+										tabindex="21" data-toggle="popover" placeholder="" title="邮箱">
+								</div>
+							</div>
+							<div class="col-sm-6 form-group">
+								<label for="editPhone" class="col-sm-4 control-label">电话:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="editPhone" name="phone" maxlength="50"
+										tabindex="24" data-toggle="popover" placeholder="" title="电话">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="editLoves" class="col-sm-2 control-label">爱好:</label>
+								<div class="col-sm-9">
+									<div class="btn-group" id="editLoves">
+										<label class="btn btn-default">
+											<input type="checkbox" name="loves" value="%s" tabindex="16" /> %s
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="editPhoto" class="col-sm-2 control-label">照片:</label>
+								<div class="col-sm-8">
+									<input type="file" id="editPhoto" name="photo" title="选择照片" tabindex="25" 
+									data-bv-file accept="image/png,image/jpeg,image/jpg" data-bv-file-extension="png,jpg,jpeg" 
+									data-bv-file-minsize="10240" data-bv-file-maxsize="512000" data-bv-container="#err_editPhoto" />
+								</div>
+								<div id="err_editPhoto"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<div class="col-sm-9 col-sm-offset-2">
+									<img  id="imgEditPhoto" class="img-responsive img-photo" src="" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 form-group">
+								<label for="editDescr" class="col-sm-2 control-label">备注:</label>
+								<div class="col-sm-9">
+									<textarea rows="4" class="form-control" id="editDescr" name="descr"
+										maxlength="200" tabindex="25" data-toggle="popover" placeholder="请输入备注(200字以内)"
+										title="对于用户的简要说明(200字以内)"></textarea>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="modal-save-btn" tabindex="30"
+						onclick="submitForm($('#frmEdit'),$('#editId').val())"></button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="modal-reset-btn" tabindex="31"
+						onclick="initForm($('#frmEdit'),false,$('#editId').val())"></button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+    </div>
+</div>
+<!--回到顶部开始-->
+<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+<!--回到顶部结束-->
+
+
+<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../lib/jquery/dist/jquery.min.js"></script>
+<script src="../lib/formvalidation/js/formValidation.js"></script>
+<script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+<script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+<script src="../dist/js/bootstrap-admin.min.js"></script>
+<script src="../dist/js/app.js"></script>
+<!--假数据模拟,生产环境中请直接删除该js-->
+<script src="../dist/js/bootstrap-admin.mock.js"></script>
+
+<script>
+    //前端表单验证
+    $('#form').formValidation({
+        fields: {
+            desc: {
+                validators: {
+                    notEmpty: true,
+                }
+            }
+        }
+    }).on('success.form.fv', function (e) {
+        //阻止表单提交
+        e.preventDefault();
+        //得到表单对象
+        let $form = $(e.target);
+        let data = $form.serialize();
+
+        alert('表单验证通过,即将发起ajax');
+        //得到序列化数据
+        $.ajax({
+            url: "/login.php",
+            method: 'POST',
+            data
+        }).then(function (res) {
+            if (res.code === 200) {
+                //登录成功
+            } else {
+                //登录失败
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
