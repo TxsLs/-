@@ -210,7 +210,7 @@
         <div class="bsa-user-area">
           <img src="dist/img/avatar.jpg" class="bsa-user-avatar" alt="用户头像">
           <div class="bsa-user-details">
-            <div class="bsa-ellipsis-1 bsa-fs-15">欲饮琵琶码上催</div>
+            <div class="bsa-ellipsis-1 bsa-fs-15" id="loginUser"></div>
             <!-- 管理员角色RBAC权限设计时可用(不需要可删除,上面的用户名可自动垂直居中)  -->
             <div class="bsa-ellipsis-1 bsa-fs-13 text-muted">超级管理员</div>
           </div>
@@ -456,7 +456,24 @@
   <script src="dist/js/bootstrap-admin.mock.js"></script>
 
   <script>
+    var ssoUser = null;  //当前用户
     $(document).ready(function () {
+      loadUser();
+      function loadUser() {
+        _root.loginUser({}, function (rtn, status) {
+          if (rtn.hasError) {
+            alert(rock.errorText(rtn, "获得当前用户失败！"));
+          } else {
+            ssoUser = rtn.result;
+          }
+          if (rock.isNull(ssoUser)) {
+            $("#loginUser").html("未知用户");
+          } else {
+            $("#loginUser").html(ssoUser.name);
+          }
+        })
+      }
+
 
       // var {
       //   OverlayScrollbars,
