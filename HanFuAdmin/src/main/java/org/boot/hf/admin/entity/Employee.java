@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @ApiModel(description = "用户实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
 @Table(name = "t_employee", alias = "e", resultMap = "resultMap")
-@JoinTables({ @JoinTable(name = "t_ban", alias = "b", onExpr = "e.f_id=b.f_user_id") })
+//@JoinTables({ @JoinTable(name = "t_ban", alias = "b", onExpr = "e.f_id=b.f_user_id") })
 public class Employee extends Entity {
 	/**
 	 * serialVersionUID。

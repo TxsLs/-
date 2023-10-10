@@ -74,13 +74,16 @@ public class PublicControler {
 		} else if (user.getAdmin() == 0) {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());
+			
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
 			return Result.of(false);
 			} 
 		else {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());
+			System.out.println(loginUser);
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+		
 			return Result.of(true);
 		}
 
@@ -107,9 +110,11 @@ public class PublicControler {
 
 	@ApiOperation(value = "返回当前用户信息", notes = "未登录则返回null")
 	@RequestMapping(value = "/loginUser", method = { RequestMethod.GET })
-	public @ResponseBody Result<Employee> loginUser() {
+	public @ResponseBody Result<Employee> loginUser(@ApiIgnore HttpSession session) {
 		log.debug("call loginUser");
 		Employee employee = null;
+		System.out.println(session.getAttribute(AppUtils.CURRENT_LOGIN_USER_KEY)+"!!!!!!!!!!!!!!!!!!!!!!!");
+		session.getAttribute(AppUtils.CURRENT_LOGIN_USER_KEY);
 		if (AppUtils.isLogin()) {
 			String code = AppUtils.getLoginUser().getUsername();
 			employee = service.findByCode(code);
