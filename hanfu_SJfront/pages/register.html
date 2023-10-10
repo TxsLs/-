@@ -1,109 +1,5 @@
 <!doctype html>
 <html lang="zh">
-<!-- <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="icon" href="dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
-    <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
-    <meta name="author" content="ajiho">
-    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-    <title>华裳在线汉服商城商家模块</title>
-</head>
-<body class="bg-body-tertiary">
-
-<div class="d-flex align-items-center justify-content-center">
-  <div style="width: 400px;max-width: 100%;margin-top: 12vh;" class="p-2">
-    <h2 class="text-center">华裳在线汉服商城商家注册</h2>
-    <p class="text-secondary text-center">基于bootstrap5.1.3设计的后台管理系统</p>
-
-    <form id="frmRegister" name="frmRegister" class="form-horizontal" action="register" method="post" role="form">
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text bg-white "><i class="bi bi-person"></i></span>
-          <input type="text" class="form-control" id="username" name="username" maxlength="20"
-								tabindex="2" placeholder="请输入帐号" required data-bv-container="#err_userid"
-								pattern="^[A-Za-z0-9]{0,20}$">
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <div class="input-group bsa-show_hide_password">
-          <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
-          <input type="password" class="form-control" id="password" name="password" maxlength="20" autocomplete="off"
-								tabindex="4" placeholder="请输入密码" required data-bv-container="#err_password" aria-label="password"
-								pattern="^[\S]{0,20}$">
-        
-          <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text bg-white "><i class="bi bi-person"></i></span>
-          <input type="text" class="form-control" id="fullname" name="fullname" maxlength="20"
-								tabindex="2" placeholder="请输入姓名" required data-bv-container="#err_fullname"
-								pattern="[\u4e00-\u9fa5]{1,10}">
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text bg-white "><i class="bi bi-person"></i></span>
-          <select class="form-select" id="gender" name="gender" tabindex="2" required>
-            <option value="">请选择性别</option>
-            <option value="男">男</option>
-            <option value="女">女</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text bg-white "><i class="bi bi-person"></i></span>
-          <input type="text" class="form-control" id="phone" name="phone" maxlength="11"
-								tabindex="2" placeholder="请输入手机号" required data-bv-container="#err_phone"
-								pattern="^1[0-9]{10}$">
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text bg-white "><i class="bi bi-image"></i> 添加头像</span>
-          <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" tabindex="2" required>
-        </div>
-      </div>
-
-      <div class="d-grid gap-2">
-        <button class="btn btn-outline-success" tabindex="10" onclick="submitForm($('#frmRegister'))"><i class="bi bi-box-arrow-in-right"></i> 注册</button>
-      </div>
-
-    </form>
-    
-    <div class="mt-3 text-center">
-      <p>已有账号？<a href="login.html" class="link-success text-decoration-none">返回登录</a></p>
-
-    </div>
-
-  </div>
-</div>
-
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../lib/formvalidation/js/formValidation.js"></script>
-<script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
-<script src="../lib/formvalidation/js/language/zh_CN.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
-<script src="../dist/js/app.js"></script>
-<script type="text/javascript" src="../js2/bootstrapValidator-rock.js"></script>
-<script type="text/javascript" src="../js2/rockjs-1.0.js"></script>
-<script type="text/javascript" src="../pagejs/common.js"></script>
-<script type="text/javascript" src="../pagejs/register.js"></script>
-
--->
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -139,7 +35,8 @@
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
             <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2" aria-label="name"
-              placeholder="请输入用户名" required data-bv-container="#err_username" pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$">
+              placeholder="请输入用户名" required data-bv-container="#err_username"
+              pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$">
           </div>
           <div id="err_username" style="text-align: left;"></div>
         </div>
@@ -147,9 +44,9 @@
         <div class="mb-3">
           <div class="input-group bsa-show_hide_password">
             <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
-            <input type="password" class="form-control" id="merchantPassword" name="merchantPassword" maxlength="20" autocomplete="off"
-              aria-label="password" tabindex="4" placeholder="请输入密码" required data-bv-container="#err_password"
-              aria-label="password" pattern="^[\S]{0,20}$">
+            <input type="password" class="form-control" id="merchantPassword" name="merchantPassword" maxlength="20"
+              autocomplete="off" aria-label="password" tabindex="4" placeholder="请输入密码" required
+              data-bv-container="#err_password" aria-label="password" pattern="^[\S]{0,20}$">
             <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
           </div>
 
@@ -159,9 +56,8 @@
         <div class="mb-3">
           <div class="input-group bsa-show_hide_password">
             <span class="input-group-text bg-white"><i class="bi bi-shield-check"></i></span>
-            <input type="password" class="form-control" id="confirm-password" name="confirm-password" maxlength="20"
-              autocomplete="off" aria-label="confirm-password" tabindex="5" placeholder="请再次输入密码" required
-              oninput="checkPassword()">
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" maxlength="20"
+              autocomplete="off" aria-label="confirm-password" tabindex="5" placeholder="请再次输入密码" required>
             <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
           </div>
           <div id="err_password" style="text-align: left; color: red"></div>
@@ -180,7 +76,7 @@
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
             <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱" required
-              data-bv-container="#err_email" >
+              data-bv-container="#err_email">
           </div>
           <div id="err_email" style="text-align: left;"></div>
         </div>
@@ -193,7 +89,7 @@
           </div>
           <div id="profileImageHelp" class="form-text">请上传您的头像（支持webp、png、jpg格式）</div>
         </div>
-        
+
 
         <div class="d-grid gap-2">
           <button class="btn btn-outline-primary" tabindex="12" type="submit"><i class="bi bi-person-plus-fill"></i>
@@ -217,151 +113,150 @@
   <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
   <script src="../dist/js/bootstrap-admin.min.js"></script>
   <script src="../dist/js/app.js"></script>
-<script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script>
-<script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
-<script type="text/javascript" src="../dist/js/common.js"></script>
-<script> 
+  <script type="text/javascript" src="../js2/bootstrapValidator-rock.js"></script>
+  <script type="text/javascript" src="../js2/rockjs-1.0.js"></script>
+  <!-- <script type="text/javascript" src="../js2/common.js"></script> -->
+  <script>
 
-
-
-
-  function checkPassword() {
-    var password = document.getElementById("password").value;
-    var confirmPassword = document.getElementById("confirm-password").value;
-    var errorContainer = document.getElementById("err_password");
-
-    if (password !== confirmPassword) {
-      errorContainer.innerText = "两次输入的密码不一致！";
-    } else {
-      errorContainer.innerText = "";
-    }
-  }
-
-
-  $(function () {
-    //前端表单验证
-    $('#form').formValidation({
-      fields: {
-        code: {
-          validators: {
-            notEmpty: {
-              message: '账号不能为空'
-            },
-            stringLength: {
-              min: 1,
-              max: 50,
-              message: '用户名长度必须在1到50个字符之间'
+    $(function () {
+      //前端表单验证
+      $('#form').formValidation({
+        fields: {
+          code: {
+            validators: {
+              notEmpty: {
+                message: '账号不能为空'
+              },
+              stringLength: {
+                min: 1,
+                max: 50,
+                message: '用户名长度必须在1到50个字符之间'
+              }
             }
-          }
-        },
-        name: {
-          validators: {
-            notEmpty: {
-              message: '姓名不能为空'
-            },
-            stringLength: {
-              min: 1,
-              max: 20,
-              message: '用户名长度必须在1到20之间'
+          },
+          name: {
+            validators: {
+              notEmpty: {
+                message: '姓名不能为空'
+              },
+              stringLength: {
+                min: 1,
+                max: 20,
+                message: '用户名长度必须在1到20之间'
+              }
             }
-          }
-        },
-        merchantPassword: {
-          validators: {
-            notEmpty: {
-              message: '密码不能为空'
-            },
-            stringLength: {
-              min: 6,
-              max: 20,
-              message: '密码长度必须在6到20个字符之间'
+          },
+          merchantPassword: {
+            validators: {
+              notEmpty: {
+                message: '密码不能为空'
+              },
+              stringLength: {
+                min: 6,
+                max: 20,
+                message: '密码长度必须在6到20个字符之间'
+              }
             }
-          }
-        },
-        gender: {
-          validators: {
-            notEmpty: {
-              message: '请选择性别'
+          },
+          confirmPassword: {
+            validators: {
+              notEmpty: {
+                message: '密码不能为空'
+              },
+
+              identical: {//相同
+                field: 'merchantPassword',
+                message: '两次密码不一致'
+              }
             }
-          }
-        },
-        phone: {
-          validators: {
-            notEmpty: {
-              message: '电话号码不能为空'
-            },
-            regexp: {
-              regexp: /^\d{11}/,
-              message: '请输入有效的11位电话号码!'
+          },
+          gender: {
+            validators: {
+              notEmpty: {
+                message: '请选择性别'
+              }
             }
-          }
-        },
-        email: {
-          validators: {
-            notEmpty: {
-              message: '邮箱不能为空'
-            },
-          }
-        },
-        profileImage: {
-          validators: {
-            file: {
-              extension: 'jpeg,jpg,png,webp',
-              type: 'image/jpeg,image/png,image/webp',
-              maxSize: 5242880, // 5MB
-              message: '请选择小于5MB的JPEG、PNG、webp格式图片文件'
+          },
+          phone: {
+            validators: {
+              notEmpty: {
+                message: '电话号码不能为空'
+              },
+              regexp: {
+                regexp: /^\d{11}/,
+                message: '请输入有效的11位电话号码!'
+              }
+            }
+          },
+          email: {
+            validators: {
+              notEmpty: {
+                message: '邮箱不能为空'
+              },
+            }
+          },
+          profileImage: {
+            validators: {
+              file: {
+                extension: 'jpeg,jpg,png,webp',
+                type: 'image/jpeg,image/png,image/webp',
+                maxSize: 5242880, // 5MB
+                message: '请选择小于5MB的JPEG、PNG、webp格式图片文件'
+              }
             }
           }
         }
-      }
-    }).on('success.form.fv', function (e) {
-      //阻止表单提交
-      e.preventDefault();
+      }).on('success.form.fv', function (e) {
+        //阻止表单提交
+        e.preventDefault();
 
-      //得到表单对象
-      let $form = $(e.target);
-      //获取数据
-      let data = new FormData($form[0]); // 使用FormData对象
+        //得到表单对象
+        let $form = $(e.target);
+        //获取数据
+        let data = new FormData($form[0]); // 使用FormData对象
 
-      // 获取照片文件
-      let photoInput = document.getElementById('profileImage');
-      if (photoInput.files.length > 0) {
-        let photo = photoInput.files[0];
-        data.append('photo', photo); // 添加照片数据到FormData对象
-      }
-
-
-      //发起ajax请求
-      $.ajax({
-        method: 'Post',
-        url: 'http://127.0.0.1:8080/hanfushopping/merchant/addMerchant',
-        //表单数据
-        data: data,
-        processData: false,
-        contentType: false,
-      }).then(response => {
-        if (response.result) {
-          $.toasts({
-            type: 'success',
-            content: '注册成功',
-            onHidden: function () {
-              location.href = 'login.html';
-            }
-          });
-        } else if(response.hasError){
-          $.toasts({
-            type: 'faile',
-            content: '注册失败',
-          });
-          if (response.errorCode == "1067" ) {
-        alert(rock.errorText(response, "注册错误!"));
-        $("#code").focus();
-      } 
-         
+        // 获取照片文件
+        let photoInput = document.getElementById('profileImage');
+        if (photoInput.files.length > 0) {
+          let photo = photoInput.files[0];
+          data.append('photo', photo); // 添加照片数据到FormData对象
         }
+
+
+        //发起ajax请求
+        $.ajax({
+          method: 'Post',
+          url: 'http://127.0.0.1:8080/hanfushopping/merchant/addMerchant',
+          //表单数据
+          data: data,
+          processData: false,
+          contentType: false,
+        }).then(response => {
+          if (response.result) {
+            $.toasts({
+              type: 'success',
+              content: '注册成功',
+              onHidden: function () {
+                location.href = 'login.html';
+              }
+            });
+          } else if (response.hasError) {
+            var errorMessage = rock.errorText(response, "注册错误!");
+            $.toasts({
+              type: 'danger',
+              content: errorMessage,
+              displayTime: 10000, // 将显示时间设置为 3 秒钟
+              onShown: function () {
+                if (response.errorCode === "1067") {
+                  $("#code").focus();
+                }
+              }
+            });
+          }
+        });
       });
     });
-  });
-</script>
+  </script>
 </body>
+
 </html>
