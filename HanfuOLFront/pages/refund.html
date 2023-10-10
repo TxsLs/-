@@ -23,34 +23,31 @@
         <div class="card-footer bg-body">
             <form id="commentForm">
                 <div class="form-group">
-                    <label for="reply-input">评论商品：</label>
-                    <textarea class="form-control" id="reply-input" name="reply" rows="3"></textarea>
-                    <div class="col-md-6">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-header bg-body">
-                                请对商品进行评分
-                            </div>
-                            <div class="card-body">
-                                <div id="raty3"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <label for="searchOrderId" class="control-label">订单号：</label>
+                    <select class="form-control" id="searchOrderId" name="orderId" tabindex="1"
+                        data-toggle="popover" title="请选择订单号">
+                        <option value="" selected>全部</option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label for="reply-input">退货理由：</label>
+                    <textarea class="form-control" id="reply-input" name="reply" rows="3"></textarea>
+                </div>
+
                 <div class="form-group">
                     <label for="image-upload">上传图片：</label>
                     <input type="file" class="form-control-file" id="image-upload" name="image">
                 </div>
-                <button type="submit" class="btn btn-primary">提交评论</button>
-                <a href="ordertable.html" class="btn btn-primary" style="float: right;">返回订单详情页</a> <!-- 添加返回首页的按钮 -->
+                <button type="submit" class="btn btn-primary">提交申请</button>
             </form>
             <!-- 提交成功提示框 -->
             <div id="successMessage" class="alert alert-success d-none" role="alert">
-                提交评论成功！将返回订单表页。
+                提交申请成功！将返回订单表页。
             </div>
 
             <!-- 提交失败提示框 -->
             <div id="errorMessage" class="alert alert-danger d-none" role="alert">
-                提交评论失败！将返回错误页。
+                提交申请失败！将返回错误页。
             </div>
         </div>
 
@@ -68,27 +65,6 @@
     <script src="../lib/raty-js/lib/jquery.raty.js"></script>
     <script src="../dist/js/bootstrap-admin.min.js"></script>
     <script src="../dist/js/app.js"></script>
-    <script>
-        $(document).ready(function (e) {
-            $('#raty3').raty({
-                // 隐藏域字段
-                scoreName: 'score',
-                // 初始化值
-                score: 1,
-                // 数量
-                number: 5,
-                starType: 'i',
-                cancelOff: "bi bi-x-circle fs-4 mx-1 text-danger",
-                cancelOn: "bi bi-x-circle fs-4 mx-1",
-                starHalf: "bi bi-star-half fs-4 mx-1 text-warning",
-                starOff: "bi bi-star fs-4 mx-1 text-secondary",
-                starOn: "bi bi-star-fill fs-4 mx-1 text-warning",
-                click: function (score, e) {
-                    alert('当前分值:' + score)
-                }
-            });
-        })
-    </script>
 <script>
     // 提交评论表单的监听事件
     document.getElementById("commentForm").addEventListener("submit", function(event) {
