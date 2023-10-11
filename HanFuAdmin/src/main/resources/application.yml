@@ -7,17 +7,18 @@ server:
 spring: 
   mvc:
     pathmatch:
-      matching-strategy: ant-path-matcher  
+      matching-strategy: ant-path-matcher
   messages:
     encoding: utf-8
-    basename: i18n/message-resources  
+    basename: i18n/message-resources
+    
   security:
     user:
       name: admin
       password: 111111
       roles:
       - ADMIN
-      - USER     
+      - USER
                    
   servlet:
     multipart:
@@ -60,7 +61,7 @@ mybatis:
   configuration:
     call-setters-on-nulls: true
     auto-mapping-behavior: full
-
+   
 pagehelper:
   auto-dialect: true  
   
