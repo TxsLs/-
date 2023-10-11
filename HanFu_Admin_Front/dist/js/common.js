@@ -6,7 +6,7 @@
 if (typeof rock === "undefined") {
 	throw new Error('common.js requires rockjs');
 }
-
+rock.xhrFields.withCredentials=true;
 /**
  * 在这里修改提供mvc rest接口的服务器url地址
  */

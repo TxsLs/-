@@ -460,13 +460,13 @@
 
   <script>
     var ssoUser = null;  //当前用户
+    
     // function loadUser() {
     //   _root.loginUser({}, function (rtn, status) {
     //     if (rtn.hasError) {
     //       alert(rock.errorText(rtn, "获得当前用户失败！"));
     //     } else {
     //       ssoUser = rtn.result;
-    //       alert(rtn.result);
     //     }
     //     if (rock.isNull(ssoUser)) {
     //       $("#loginUser").html("未知用户");
@@ -479,27 +479,7 @@
     $(document).ready(function () {
       // loadUser();
 
-      // 发送 Ajax 请求
-      // $.ajax({
-      //   url: 'http://localhost:8080/hanfu/loginUser', // 后端接口地址
-      //   type: 'GET', // HTTP 方法
-      //   dataType: 'json', // 响应数据类型
-      //   success: function (result) {
-      //     if (result.code === 0) {
-      //       // 成功获得当前用户信息
-      //       var user = result.data;
-      //       console.log(user);
-      //       // TODO: 在页面中显示用户信息
-      //     } else {
-      //       // 未登录或者发生其他错误
-      //       console.error(result.message);
-      //     }
-      //   },
-      //   error: function (xhr, status, error) {
-      //     // 请求失败
-      //     console.error(error);
-      //   }
-      // });
+      
 
 
       _root.loginUser({}, function (rtn) {

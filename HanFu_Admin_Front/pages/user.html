@@ -149,6 +149,12 @@
        * 4.服务端分页返回的格式为：{rows:[{},{}],total:200}
        * 参考：https://github.com/wenzhixin/bootstrap-table-examples/blob/master/json/data2.json
        */
+
+       _root.loginUser(null, function(rtn, status) {
+		if (rtn.hasError) {
+			alert(rock.errorText(rtn, "连接到服务器失败！"));
+		} else if (rtn.notNull) {
+      
       $('#table').bootstrapTable({
         //配置语言
         locale: 'zh-CN',
@@ -516,6 +522,13 @@
           }
         ]
       });
+
+		} else {
+			location.href = "login.html";
+		}
+	})
+
+     
 
 
       //批量处理
