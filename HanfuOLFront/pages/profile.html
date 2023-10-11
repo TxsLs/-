@@ -27,13 +27,13 @@
                         <div class="row mb-3">
                             <label for="username" class="col-sm-3 col-form-label text-sm-end">用户名</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="username" name="username" readonly value="admin88">
+                                <input type="text" class="form-control" id="username" name="username">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nickname" name="nickname" value="欲饮琵琶码上催" >
+                                <input type="text" class="form-control" id="nickname" name="nickname">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -122,9 +122,31 @@
 <script src="../dist/js/bootstrap-admin.min.js"></script>
 <script src="../dist/js/app.js"></script>
 <!--假数据模拟,生产环境中请直接删除该js-->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
-
+<!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
+<script src="../pagejs/rockjs-1.0.js"></script>
+<script src="../pagejs/common.js"></script>
 <script>
+var ssoUser = null;  //当前用户
+		_root.loginCustomer({}, function (rtn, status) {
+			if (rtn.hasError) {
+				alert(rock.errorText(rtn, "获得当前用户失败！"));
+			} else {
+				ssoUser = rtn.result;
+			}
+			if (rock.isNull(ssoUser)) {
+				alert(ssoUser + "---------------");
+				$("#loginUser").html("未知用户");
+			} else {
+				console.log(ssoUser)
+				console.log(ssoUser.id)
+				$("#loginUser").html(ssoUser.name);
+                $("#username").attr("value", ssoUser.id);
+                $("#nickname").attr("value", ssoUser.name);
+			}
+		})
+
+
+
     //前端表单验证
     $('#form').formValidation({
         fields: {

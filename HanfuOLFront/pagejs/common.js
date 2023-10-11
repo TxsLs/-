@@ -6,12 +6,13 @@
 if (typeof rock === "undefined") {
 	throw new Error('common.js requires rockjs');
 }
+rock.xhrFields.withCredentials=true;
 
 /**
  * 在这里修改提供mvc rest接口的服务器url地址
  */
 // var mvc_base_url = "/spring-boot/";
-var mvc_base_url = "http://localhost:8080/spring-boot/";
+var mvc_base_url = "http://127.0.0.1:8080/spring-boot/";//这里不要用localhost，有跨域问题
 
 /**
  * 调用该方法初始化业务服务对象
@@ -49,6 +50,6 @@ rock.initBasicMethod = function (services) {
 var mvc = rock.initSvr("_root");
 var _root = mvc.findService("_root");
 _root.addGetMethod("loginCustomer",true);
-// _root.addGetMethod("loadUser",true);
+//_root.addGetMethod("loadUser",true);
 _root.addPostMethod("login",true);
 _root.addGetMethod("logout",true);

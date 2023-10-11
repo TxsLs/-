@@ -125,26 +125,6 @@
       return $("#tableData");
     }
     $(document).ready(function () {
-
-      // 新增用户
-      $('.add-btn').on('click', function () {
-        // window :建议加上该前缀,否则在子页面中通过parent.modalInstance 获取不到该实例对象,因为它现在处于一个匿名函数里
-        window.modalInstance = $.modal({
-          url: 'user-add.html',
-          title: '用户添加',
-          //禁用掉底部的按钮区域
-          buttons: [],
-          modalDialogClass: 'modal-dialog-centered modal-lg',
-          onHidden: function (obj, data) {
-            if (data === true) {
-              //刷新当前数据表格
-              $('#table').bootstrapTable('refresh');
-              $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-            }
-          }
-        })
-      })
-
       /**
        * columns表示列，里面的对象 title是表头信息，field是服务端返回的字段名称
        * 1.不做分页，返回的数据格式是 [{},{}]
@@ -290,7 +270,7 @@
             new bootstrap.Tooltip(el)
           })
         },
-        //回调函数
+        //回调函数修改图片元素
         onLoadSuccess: function (data) {
           //重新启用弹出层,否则formatter格式化函数返回的html字符串上的tooltip提示不生效
           $('[data-bs-toggle="tooltip"]').each(function (i, el) {
@@ -415,15 +395,15 @@
             title: '照片',
             align: 'center',
             formatter: function (value, row, index) {
-              return '<img src="' + value + '" class="img-photo" style="max-width: 200px;>';
+              return '<img src="' + value + '" class="img-photo" style="max-width: 200px;">';
             }
           },
           {
             title: '操作',
             align: 'center',
             formatter: function (value, row, index) {
-              return '<td style="text-align: center; "><button class="btn btn-danger btn-add-to-cart"'+
-                ' onclick="addToCart(' + row.id + ')">加入购物车</button></td>';
+              return '<button class="btn btn-danger btn-add-to-cart"' +
+                ' onclick="addToCart(' + row.id + ')">加入购物车</button>';
             }
           }
         ]
@@ -431,42 +411,6 @@
 
 
 
-      //批量处理
-      $('.batch-btn').on('click', function () {
-        //获取所有选中行的id
-        let id = [];
-        let rowSelected = $("#table").bootstrapTable('getSelections');
-        $.each(rowSelected, function (index, row) {
-          id.push(row.id);
-        })
-
-        //发送ajax
-        $.modal({
-          body: '确定要删除所选用户吗?',
-          ok: function () {
-            $.ajax({
-              url: '/user/10',
-              method: 'delete',
-              data: { id },
-            }).then(response => {
-              if (response.code === 200) {
-                $.toasts({
-                  type: 'success',
-                  delay: 1500,
-                  content: '删除成功',
-                  onHidden: function () {
-
-                    $('#table').bootstrapTable('refresh');
-                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                    //把批量删除按钮变成禁止点击
-                    $('.batch-btn').attr('disabled', true)
-                  }
-                })
-              }
-            });
-          }
-        })
-      })
 
 
       function ignoreClickToSelectOn(e) {
@@ -483,48 +427,6 @@
           $('.batch-btn').attr('disabled', true)
         }
       }
-
-
-      function formatRole(val, rows) {
-        switch (val) {
-          case 1:
-            return '经理'
-          case 2:
-            return '组长'
-          case 3:
-            return '研发组长'
-          case 4:
-            return '客服'
-          case 5:
-            return '文章审核员'
-          case 6:
-            return '销售'
-          default:
-            return '<span class="badge text-bg-danger">未分配</span>'
-        }
-
-      }
-
-      function formatGender(val, rows) {
-        return val === true ? '男' : '女';
-      }
-
-      //格式化列数据演示 val:当前数据 rows:当前整行数据
-      function formatStatus(val, rows) {
-
-        let uncheck = `<div class="form-check form-switch">
-  <input class="form-check-input bsa-cursor-pointer" type="checkbox">
-</div>`;
-
-        let checked = `<div class="form-check form-switch">
-  <input class="form-check-input bsa-cursor-pointer" type="checkbox" checked>
-</div>`
-
-        return val === 1 ? checked : uncheck;
-
-
-      }
-
 
 
 
