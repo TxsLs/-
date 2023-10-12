@@ -298,18 +298,19 @@
         if (rtn.notNull) {
           document.getElementById("login-dropdown").style.display = "none";
           document.getElementById("profile-dropdown").style.display = "block";
+          //登录后修改头像
+          var mvc = rock.initSvr(["customer"]);
+          var customerService = mvc.findService("customer");
+          if (ssoUser.hasPhoto) {
+            $("#avatarImage").attr("src", customerService.url("photo") + "?id=" + ssoUser.id);
+
+          }
         } else {
           document.getElementById("login-dropdown").style.display = "block";
           document.getElementById("profile-dropdown").style.display = "none";
         }
-        //登录后修改头像
-        var mvc = rock.initSvr(["customer"]);
-        var customerService = mvc.findService("customer");
-        if (ssoUser.hasPhoto) {
-          $("#avatarImage").attr("src", customerService.url("photo") + "?id=" + ssoUser.id);
 
-        }
-        console.log(ssoUser+"sssssssssssssssssssss");
+        console.log(ssoUser + "sssssssssssssssssssss");
       })
     }
     $(document).ready(function () {
