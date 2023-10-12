@@ -31,24 +31,40 @@ function submitForm($frm) {
 			else if (rtn.hasError) {
 				
 				if (rtn.errorCode == "1020" || rtn.errorCode == "1001" || rtn.errorCode == "1002") {
-					
+
+					var errorMessage = rock.errorText(rtn, "登录错误!");
 					$.toasts({
 						type: 'danger',
-						content: '登录失败！',
+						//content: '登录失败！',
+						content: errorMessage,
+						delay: 3050, // 显示的时间（毫秒）
+						onShown: function () {
+							  $("#username").focus();
+							
+						  }
 					  });
-					  alert(rock.errorText(rtn, "登录错误!"));
-					$("#username").focus();
+					  //alert(rock.errorText(rtn, "登录错误!"));
+					//$("#username").focus();
 				} else if (rtn.errorCode == "1003") {
-					
+					var errorMessage = rock.errorText(rtn, "登录错误!")
 					$.toasts({
 						type: 'danger',
-						content: '登录失败！',
-					   
+						content: errorMessage,
+						delay: 3050, // 显示的时间（毫秒）
+						onShown: function () {
+							$("#captch").focus();
+						}
 					  });
-					  alert(rock.errorText(rtn, "登录错误!"));
-					$("#captch").focus();
+					  //alert(rock.errorText(rtn, "登录错误!"));
+					//$("#captch").focus();
 				} else {
-					alert(rock.errorText(rtn, "登录错误!"));
+					var errorMessage = rock.errorText(rtn, "登录错误!")
+					$.toasts({
+						type: 'danger',
+						content: errorMessage,
+						delay: 3050, // 显示的时间（毫秒）
+					  });
+					//alert(rock.errorText(rtn, "登录错误!"));
 				}
 			} else if (rtn.result) {
 				$.toasts({
@@ -68,18 +84,12 @@ function submitForm($frm) {
 					}
 				});
 
-			} else {
-				$.toasts({
-					type: 'danger',
-					content: '用户名密码不正确！',
-					
-				});
-			}
+			} 
 		});
 	} else {
 		$.toasts({
 			type: 'warning',
-			content: '请检查输入数据是否正确!',
+			content: '用户名或密码输入格式不正确!',
 			
 		});
 		//alert("请检查输入数据是否正确!");

@@ -167,7 +167,7 @@
         responseHandler: function (res) {
           var data = {};
           if (res.hasError) {
-            alert(rock.errorText(res, "无法获得数据列表!"));
+            alert(rock.errorText(res, "未登录！无法获得数据列表!"));
           }
           else {
             var ps = res.result;
