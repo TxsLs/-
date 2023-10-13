@@ -85,4 +85,3 @@ public interface MetaDao<T extends Vo<Long>> {
 			@Param("where") Predicate where);
 
 }
-

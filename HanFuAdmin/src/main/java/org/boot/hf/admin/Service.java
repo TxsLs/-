@@ -14,4 +14,3 @@ import org.quincy.rock.core.dao.IService;
 public interface Service<T extends Entity> extends IService<T> {
 
 }
-

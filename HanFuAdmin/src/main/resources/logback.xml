@@ -3,7 +3,7 @@
 	<!-- 变量 -->
 	<property name="app_name" value="hanfu-store-admin" />
 	<property name="package_name" value="org.boot.hf.admin" />
-	<property name="log_dir" value="d:/repos/log/${app_name}" />
+	<property name="log_dir" value="d:/repos/logs/${app_name}" />
 	
 	<contextName>${app_name}</contextName>
 	<timestamp key="curr_time" datePattern="yyyy-MM-dd HH:mm:ss_SSS" />	

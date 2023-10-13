@@ -26,7 +26,7 @@
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
-            <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2"
+            <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2" autocomplete
               placeholder="请输入账号" required data-bv-container="#err_username" pattern="^[A-Za-z0-9]{0,20}$">
           </div>
 
@@ -36,7 +36,8 @@
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
             <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2" aria-label="name"
-              placeholder="请输入姓名" required data-bv-container="#err_username" pattern="^[\u4e00-\u9fa5A-Za-z0-9]{0,20}$">
+              autocomplete placeholder="请输入姓名" required data-bv-container="#err_username"
+              pattern="^[\u4e00-\u9fa5A-Za-z0-9]{0,20}$">
           </div>
 
         </div>
@@ -81,8 +82,8 @@
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
-            <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" placeholder="请输入电话号码" required
-              data-bv-container="#err_phone" maxlength="11">
+            <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" autocomplete
+              placeholder="请输入电话号码" required data-bv-container="#err_phone" maxlength="11">
           </div>
           <!-- <div id="err_phone" style="text-align: left;"></div> -->
         </div>
@@ -379,7 +380,7 @@
             $.toasts({
               type: 'danger',
               content: errorMessage,
-              displayTime: 10000, // 将显示时间设置为 3 秒钟
+              displayTime: 10000, // 将显示时间设置
               onShown: function () {
                 if (response.errorCode === "1067") {
                   $("#code").focus();
@@ -390,18 +391,18 @@
 
           }
           // $.toasts({
-            //   type: 'danger',
-            //   content: '注册失败！',
-            //   // onHidden: function () {
-            //   //   location.href = 'register.html';
-            //   // }
-            // });
-            // if (response.errorCode == "1067") {
-            //   alert(rock.errorText(response, "注册错误!"));
-            //   $("#code").focus();
+          //   type: 'danger',
+          //   content: '注册失败！',
+          //   // onHidden: function () {
+          //   //   location.href = 'register.html';
+          //   // }
+          // });
+          // if (response.errorCode == "1067") {
+          //   alert(rock.errorText(response, "注册错误!"));
+          //   $("#code").focus();
 
-            // }
-            
+          // }
+
         });
       });
     });

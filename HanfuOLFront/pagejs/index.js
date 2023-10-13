@@ -2,7 +2,7 @@ var ssoUser = null;  //当前用户
 
 
 
-$(function ($){
+$(function (){
 	_root.loginUser(null, function (rtn, status) {
 		if (rtn.hasError) {
 			alert(rock.errorText(rtn, "连接到服务器失败！"));
@@ -37,6 +37,7 @@ function loadUser() {
 			ssoUser = rtn.result;
 		}
 		if (rock.isNull(ssoUser)) {
+			alert(ssoUser+"---------------");
 			$("#loginUser").html("未知用户");
 		} else {
 			$("#loginUser").html(ssoUser.name);

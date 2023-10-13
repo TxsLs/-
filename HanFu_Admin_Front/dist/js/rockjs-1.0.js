@@ -522,6 +522,11 @@ if (typeof rock === "undefined")
 		return rootPath+prjName+"/";
 	}
 	
+	rock.xhrFields={
+		withCredentials:false
+	};
+	rock.ajaxOpts={};
+	
 	//ajax
 	rock._ajax = function(url, type, data, process, async, success, error, option) {
 		process=process==null?true:process;   //默认是处理为请求参数
@@ -535,6 +540,7 @@ if (typeof rock === "undefined")
 		}
 		var opts={
 			url : url,
+			xhrFields:rock.xhrFields,
 			async : async,
 			type : type,
 			processData : rock.isFormData(data)?false:process,
@@ -556,7 +562,7 @@ if (typeof rock === "undefined")
 			}
 		};
 		if ($.isPlainObject(option)){
-			$.extend(true,opts,option);
+			$.extend(true,opts,rock.ajaxOpts,option);
 		}
 		var xhr=$.ajax(opts);
 		return xhr;

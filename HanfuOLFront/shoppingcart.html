@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<title>购物车</title>
@@ -8,11 +9,13 @@
 		body {
 			padding-top: 20px;
 		}
+
 		table {
 			margin-bottom: 20px;
 		}
 	</style>
 </head>
+
 <body>
 	<div class="container">
 		<h1>购物车</h1>
@@ -87,6 +90,8 @@
 	</div>
 
 	<script src="lib/jquery/dist/jquery.min.js"></script>
+	<script src="pagejs/rockjs-1.0.js"></script>
+	<script src="pagejs/common.js"></script>
 	<script>
 		$(function () {
 			// 更新订单总额
@@ -107,5 +112,26 @@
 			$("input[type='checkbox'], input[type='number']").on("change", updateTotal);
 		});
 	</script>
+	<script>
+		 var ssoUser = null;  //当前用户
+		_root.loginCustomer({}, function (rtn, status) {
+			if (rtn.hasError) {
+				alert(rock.errorText(rtn, "获得当前用户失败！"));
+			} else {
+				ssoUser = rtn.result;
+			}
+			if (rock.isNull(ssoUser)) {
+				alert(ssoUser + "---------------");
+				$("#loginUser").html("未知用户");
+			} else {
+				console.log(ssoUser)
+				console.log(ssoUser.id)
+				
+				$("#loginUser").html(ssoUser.name);
+			}
+		})
+
+	</script>
 </body>
+
 </html>

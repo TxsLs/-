@@ -23,30 +23,17 @@
             <div class="row">
                 <div class="col-md-5">
                     <form id="form">
-                        <div class="row mb-3">
-                            <label for="role" class="col-sm-3 col-form-label text-sm-end">我的角色</label>
-                            <div class="col-sm-9">
-                                <select class="form-select" name="role" aria-label="role" id="role">
-                                    <option value="1" selected>超级管理员</option>
-                                    <option value="2" disabled>普通管理员</option>
-                                    <option value="3" disabled>审核员</option>
-                                    <option value="4" disabled>编辑员</option>
-                                </select>
-                                <div class="form-text">当前角色不可更改为其它角色</div>
-                            </div>
 
-                        </div>
                         <div class="row mb-3">
                             <label for="username" class="col-sm-3 col-form-label text-sm-end">用户名</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="username" name="username" readonly value="admin88" disabled>
-                                <div class="form-text">不可修改。一般用于后台登入名</div>
+                                <input type="text" class="form-control" id="username" name="username">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nickname" name="nickname" value="欲饮琵琶码上催" >
+                                <input type="text" class="form-control" id="nickname" name="nickname">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -91,6 +78,22 @@
                                 <textarea class="form-control" id="desc" rows="3" name="desc"></textarea>
                             </div>
                         </div>
+                     <!-- 地址开始 -->
+                     <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label text-sm-end">地址</label>
+                        <div class="col-sm-9">
+
+                            <!-- 地址列表 -->
+                            <div id="addressListDiv">
+                                <div id="address0" class="mb-3">
+                                    <input type="text" class="form-control" name="address[]" placeholder="地址1">
+                                    <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removeAddress(0)">删除</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addAddress()">添加地址</button>
+                        </div>
+                    </div>
+                    <!-- 地址结束 -->
                         <div class="row mb-3">
                             <div class="col-sm-9 offset-sm-3">
                                 <button type="submit" class="btn btn-primary">确认修改</button>
@@ -103,169 +106,7 @@
         </div>
 
 
-        <div class="modal-dialog">
-			<div class="modal-content" style="width: 800px;">
-				<div class="modal-header">
-					<span class="close" data-dismiss="modal"><img src="images/close_btn.png" /></span>
-					<h4 class="modal-title" align="left">修改用户信息</h4>
-				</div>
-				<div class="modal-body">
-					<form id="frmEdit" name="frmEdit" class="form-horizontal" role="form" type="">
-						<input type="hidden" class="form-control" id="editId" name="id" value="">
-						<div class="row">
-							<div class="col-sm-6 form-group">
-								<label for="editCode" class="col-sm-4 control-label text-danger">工号:</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" id="editCode" name="code" maxlength="20"
-										tabindex="11" data-toggle="popover" placeholder="请输入工号"
-										title="工号必须由英文或数字组成(限制20个字符)" required data-bv-container="#err_editCode"
-										pattern="^[A-Za-z0-9]{0,20}$">
-								</div>
-								<div id="err_editCode"></div>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label for="editName" class="col-sm-4 control-label text-danger">姓名:</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" id="editName" name="name" maxlength="50"
-										tabindex="12" data-toggle="popover" placeholder="请输入姓名" title="不能超过50个字符"
-										required data-bv-container="#err_editName">
-								</div>
-								<div id="err_editName"></div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6 form-group">
-								<label for="editDeptId" class="col-sm-4 control-label">部门:</label>
-								<div class="col-sm-7">
-									<select class="form-control" id="editDeptId" name="deptId" tabindex="13"
-										data-toggle="popover" title="请选择部门">
-									</select>
-								</div>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label for="editJobId" class="col-sm-4 control-label">职务:</label>
-								<div class="col-sm-7">
-									<select class="form-control" id="editJobId" name="jobId" tabindex="14"
-										data-toggle="popover" title="请选择职务">
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6 form-group">
-								<label for="editBirthday" class="col-sm-4 control-label text-danger">出生日期:</label>
-								<div class="col-sm-8">
-									<div class="input-group date">
-										<input type="text" class="form-control" id="editBirthday" name="birthday"
-											readonly tabindex="15" data-toggle="popover" title="出生日期" required
-											data-bv-container="#err_editBirthday" />
-										<span class="input-group-addon">
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-									<div id="err_editBirthday"></div>
-								</div>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label for="editWorkstateId" class="col-sm-4 control-label">工作状态:</label>
-								<div class="col-sm-6">
-									<select class="form-control" id="editWorkstateId" name="workstateId" tabindex="16"
-										data-toggle="popover" title="请选择工作状态">
-									</select>
-								</div>
-							</div>							
-						</div>
-						<div class="row">
-							<div class="col-sm-6 form-group">
-								<label for="editGender" class="col-sm-4 control-label">性别:</label>
-								<div class="col-sm-6">
-									<div class="btn-group" id="editGender" data-toggle="buttons" title="请选择性别">
-										<label class="btn btn-default">
-											<input type="radio" name="gender" value="1" tabindex="19"> 男
-										</label>
-										<label class="btn btn-default">
-											<input type="radio" name="gender" value="2" tabindex="19"> 女
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label for="editSfzh" class="col-sm-4 control-label text-danger">身份证号:</label>
-								<div class="col-sm-7">
-									<input type="text" class="form-control" id="editSfzh" name="sfzh" maxlength="18"
-										tabindex="18" data-toggle="popover" placeholder="" title="身份证号" required
-										data-bv-container="#err_editSfzh">
-								</div>
-								<div id="err_editSfzh"></div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6 form-group">
-								<label for="editEmail" class="col-sm-4 control-label">邮箱:</label>
-								<div class="col-sm-7">
-									<input type="text" class="form-control" id="editEmail" name="email" maxlength="50"
-										tabindex="21" data-toggle="popover" placeholder="" title="邮箱">
-								</div>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label for="editPhone" class="col-sm-4 control-label">电话:</label>
-								<div class="col-sm-7">
-									<input type="text" class="form-control" id="editPhone" name="phone" maxlength="50"
-										tabindex="24" data-toggle="popover" placeholder="" title="电话">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12 form-group">
-								<label for="editLoves" class="col-sm-2 control-label">爱好:</label>
-								<div class="col-sm-9">
-									<div class="btn-group" id="editLoves">
-										<label class="btn btn-default">
-											<input type="checkbox" name="loves" value="%s" tabindex="16" /> %s
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12 form-group">
-								<label for="editPhoto" class="col-sm-2 control-label">照片:</label>
-								<div class="col-sm-8">
-									<input type="file" id="editPhoto" name="photo" title="选择照片" tabindex="25" 
-									data-bv-file accept="image/png,image/jpeg,image/jpg" data-bv-file-extension="png,jpg,jpeg" 
-									data-bv-file-minsize="10240" data-bv-file-maxsize="512000" data-bv-container="#err_editPhoto" />
-								</div>
-								<div id="err_editPhoto"></div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12 form-group">
-								<div class="col-sm-9 col-sm-offset-2">
-									<img  id="imgEditPhoto" class="img-responsive img-photo" src="" />
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12 form-group">
-								<label for="editDescr" class="col-sm-2 control-label">备注:</label>
-								<div class="col-sm-9">
-									<textarea rows="4" class="form-control" id="editDescr" name="descr"
-										maxlength="200" tabindex="25" data-toggle="popover" placeholder="请输入备注(200字以内)"
-										title="对于用户的简要说明(200字以内)"></textarea>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="modal-save-btn" tabindex="30"
-						onclick="submitForm($('#frmEdit'),$('#editId').val())"></button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="modal-reset-btn" tabindex="31"
-						onclick="initForm($('#frmEdit'),false,$('#editId').val())"></button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal -->
+       
     </div>
 </div>
 <!--回到顶部开始-->
@@ -281,9 +122,31 @@
 <script src="../dist/js/bootstrap-admin.min.js"></script>
 <script src="../dist/js/app.js"></script>
 <!--假数据模拟,生产环境中请直接删除该js-->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
-
+<!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
+<script src="../pagejs/rockjs-1.0.js"></script>
+<script src="../pagejs/common.js"></script>
 <script>
+var ssoUser = null;  //当前用户
+		_root.loginCustomer({}, function (rtn, status) {
+			if (rtn.hasError) {
+				alert(rock.errorText(rtn, "获得当前用户失败！"));
+			} else {
+				ssoUser = rtn.result;
+			}
+			if (rock.isNull(ssoUser)) {
+				alert(ssoUser + "---------------");
+				$("#loginUser").html("未知用户");
+			} else {
+				console.log(ssoUser)
+				console.log(ssoUser.id)
+				$("#loginUser").html(ssoUser.name);
+                $("#username").attr("value", ssoUser.id);
+                $("#nickname").attr("value", ssoUser.name);
+			}
+		})
+
+
+
     //前端表单验证
     $('#form').formValidation({
         fields: {
@@ -315,6 +178,34 @@
         });
     });
 </script>
+<script>
+    // 添加地址
+    function addAddress() {
+        let addressListDiv = document.getElementById("addressListDiv");
+        let index = addressListDiv.children.length;
+        let addressInput = document.createElement("div");
+        addressInput.id = "address" + index;
+        addressInput.classList.add("mb-3");
+        addressInput.innerHTML = `<input type="text" class="form-control" name="address[]" placeholder="地址${index + 1}">
+                                    <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removeAddress(${index})">删除</button>`;
+        addressListDiv.appendChild(addressInput);
+    }
 
+    // 删除地址
+    function removeAddress(index) {
+        let addressDiv = document.getElementById("address" + index);
+        if (addressDiv) {
+            addressDiv.remove();
+            // 序号重排
+            let children = document.querySelectorAll("#addressListDiv > div");
+            for (let i = 0; i < children.length; i++) {
+                let input = children[i].querySelector("input");
+                input.placeholder = "地址" + (i + 1);
+                let button = children[i].querySelector("button");
+                button.setAttribute("onclick", `removeAddress(${i})`);
+            }
+        }
+    }
+</script>
 </body>
 </html>

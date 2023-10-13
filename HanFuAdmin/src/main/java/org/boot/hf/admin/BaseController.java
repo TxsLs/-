@@ -5,20 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.security.auth.login.LoginException;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Update;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
 import org.quincy.rock.core.dao.sql.Sort;
-import org.quincy.rock.core.vo.PageSet;
+import org.quincy.rock.core.util.MapUtil;
 import org.quincy.rock.core.vo.Result;
+import org.quincy.rock.core.vo.Vo.Default;
+import org.quincy.rock.core.vo.Vo.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,8 +41,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author mex2000
  * @since 1.0
  */
+@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5500", "http://localhost:5500" })
 @Slf4j
-@CrossOrigin
 @Validated
 public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	@Autowired
@@ -86,7 +83,7 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	public @ResponseBody Result<Boolean> update(@Validated({ Update.class, Default.class }) @RequestBody T vo,
 			@RequestParam(defaultValue = "false") boolean ignoreNullValue) {
 		log.debug("call update");
-		boolean result = this.service().update(vo, ignoreNullValue, null);
+		boolean result = this.service().update(vo, ignoreNullValue, null, "password");
 		return Result.of(result);
 	}
 
@@ -95,7 +92,9 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	@RequestMapping(value = "/updateMap", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> updateMap(@NotEmpty @RequestBody Map<String, Object> voMap) {
 		log.debug("call updateMap");
-		boolean result = this.service().updateMap(voMap, null);
+		Long id = MapUtil.getLong(voMap, "id");
+		Predicate where = DaoUtil.and().equal("id", id);
+		boolean result = this.service().updateMap(voMap, where);
 		return Result.of(result);
 	}
 
@@ -131,7 +130,7 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 			@ApiImplicitParam(name = "propValue", value = "属性值", required = true) })
 	@RequestMapping(value = "/queryByName", method = { RequestMethod.GET })
 	public @ResponseBody Result<T> queryByName(@NotBlank @RequestParam String propName,
-			@Validated({ Default.class }) @RequestParam Object propValue) {
+			@NotBlank @RequestParam String propValue) {
 		log.debug("call queryByName");
 		T vo = this.service().findByName(propName, propValue, "password");
 		return Result.toResult(vo);
@@ -152,21 +151,19 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 			@ApiImplicitParam(name = "ignoreId", value = "忽略的主键id", dataType = "long") })
 	@RequestMapping(value = "/existsByName", method = { RequestMethod.GET })
 	public @ResponseBody Result<Boolean> existsByName(@NotBlank @RequestParam String propName,
-			@Validated({ Default.class }) @RequestParam Object propValue, Long ignoreId) {
+			@NotBlank @RequestParam String propValue, Long ignoreId) {
 		log.debug("call existsByName");
 		boolean result = this.service().existByName(propName, propValue, ignoreId);
 		return Result.of(result);
 	}
 
-	@ApiOperation(value = "查询所有实体", notes = "")
+	@ApiOperation(value = "查询所有实体", notes = "该接口继承自SimpleController")
 	@ApiImplicitParam(name = "sort", value = "排序规则字符串")
 	@RequestMapping(value = "/queryAll", method = { RequestMethod.GET })
+	//@PreAuthorize("hasPermission('/spring-boot','/job','/queryAll')")
 	public @ResponseBody Result<List<? extends Entity>> queryAll(String sort) {
 		log.debug("call queryAll");
 		List<? extends Entity> list = this.service().findAll(null, Sort.parse(sort));
 		return Result.toResult(list);
 	}
-
-
-
 }

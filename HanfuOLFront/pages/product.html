@@ -28,9 +28,9 @@
         <form class="row row-cols-sm-auto g-3 py-2 align-items-center">
           <div class="col-12">
             <div class="row">
-              <label for="username" class="col-sm-auto col-form-label">性名</label>
+              <label for="username" class="col-sm-auto col-form-label">用户名</label>
               <div class="col">
-                <input type="email" class="form-control" id="name" name="name">
+                <input type="email" class="form-control" id="username" name="username">
               </div>
             </div>
           </div>
@@ -44,11 +44,11 @@
           </div>
           <div class="col-12">
             <div class="row">
-              <label for="joinTime" class="col-sm-auto col-form-label">注册时间段</label>
+              <label for="beginTime" class="col-sm-auto col-form-label">创建时间</label>
               <div class="col">
                 <div class="input-group">
-                  <input type="text" readonly class="form-control" aria-label="q" placeholder="开始时间" name="joinTime"
-                    id="joinTime">
+                  <input type="text" readonly class="form-control" aria-label="q" placeholder="开始时间" name="beginTime"
+                    id="beginTime">
                   <span class="input-group-text"><i class="bi bi-arrow-left-right"></i></span>
                   <input type="text" readonly class="form-control" aria-label="q" placeholder="结束时间" name="endTime"
                     id="endTime">
@@ -56,15 +56,14 @@
               </div>
             </div>
           </div>
-
           <div class="col-12">
             <div class="row">
               <label for="status" class="col-sm-auto col-form-label">用户状态</label>
               <div class="col">
                 <select class="selectpicker" id="status" name="status">
-                  <option value="3">所有</option>
-                  <option value="0">停用</option>
+                  <option value="0">所有</option>
                   <option value="1">正常</option>
+                  <option value="2">停用</option>
                 </select>
               </div>
             </div>
@@ -113,34 +112,19 @@
   <script src="../lib/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js"></script>
   <script src="../dist/js/bootstrap-admin.min.js"></script>
   <script src="../dist/js/app.js"></script>
-  <!--假数据模拟,生产环境中请直接删除该js-->
+  <script src="../pagejs/rockjs-1.0.js"></script>
+  <script src="../pagejs/common.js"></script>
+  <!--假数据模拟,产环境中请直接删除该js-->
   <!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
-  <!-- <script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script> -->
-  <script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
-  <script type="text/javascript" src="../dist/js/common.js"></script>
 
   <script>
+    /**
+ * 获得表格组件
+ */
+    function getBootstrapTable() {
+      return $("#tableData");
+    }
     $(document).ready(function () {
-
-      // 新增用户
-      $('.add-btn').on('click', function () {
-        // window :建议加上该前缀,否则在子页面中通过parent.modalInstance 获取不到该实例对象,因为它现在处于一个匿名函数里
-        window.modalInstance = $.modal({
-          url: 'user-add.html',
-          title: '用户添加',
-          //禁用掉底部的按钮区域
-          buttons: [],
-          modalDialogClass: 'modal-dialog-centered modal-lg',
-          onHidden: function (obj, data) {
-            if (data === true) {
-              //刷新当前数据表格
-              $('#table').bootstrapTable('refresh');
-              $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-            }
-          }
-        })
-      })
-
       /**
        * columns表示列，里面的对象 title是表头信息，field是服务端返回的字段名称
        * 1.不做分页，返回的数据格式是 [{},{}]
@@ -149,25 +133,19 @@
        * 4.服务端分页返回的格式为：{rows:[{},{}],total:200}
        * 参考：https://github.com/wenzhixin/bootstrap-table-examples/blob/master/json/data2.json
        */
-
-       _root.loginUser(null, function(rtn, status) {
-		if (rtn.hasError) {
-			alert(rock.errorText(rtn, "连接到服务器失败！"));
-		} else if (rtn.notNull) {
-      
       $('#table').bootstrapTable({
         //配置语言
         locale: 'zh-CN',
         //设置高度就可以固定表头
         // height: 500,
         //请求地址
-        url: 'http://127.0.0.1:8080/hanfu/employee/queryPage',
+        url: 'http://localhost:8080/spring-boot/product/queryPage',
 
         queryParamsType: "page",
         responseHandler: function (res) {
           var data = {};
           if (res.hasError) {
-            alert(rock.errorText(res, "未登录！无法获得数据列表!"));
+            alert(rock.errorText(res, "无法获得数据列表!"));
           }
           else {
             var ps = res.result;
@@ -292,11 +270,31 @@
             new bootstrap.Tooltip(el)
           })
         },
-        onLoadSuccess: function () {
+        //回调函数修改图片元素
+        onLoadSuccess: function (data) {
           //重新启用弹出层,否则formatter格式化函数返回的html字符串上的tooltip提示不生效
           $('[data-bs-toggle="tooltip"]').each(function (i, el) {
             new bootstrap.Tooltip(el)
-          })
+          });
+          // 在这里遍历每一行数据，并插入图片
+          var rows = data.rows;
+          var mvc = rock.initSvr(["product"]);
+          var productService = mvc.findService("product");
+          for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var hasPhoto = $('#table').bootstrapTable("getRowByUniqueId", row.id).hasPhoto;
+
+            // var $imgPhoto = $('#table').find("img.img-photo");
+            // 找到目标行内的图片元素
+            var $imgPhoto = $('#table').find("tr[data-uniqueid='" + row.id + "'] img.img-photo");
+            if (hasPhoto) {
+              $imgPhoto.attr("src", productService.url("photo") + "?id=" + row.id);
+            }
+            else {
+              $imgPhoto.attr("src", "../dist/img/bs.png");
+            }
+          }
+          console.log("行数" + rows.length);
         },
         //params是一个对象
         queryParams: function (options) {
@@ -338,7 +336,7 @@
             visible: true,
           },
           {
-            title: '用户ID',
+            title: '商品id',
             field: 'id',
             // 使用[align]，[halign]和[valign]选项来设置列和它们的标题的对齐方式。h表示横向，v标识垂直
             align: 'center',
@@ -353,220 +351,66 @@
             widthUnit: 'rem'
           },
           {
-            title: '账号',
+            title: '商品编号',
             field: 'code',
             align: 'center',
             sortable: true,
           },
           {
-            title: '姓名',
+            title: '商品名称',
             field: 'name',
             align: 'center',
             sortable: true,
           },
 
           {
-            title: '是否是系统管理员',
-            field: 'admin',
-            align: 'center',
-            sortable: true,
-            formatter: function (value) {
-              return value == 1 ? "超级管理员" : "商城员工";
-            },
-          },
-          {
-            title: '性别',
-            field: 'gender',
-            align: 'center',
-            sortable: true,
-            formatter: function (value) {
-              return value == 1 ? "男" : "女";
-            },
-          },
-
-          {
-            title: '注册时间',
-            field: 'joinTime',
-            align: 'center',
-            sortable: true,
-            formatter: function (value) {
-              // 使用 Date 对象将 value 转换为日期时间
-              var datetime = new Date(value);
-
-              // 获取年、月、日、小时、分钟、秒
-              var year = datetime.getFullYear();
-              var month = String(datetime.getMonth() + 1).padStart(2, '0');
-              var day = String(datetime.getDate()).padStart(2, '0');
-              var hour = String(datetime.getHours()).padStart(2, '0');
-              var minute = String(datetime.getMinutes()).padStart(2, '0');
-              var second = String(datetime.getSeconds()).padStart(2, '0');
-
-              // 返回格式化后的日期时间字符串
-              return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-            }
-          },
-          {
-            title: '手机号',
-            field: 'phone',
+            title: '描述',
+            field: 'description',
             align: 'center',
             sortable: true,
           },
-
-
           {
-            title: '用户状态',
-            field: 'status',
+            title: '价格',
+            field: 'price',
             align: 'center',
             sortable: true,
-            formatter: formatStatus,
-            events: {
-              'click .form-switch': function (event, value, row, index) {
-                event.preventDefault();
-                event.stopPropagation();
 
-                //获取当前状态
-                let $checkbox = $(event.target);
-                //获取即将去往的选中状态
-                let status = $checkbox.prop('checked');
-
-                //发送ajax改变用户的状态
-                $.ajax({
-                  url: `/userChangeStatus/${row.id}`,
-                  method: 'get',
-                }).then(response => {
-                  if (response.code === 200) {
-                    //修改状态
-                    $checkbox.prop('checked', status);
-                    //给出通知
-                    $.toasts({
-                      type: 'success',
-                      placement: 'top-center',
-                      content: '操作成功',
-                    })
-                  }
-                });
-              }
+          },
+          {
+            title: '库存',
+            field: 'stock',
+            align: 'center',
+            sortable: true,
+          }, {
+            title: '分类名称',
+            field: 'categoryName',
+            align: 'center',
+            sortable: true,
+          }, {
+            title: '商家名称',
+            field: 'merchantName',
+            align: 'center',
+            sortable: true,
+          }, {
+            title: '照片',
+            align: 'center',
+            formatter: function (value, row, index) {
+              return '<img src="' + value + '" class="img-photo" style="max-width: 200px;">';
             }
           },
           {
             title: '操作',
             align: 'center',
-            formatter: formatAction,
-            events: {
-              'click .edit-btn': function (event, value, row, index) {
-                event.stopPropagation();
-
-                window.modalInstance = $.modal({
-                  url: 'user-edit.html',
-                  title: '用户编辑',
-                  //禁用掉底部的按钮区域
-                  buttons: [],
-                  modalDialogClass: 'modal-dialog-centered modal-lg',
-                  onHidden: function (obj, data) {
-                    if (data === true) {
-                      //刷新当前数据表格
-                      $('#table').bootstrapTable('refresh');
-                      $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                    }
-                  }
-                })
-
-              },
-              'click .del-btn': function (event, value, row, index) {
-                event.stopPropagation();
-                $.modal({
-                  body: '确定要删除当前用户' + row.name + '?',
-                  ok: function () {
-
-                    $.ajax({
-                      url: '/user/10',
-                      method: 'delete',
-                    }).then(response => {
-                      if (response.code === 200) {
-                        $.toasts({
-                          type: 'success',
-                          content: '删除成功',
-                          onHidden: function () {
-                            //刷新当前数据表格
-                            $('#table').bootstrapTable('refresh');
-                            $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                          }
-                        })
-                      }
-                    });
-
-                  }
-                })
-
-              },
-              'click .role-btn': function (event, value, row, index) {
-                event.stopPropagation();
-
-                window.rolemodal = $.modal({
-                  url: 'user-role.html',
-                  title: '分配角色',
-                  //禁用掉底部的按钮区域
-                  buttons: [],
-                  modalDialogClass: 'modal-dialog-centered modal-lg',
-                  onHidden: function (obj, data) {
-                    if (data === true) {
-                      //刷新当前数据表格
-                      $('#table').bootstrapTable('refresh');
-                      $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                    }
-                  }
-                })
-
-              }
+            formatter: function (value, row, index) {
+              return '<button class="btn btn-danger btn-add-to-cart"' +
+                ' onclick="addToCart(' + row.id + ')">加入购物车</button>';
             }
           }
         ]
       });
 
-		} else {
-			location.href = "login.html";
-		}
-	})
-
-     
 
 
-      //批量处理
-      $('.batch-btn').on('click', function () {
-        //获取所有选中行的id
-        let id = [];
-        let rowSelected = $("#table").bootstrapTable('getSelections');
-        $.each(rowSelected, function (index, row) {
-          id.push(row.id);
-        })
-
-        //发送ajax
-        $.modal({
-          body: '确定要删除所选用户吗?',
-          ok: function () {
-            $.ajax({
-              url: '/user/10',
-              method: 'delete',
-              data: { id },
-            }).then(response => {
-              if (response.code === 200) {
-                $.toasts({
-                  type: 'success',
-                  delay: 1500,
-                  content: '删除成功',
-                  onHidden: function () {
-
-                    $('#table').bootstrapTable('refresh');
-                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                    //把批量删除按钮变成禁止点击
-                    $('.batch-btn').attr('disabled', true)
-                  }
-                })
-              }
-            });
-          }
-        })
-      })
 
 
       function ignoreClickToSelectOn(e) {
@@ -585,68 +429,6 @@
       }
 
 
-      function formatRole(val, rows) {
-        switch (val) {
-          case 1:
-            return '经理'
-          case 2:
-            return '组长'
-          case 3:
-            return '研发组长'
-          case 4:
-            return '客服'
-          case 5:
-            return '文章审核员'
-          case 6:
-            return '销售'
-          default:
-            return '<span class="badge text-bg-danger">未分配</span>'
-        }
-
-      }
-
-      function formatGender(val, rows) {
-        return val === true ? '男' : '女';
-      }
-
-      //格式化列数据演示 val:当前数据 rows:当前整行数据
-      function formatStatus(val, rows) {
-
-        let uncheck = `<div class="form-check form-switch">
-  <input class="form-check-input bsa-cursor-pointer" type="checkbox">
-</div>`;
-
-        let checked = `<div class="form-check form-switch">
-  <input class="form-check-input bsa-cursor-pointer" type="checkbox" checked>
-</div>`
-
-        return val === 1 ? checked : uncheck;
-
-
-      }
-
-
-      //格式化列数据演示 val:当前数据 rows:当前整行数据
-      function formatAction(val, rows) {
-
-        let html = '';
-
-
-        //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
-        html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="修改用户"><i class="bi bi-pencil"></i></button>`;
-
-        //第二个按钮
-        html += `<button type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="删除用户"><i class="bi bi-trash3"></i></button>`
-
-
-        //第三个按钮
-        html += `<button type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="分配角色"><i class="bi bi-person-square"></i></button>`
-
-        return html;
-      }
 
       //搜索处理
       $('.bsa-querySearch-btn').on('click', function () {
@@ -702,7 +484,7 @@
       }
 
       //自定义日期格式插件
-      let td6 = new tempusDominus.TempusDominus(document.getElementById('joinTime'), {
+      let td6 = new tempusDominus.TempusDominus(document.getElementById('beginTime'), {
         //本地化控制
         localization: {
           ...td_zh,//展开语法
@@ -750,7 +532,6 @@
           },
         }
       });
-
       let td7 = new tempusDominus.TempusDominus(document.getElementById('endTime'), {
         //本地化控制
         localization: {
@@ -801,8 +582,6 @@
           },
         }
       });
-
-
       //事件监听设定起始时间为td7实例的选中时间
       td6.subscribe(tempusDominus.Namespace.events.change, (e) => {
         td7.updateOptions({

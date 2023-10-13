@@ -3,18 +3,25 @@ package org.boot.hf.admin.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Update;
 import org.boot.hf.admin.AppUtils;
 import org.boot.hf.admin.BaseController;
 import org.boot.hf.admin.entity.Employee;
 import org.boot.hf.admin.entity.Photo;
 import org.boot.hf.admin.service.EmployeeService;
+import org.quincy.rock.core.dao.DaoUtil;
+import org.quincy.rock.core.dao.sql.Predicate;
+import org.quincy.rock.core.dao.sql.Sort;
+import org.quincy.rock.core.lang.DataType;
 import org.quincy.rock.core.util.IOUtil;
+import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -196,6 +204,26 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			photo.setPhotoFile(fileName);
 		}
 		return this.service().updatePhoto(photo);
+	}
+
+	@ApiOperation(value = "条件分页查询", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "工号(支持like)，允许null"),
+			@ApiImplicitParam(name = "name", value = "名称(支持like)，允许null"),
+			@ApiImplicitParam(name = "sort", value = "排序规则字符串"),
+			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
+			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
+	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
+	public @ResponseBody Result<PageSet<Employee>> queryPage(String code, String name, String sort,
+			@Min(1) @RequestParam long pageNum, @Min(1) @RequestParam int pageSize) {
+		log.debug("call queryPage");
+		Predicate where = DaoUtil.and();
+
+		if (StringUtils.isNotEmpty(code))
+			where.like("code", code);
+		if (StringUtils.isNotEmpty(name))
+			where.like("name", name);
+		PageSet<Employee> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize, "password");
+		return Result.toResult(ps);
 	}
 
 }
