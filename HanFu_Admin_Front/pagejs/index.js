@@ -27,7 +27,7 @@ $(document).ready(function () {
     } else {
       ssoUser = rtn.result;
     }
-    if (rock.isNull(ssoUser)||ssoUser.admin==0) {
+    if (rock.isNull(ssoUser) || ssoUser.admin == 0) {
       $("#loginUser").html("未知用户请登录！");
       document.getElementById("login-dropdown").style.display = "block";
       document.getElementById("profile-dropdown").style.display = "none";
@@ -43,8 +43,8 @@ $(document).ready(function () {
       }
     }
 
-  
-  })
+
+  });
 
 
 
@@ -99,7 +99,7 @@ $(document).ready(function () {
               onHidden: function () {
                 top.location.replace('pages/login.html');
               }
-            })
+            });
 
           }
         });
@@ -107,7 +107,7 @@ $(document).ready(function () {
 
 
       }
-    })
+    });
 
 
   });
