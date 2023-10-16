@@ -67,7 +67,7 @@ public class PublicControler {
 		if (user == null) {
 			return Result.toResult("1020", "该账号不存在，请注册！");
 		} else if (service.checkPassword(username, password) == null) {
-			return Result.toResult("1001", "用户或密码不正确!");
+			return Result.toResult("1001", "账号或密码不正确!");
 
 		} else if (user.getStatus() == 0) {
 			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
@@ -81,7 +81,6 @@ public class PublicControler {
 		else {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());
-			System.out.println(loginUser);
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
 		
 			return Result.of(true);

@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -87,46 +86,94 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
 			@RequestPart(value = "photo", required = false) MultipartFile file) throws IOException {
 		log.debug("call updateEmployee");
-		boolean exist = this.service().existByName("code", vo.getCode(), null);
-		boolean result = this.service().update(vo, true, null);
-		if (!exist) {
-			if (result && file != null && !file.isEmpty()) {
-				result = this.updatePhoto(vo.id(), file);
+		String code = AppUtils.getLoginUser().getUsername();
+		Employee employee = service().findByCode(code);
+		if (AppUtils.isLogin() || employee.getAdmin() == 1) {
+			boolean exist = this.service().existByName("code", vo.getCode(), null);
+
+			if (!exist) {
+				boolean result = this.service().update(vo, true, null);
+				if (result && file != null && !file.isEmpty()) {
+					result = this.updatePhoto(vo.id(), file);
+				}
+				return Result.of(result);
+			} else {
+				return Result.toResult("1067", "账号名已存在！请重试！");
 			}
-			return Result.of(result);
 		} else {
-			return Result.toResult("1068", "未登录！请返回登录界面！");
+			return Result.toResult("1068", "未登录或权限不够！请返回登录界面！");
 		}
 	}
 
 	@ApiOperation(value = "根据员工id更新自己的信息", notes = "当前用户可以修改自己少部分个人信息")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "要更新实体的主键id", required = true, paramType = "form", dataType = "long"),
-			@ApiImplicitParam(name = "code", value = "代码", required = false, paramType = "form"),
+			@ApiImplicitParam(name = "code", value = "账号", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "name", value = "名称", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = false, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "int") })
 	@RequestMapping(value = "/updateSelfInfo", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> updateSelfInfo(
 			@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
-			@RequestPart(value = "photo", required = false) MultipartFile file, @ApiIgnore HttpSession session) {
+			@RequestPart(value = "photo", required = false) MultipartFile file, @ApiIgnore HttpSession session)
+			throws IOException {
 		log.debug("call updateSelfInfo");
-		boolean ok = false;
+		//boolean ok = false;
 		if (AppUtils.isLogin()) {
 
 			String code = AppUtils.getLoginUser().getUsername();
 			Employee employee = service().findByCode(code);
-			Boolean exist = service().existByName("code", vo.getCode(), null);
+			Long idLong = employee.getId();
+			Boolean exist = service().existByName("code", vo.getCode(), idLong);
 			if (!exist) {
-				if (vo.equals(employee)) {
-					ok = this.service().updateSelfInfo(vo);
+				boolean result = this.service().update(vo, true, null);
+				if (result && file != null && !file.isEmpty()) {
+					result = this.updatePhoto(vo.id(), file);
 				}
-				return Result.of(ok);
+				return Result.of(result);
+
+				/*String code = AppUtils.getLoginUser().getUsername();
+				Employee employee = service().findByCode(code);
+				Long idLong = employee.getId();
+				Boolean exist = service().existByName("code", vo.getCode(), idLong);
+				if (!exist) {
+					
+				//								if (file != null && !file.isEmpty()) {
+				//									ok = this.updatePhoto(vo.id(), file);
+				//								}
+				//								if (vo.equals(employee)) {
+				//									// 如果信息没有变化，只更新照片
+				//									return Result.of(ok);
+				//								} else {
+				//									// 如果信息有变化，先更新个人信息，然后再更新照片
+				//									boolean result = this.service().updateSelfInfo(vo);
+				//									if (result) {
+				//										ok = this.updatePhoto(vo.id(), file);
+				//									}
+				//									return Result.of(result);
+				//								}
+				System.out.println(vo.equals(employee));
+					if (vo.equals(employee)) {
+					
+						if (ok && file != null && !file.isEmpty()) {
+							ok = this.updatePhoto(vo.id(), file);
+						}
+						return Result.of(ok);
+					} else {
+						ok = this.service().updateSelfInfo(vo);
+						if (ok && file != null && !file.isEmpty()) {
+							ok = this.updatePhoto(vo.id(), file);
+						}
+						return Result.of(ok);
+					}*/
+
 			} else {
 				return Result.toResult("1067", "账号名已存在！请重试！");
 			}
 
-		} else {
+		} else
+
+		{
 			return Result.toResult("1068", "未登录！请返回登录界面！");
 		}
 
