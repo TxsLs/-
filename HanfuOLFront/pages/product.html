@@ -294,7 +294,6 @@
               $imgPhoto.attr("src", "../dist/img/bs.png");
             }
           }
-          console.log("行数" + rows.length);
         },
         //params是一个对象
         queryParams: function (options) {
@@ -305,6 +304,7 @@
           // param.sort = options.sortName + " " + options.sortOrder;
 
           // return param;
+         
 
           return {
             // 每页数据量
@@ -325,7 +325,6 @@
             pageSize: options.pageSize,
             pageNum: options.pageNumber,
             sort: options.sortName + " " + options.sortOrder,
-
           }
         },
         //列
@@ -397,7 +396,14 @@
             formatter: function (value, row, index) {
               return '<img src="' + value + '" class="img-photo" style="max-width: 200px;">';
             }
+          }, {
+            title: '购买数量',
+            align: 'center',
+            formatter: function (value, row, index) {
+              return '<input type="number" id="ProductNumber' + row.id + '" min="1" max="' + row.stock + '" value="1">';
+            }
           },
+
           {
             title: '操作',
             align: 'center',
@@ -407,6 +413,9 @@
             }
           }
         ]
+      
+      
+      
       });
 
 
@@ -603,9 +612,85 @@
       $('select').selectpicker();
     });
 
+  </script>
+  <script>
+    function addToCart(productId) {
+      // 在这里编写添加商品到购物车的逻辑
+      var ssoUser = null;  //获取当前用户
+      _root.loginCustomer({}, function (rtn, status) {
+        if (rtn.hasError) {
+          alert(rock.errorText(rtn, "获得当前用户失败！"));
+        } else {
+          ssoUser = rtn.result;
+        }
+        if (rock.isNull(ssoUser)) {//如果没登录，就先跳转到登录页。
+          $.toasts({
+            type: 'success',
+            content: '请先登录！',
+            onHidden: function () {
+              _root.logout({}, (rtn) => {
+                if (rtn.hasError || !rtn.result) {
+                  alert("注销登录出错!");
+                } else {
+                  window.open("../login.html", "_blank");
+                }
+              });
+            }
+          });
+        } else {          // 可以使用 productId 参数获取要添加的商品的唯一标识符
+          // 可以在此处执行其他相关操作，比如发送请求到服务器，更新购物车数量等
+          var quantity = document.getElementById('ProductNumber' + productId).value;
+          // 示例逻辑：将商品添加到购物车
+          console.log("添加商品到购物车，商品ID：" + productId + "商品数量:" + quantity);
+
+          $.toasts({
+            type: 'success',
+            content: '加入购物车成功',
+          });
+
+
+          //待优化的点：这段代码用空间换时间，会加入多段数据进入购物车，
+          //可以做成时间换空间：先查有没有再更新购物车。
+
+          // 准备请求数据
+          var data = {
+            code: ssoUser.code,
+            productId: productId,
+            quantity: quantity
+          };
+          console.log(data);
+          // 发送POST请求
+          $.ajax({
+            url: 'http://127.0.0.1:8080/spring-boot/ShopCart/addCart',
+            method: 'POST',
+            data: data,
+            xhrFields: {
+              withCredentials: true
+            },
+            success: function (response) {
+              // 请求成功，处理响应数据
+              console.log(response);
+            },
+            error: function (xhr, status, error) {
+              // 请求失败，处理错误
+              console.error(error);
+            }
+          });
+
+        }
+
+
+
+
+
+
+
+
+      }
+      )
+    }
 
   </script>
-
 </body>
 
 </html>

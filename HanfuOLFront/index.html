@@ -32,7 +32,7 @@
       <div class="bsa-header-item bsa-cursor-default">
         <!--    搜索表单包裹区域        -->
         <div class="bsa-search-form-wrapper" data-bsa-toggle="navbar-search" data-close-reset="false"
-          data-action="pages/search.html" data-params='{"type":"article","user":"admin2"}'>
+          data-action="pages/product.html" data-params='{"type":"article","user":"admin2"}'>
           <div class="bsa-search-form">
             <input type="text" class="form-control bsa-input-search" aria-label="搜索关键词" placeholder="搜索关键词">
             <button class="bsa-search-submit-btn" type="submit"><i class="bi bi-search"></i></button>
@@ -47,8 +47,8 @@
     <li class="flex-grow-1"></li>
     <!--  通知(如果有新消息则添加类名.bsa-has-msg)  -->
     <li>
-      <div class="bsa-header-item" data-qt-tab='{"title":"联系客服","url":"pages/message.html"}' data-qt-target=".qtab"
-        style="font-size: smaller;">
+      <div class="bsa-header-item" onclick="checkLogin(event)" style="font-size: smaller;"
+        data-url="pages/message.html">
         <i class="bi bi-bell bsa-has-msg"></i>联系客服
       </div>
     </li>
@@ -65,37 +65,33 @@
           <div class="card-body">
             <div class="container-fluid">
               <div class="row row-cols-3 g-3">
-                <a class="col text-decoration-none text-body-secondary d-flex flex-column align-items-center p-2 gap-1"
-                  href="shoppingcart.html">
-                  <div
-                    class="d-flex align-items-center justify-content-center bsa-fs-25 bg-body-secondary  bsa-wh-45 rounded-circle">
-                    <i class="bi bi-list"></i>
+                <a class="col shopping-cart-link text-decoration-none text-body-secondary d-flex flex-column align-items-center p-2 gap-1"
+                  href="#" data-url="shoppingcart.html" onclick="checkLogin(event)">
+                  <div data-url="shoppingcart.html"
+                    class="d-flex align-items-center justify-content-center bsa-fs-25 bg-body-secondary bsa-wh-45 rounded-circle">
+                    <i class="bi bi-list" data-url="shoppingcart.html"></i>
                   </div>
-                  <div class="bsa-fs-14 bsa-ellipsis-2 text-center">购物车详情</div>
+                  <div class="bsa-fs-14 bsa-ellipsis-2 text-center" data-url="shoppingcart.html">购物车详情</div>
                 </a>
 
                 <a class="col text-decoration-none text-body-secondary d-flex flex-column align-items-center p-2 gap-1"
-                  href="javascript:">
-                  <div
+                  href="javascript:" data-url="pages/ordertable.html" onclick="checkLogin(event)">
+                  <div data-url="pages/ordertable.html"
                     class="d-flex align-items-center justify-content-center bsa-fs-25 bg-body-secondary bsa-wh-45 rounded-circle"
-                    data-qt-tab='{"title":"订单详情","url":"pages/ordertable.html"}' data-qt-target=".qtab"
                     style="font-size: smaller;">
-                    <i class="bi bi-list-check"></i>
+                    <i class="bi bi-list-check" data-url="pages/ordertable.html"></i>
                   </div>
-                  <div class="bsa-fs-14 bsa-ellipsis-2 text-center"
-                    data-qt-tab='{"title":"订单详情","url":"pages/ordertable.html"}'>订单详情</div>
+                  <div class="bsa-fs-14 bsa-ellipsis-2 text-center" data-url="pages/ordertable.html">订单详情</div>
                 </a>
 
                 <a class="col text-decoration-none text-body-secondary d-flex flex-column align-items-center p-2 gap-1"
-                  href="javascript:">
-                  <div
+                  href="javascript:" data-url="pages/refund.html" onclick="checkLogin(event)">
+                  <div data-url="pages/refund.html"
                     class="d-flex align-items-center justify-content-center bsa-fs-25 bg-body-secondary bsa-wh-45 rounded-circle"
-                    data-qt-tab='{"title":"申请退货","url":"pages/refund.html"}' data-qt-target=".qtab"
                     style="font-size: smaller;">
-                    <i class="bi bi-arrow-repeat"></i>
+                    <i class="bi bi-arrow-repeat" data-url="pages/refund.html"></i>
                   </div>
-                  <div class="bsa-fs-14 bsa-ellipsis-2 text-center"
-                    data-qt-tab='{"title":"申请退货","url":"pages/refund.html"}'>申请退货
+                  <div class="bsa-fs-14 bsa-ellipsis-2 text-center" data-url="pages/refund.html">申请退货
                   </div>
                 </a>
               </div>
@@ -286,8 +282,6 @@
           alert(rock.errorText(rtn, "获得当前用户失败！"));
         } else {
           ssoUser = rtn.result;
-          console.log(rtn);//破局之法应该是在空对象中传入当前用户的id
-          console.log(rtn.result);//破局之法应该是在空对象中传入当前用户的id
         }
         //根据登录状态修改个人信息
         if (rock.isNull(ssoUser)) {
@@ -309,8 +303,6 @@
           document.getElementById("login-dropdown").style.display = "block";
           document.getElementById("profile-dropdown").style.display = "none";
         }
-
-        console.log(ssoUser + "sssssssssssssssssssss");
       })
     }
     $(document).ready(function () {
@@ -323,6 +315,8 @@
       // const osInstance = OverlayScrollbars(document.querySelector('body'), {});
 
       loadUser();
+
+   
       //头部搜索框处理(不需要可以删除,不明白的可以看bootstrap-admin官方文档)
       $(document).on('search.bsa.navbar-search', function (e, inputValue, data) {
         //先得到请求地址,组合后大概是这样pages/search.html?keyword=dsadsa&type=article&user=admin2
@@ -358,7 +352,38 @@
       });
     });
 
+    function checkLogin(event) {//检查是否登录的函数
+      event.preventDefault(); // 阻止默认行为，即阻止<a>元素的跳转事件
 
+      var ssoUser = null;  //获取当前用户
+      _root.loginCustomer({}, function (rtn, status) {
+        if (rtn.hasError) {
+          alert(rock.errorText(rtn, "获得当前用户失败！"));
+        } else {
+          ssoUser = rtn.result;
+        }
+        if (rock.isNull(ssoUser)) {//如果没登录，就先跳转到登录页。
+          $.toasts({
+            type: 'success',
+            content: '请先登录！',
+            onHidden: function () {
+              _root.logout({}, (rtn) => {
+                if (rtn.hasError || !rtn.result) {
+                  alert("注销登录出错!");
+                } else {
+                  window.location.href = "login.html";
+                }
+              });
+            }
+          });
+        } else {
+          var DataUrl = event.target.getAttribute('data-url');
+          // 在此处执行跳转逻辑
+          window.location.href = DataUrl;
+        }
+      })
+
+    }
 
   </script>
 </body>
