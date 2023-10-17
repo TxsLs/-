@@ -64,11 +64,11 @@ public class EmployeeServiceImpl extends BaseService<Employee, EmployeeDao> impl
 		return dao().updatePhoto(photo) > 0;
 	}
 
-	@Override
+	/*@Override
 	@Transactional
 	public boolean updateSelfInfo(Employee vo) {
 		return dao().updateSelfInfo(vo) > 0;
-	}
+	}*/
 
 	@Override
 	public boolean insert(Employee entity, boolean ignoreNullValue, String... excluded) {

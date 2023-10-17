@@ -20,7 +20,7 @@ public interface EmployeeDao extends Dao<Employee> {
 	 * @param vo　个人用户信息
 	 * @return　更新数据条数
 	 */
-	public int updateSelfInfo(Employee vo);
+	//public int updateSelfInfo(Employee vo);
 
 	/**
 	 * <b>修改密码。</b>

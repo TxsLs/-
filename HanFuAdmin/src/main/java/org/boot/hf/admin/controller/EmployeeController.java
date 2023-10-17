@@ -89,7 +89,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		String code = AppUtils.getLoginUser().getUsername();
 		Employee employee = service().findByCode(code);
 		if (AppUtils.isLogin() || employee.getAdmin() == 1) {
-			boolean exist = this.service().existByName("code", vo.getCode(), null);
+			boolean exist = this.service().existByName("code", vo.getCode(), vo.getId());
 
 			if (!exist) {
 				boolean result = this.service().update(vo, true, null);

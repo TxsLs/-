@@ -18,7 +18,7 @@ public interface EmployeeService extends Service<Employee> {
 	 * @param vo　个人用户信息
 	 * @return　是否成功
 	 */
-	public boolean updateSelfInfo(Employee vo);
+	//public boolean updateSelfInfo(Employee vo);
 
 	/**
 	 * <b>用户修改自己的密码。</b>
