@@ -1,44 +1,46 @@
 <!doctype html>
 <html lang="zh">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
-    <meta name="keywords" content="商家个人信息修改页面,响应式后台模板,Bootstrap5后台管理系统模板">
-    <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
-    <meta name="author" content="ajiho">
-    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-    <title>商家个人信息修改</title>
-</head>
-<body class="bg-body-tertiary py-3">
-<div class="container-fluid">
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-body">
-            设置我的资料
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-5">
-                    <form id="form" enctype="multipart/form-data">
-                        <div class="row mb-3">
-                            <label for="username" class="col-sm-3 col-form-label text-sm-end">账号</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="code" name="code" value="商家账号">
-                                <div class="form-text">用于登录</div>
-                            </div>
-                        </div>
 
-                        <div class="row mb-3">
-                          <label for="id" class="col-sm-3 col-form-label text-sm-end">ID</label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" id="id" name="id"  readonly>
-                              <div id="profileImageHelp" class="form-text">不可更改！</div>
-                          </div>
-                      </div>
-                          <!-- <div class="row mb-3">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
+  <meta name="keywords" content="商家个人信息修改页面,响应式后台模板,Bootstrap5后台管理系统模板">
+  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+  <title>商家个人信息修改</title>
+</head>
+
+<body class="bg-body-tertiary py-3">
+  <div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-body">
+        设置我的资料
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-5">
+            <form id="form" enctype="multipart/form-data">
+              <div class="row mb-3">
+                <label for="username" class="col-sm-3 col-form-label text-sm-end">账号</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="code" name="code" value="商家账号">
+                  <div class="form-text">用于登录</div>
+                </div>
+              </div>
+
+              <div class="row mb-3" id="idname">
+                <label for="id" class="col-sm-3 col-form-label text-sm-end">ID</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="id" name="id" readonly>
+                  <div id="profileImageHelp" class="form-text">不可更改！</div>
+                </div>
+              </div>
+              <!-- <div class="row mb-3">
                             <label for="id" class="col-sm-3 col-form-label text-sm-end">ID</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" id="id" name="id" value="${id}" readonly>
@@ -46,356 +48,295 @@
                              </div>
                             </div> -->
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-sm-3 col-form-label text-sm-end">店铺名称</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="name" name="name" value="默认店铺名称"
-                                pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="merchantIntroduction" class="col-sm-3 col-form-label text-sm-end">店铺描述</label>
-                            <div class="col-sm-9">
-                              <!-- <input type="text" class="form-control" id="merchantIntroduction" name="merchantIntroduction" value="默认店铺描述"
+              <div class="row mb-3">
+                <label for="name" class="col-sm-3 col-form-label text-sm-end">店铺名称</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name" name="name" value="默认店铺名称"
+                    pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="merchantIntroduction" class="col-sm-3 col-form-label text-sm-end">店铺描述</label>
+                <div class="col-sm-9">
+                  <!-- <input type="text" class="form-control" id="merchantIntroduction" name="merchantIntroduction" value="默认店铺描述"
                               pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$"> -->
-                                <textarea class="form-control" id="merchantIntroduction" rows="3" name="merchantIntroduction" 
-                             
-                                pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$">默认店铺描述</textarea>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="phone" class="col-sm-3 col-form-label text-sm-end">联系电话</label>
-                            <div class="col-sm-9">
-                                <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" placeholder="电话号码" required
-                                data-bv-container="#err_phone" maxlength="11">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="email" class="col-sm-3 col-form-label text-sm-end">邮箱</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="邮箱" required
-                                data-bv-container="#err_email">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="avatar" class="col-sm-3 col-form-label text-sm-end">头像</label>
-                            <div class="col-sm-9">
-                                <input type="file" class="form-control" id="profileImage" name="profileImage" tabindex="10"
-                                accept="image/webp,image/*" aria-describedby="profileImageHelp">
-                                <div id="profileImageHelp" class="form-text">请上传您的头像（支持webp、png、jpg格式）</div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-9 offset-sm-3">
-                                <button type="submit" class="btn btn-primary">确认修改</button>
-                            </div>
-                        </div>
+                  <textarea class="form-control" id="merchantIntroduction" rows="3" name="merchantIntroduction"
+                    pattern="^[\u4E00-\u9FA5\uF900-\uFA2D\w\s\S]{1,20}$">默认店铺描述</textarea>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="phone" class="col-sm-3 col-form-label text-sm-end">联系电话</label>
+                <div class="col-sm-9">
+                  <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" placeholder="电话号码"
+                    required data-bv-container="#err_phone" maxlength="11">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="email" class="col-sm-3 col-form-label text-sm-end">邮箱</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="email" name="email" placeholder="邮箱" required
+                    data-bv-container="#err_email">
+                </div>
+              </div>
 
-                    </form>
+              <div class="row mb-3">
+                <label for="page" class="col-sm-3 col-form-label text-sm-end">头像</label>
+                <div class="col-sm-9">
+                  <input type="file" class="form-control" id="profileImage" name="profileImage" tabindex="10"
+                    accept="image/webp,image/*" aria-describedby="profileImageHelp">
+                  <div id="profileImageHelp" class="form-text">请上传您的头像（支持webp、png、jpg格式）</div>
+                </div>
+              </div>
+
+              <div class="mb-3 ">
+                <div class="card-header bg-body text-center">
+                    用户头像
+                </div>
+                <div class="card-body text-center">
+                    <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像"
+                        class="rounded-circle   bsa-wh-100 " data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
                 </div>
             </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-9 offset-sm-3">
+                  <button type="submit" class="btn btn-primary">确认修改</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<!--回到顶部开始-->
-<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
-<!--回到顶部结束-->
+  </div>
+  <!--回到顶部开始-->
+  <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+  <!--回到顶部结束-->
 
 
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../lib/formvalidation/js/formValidation.js"></script>
-<script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
-<script src="../lib/formvalidation/js/language/zh_CN.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
-<script src="../dist/js/app.js"></script>
-<!--假数据模拟,生产环境中请直接删除该js-->
-<!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
-<script type="text/javascript" src="../js2/rockjs-1.0.js"></script>
-<script type="text/javascript" src="../pagejs/common.js"></script>
-<script>
-var ssoUser=null;  //当前用户
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/formvalidation/js/formValidation.js"></script>
+  <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+  <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
+  <!--假数据模拟,生产环境中请直接删除该js-->
+  <!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
+  <script type="text/javascript" src="../js2/rockjs-1.0.js"></script>
+  <script type="text/javascript" src="../pagejs/common.js"></script>
+  <script>
+    var ssoUser = null;  //当前用户
+    $("#idname").hide();
 
-
-/**
- * 装载用户信息
- */
- $(function ($) {
-	_root.loginUser({},function(rtn, status){
-		if (rtn.hasError){
-			alert(rock.errorText(rtn, "获得当前用户失败！"));
-		}else {
-			ssoUser=rtn.result;
-		}
-		if (rock.isNull(ssoUser)) {
-			$("#loginUser").html("未知用户");
-		} else {
-      $("#code").attr("value",ssoUser.code);
-      $("#id").attr("value",ssoUser.id);
-      $("#name").attr("value",ssoUser.name);
-      $("#merchantIntroduction").val(ssoUser.merchantIntroduction);
-      $("#phone").attr("value",ssoUser.phone);
-      $("#email").attr("value",ssoUser.email);
-
-
-//前端表单验证
-$('#form').formValidation({
-        fields: {
-          code: {
-            validators: {
-              notEmpty: {
-                message: '账号不能为空'
-              },
-              stringLength: {
-                min: 1,
-                max: 20,
-                message: '用户名长度必须在1到20个字符之间'
-              }
-            }
-          },
-
-          name: {
-            validators: {
-              notEmpty: {
-                message: '店铺名不能为空'
-              },
-              stringLength: {
-                min: 1,
-                max: 20,
-                message: '店铺名长度必须在1到20之间'
-              }
-            }
-          },
-          
-          merchantIntroduction: {
-            validators: {
-                message: '店铺描述'
-              }
-            },
-
-          phone: {
-            validators: {
-              notEmpty: {
-                message: '电话号码不能为空'
-              },
-              regexp: {
-                regexp: /^\d{11}/,
-                message: '请输入有效的11位电话号码!'
-              }
-            }
-          },
-          email: {
-            validators: {
-              notEmpty: {
-                message: '邮箱不能为空'
-              },
-            }
-          },
-          profileImage: {
-            validators: {
-              file: {
-                extension: 'jpeg,jpg,png,webp',
-                type: 'image/jpeg,image/png,image/webp',
-                maxSize: 5242880, // 5MB
-                message: '请选择小于5MB的JPEG、PNG、webp格式图片文件'
-              }
-            }
-          }
+    /**
+     * 装载用户信息
+     */
+    $(function ($) {
+      _root.loginUser({}, function (rtn, status) {
+        if (rtn.hasError) {
+          alert(rock.errorText(rtn, "获得当前用户失败！"));
+        } else {
+          ssoUser = rtn.result;
         }
-     }).on('success.form.fv', function (e) {
-        //阻止表单提交
-        e.preventDefault();
- 
-        //得到表单对象
-        let $form = $(e.target);
-        //获取数据
-        let data = new FormData($form[0]); // 使用FormData对象
+        if (rock.isNull(ssoUser)) {
+          $("#loginUser").html("未知用户");
+        } else {
+          $("#code").attr("value", ssoUser.code);
+          $("#id").attr("value", ssoUser.id);
+          $("#name").attr("value", ssoUser.name);
+          $("#merchantIntroduction").val(ssoUser.merchantIntroduction);
+          $("#phone").attr("value", ssoUser.phone);
+          $("#email").attr("value", ssoUser.email);
+        var mvc = rock.initSvr(["merchant"]);
+        var Service = mvc.findService("merchant");
+        if (ssoUser.hasPhoto) {
 
-        // 获取照片文件
-        let photoInput = document.getElementById('profileImage');
-        if (photoInput.files.length > 0) {
-          let photo = photoInput.files[0];
-          data.append('photo', photo); // 添加照片数据到FormData对象
+          $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + ssoUser.id);
         }
-        
+           //照片上传字段设置
+           $("#profileImage").change((evt) => {
+                var ele = evt.target, url;
+                if (rock.isMsie()) {
+                    url = ele.value;
+                } else {
+                    var file = ele.files[0];
+                    if (file) {
+                        url = window.URL.createObjectURL(file);
+                    }
 
-        //发起ajax请求
-        $.ajax({
-          xhrFields: {
-                                withCredentials: true
-                            },//跨域权限开启
-          method: 'Post',
-          url: 'http://127.0.0.1:8080/hanfushopping/merchant/updateMerchant',
-          //表单数据
-          data: data,
-          processData: false,
-          contentType: false,
-        }).then(response => {
-          if (response.result) {
-            $.toasts({
-              type: 'success',
-              content: '修改成功',
+                }
+
+
+                $("#imgEditPhoto").attr("src", url);
             });
-          } else if (response.hasError) {
-            var errorMessage = rock.errorText(response, "修改失败!");
-            $.toasts({
-              type: 'danger',
-              content: errorMessage,
-              displayTime: 10000, // 将显示时间设置为 3 秒钟
-              onShown: function () {
-                if (response.errorCode === "1067") {
-                  $("#code").focus();
+
+
+          //前端表单验证
+          $('#form').formValidation({
+            fields: {
+              code: {
+                validators: {
+                  notEmpty: {
+                    message: '账号不能为空'
+                  },
+                  stringLength: {
+                    min: 1,
+                    max: 20,
+                    message: '用户名长度必须在1到20个字符之间'
+                  }
+                }
+              },
+
+              name: {
+                validators: {
+                  notEmpty: {
+                    message: '店铺名不能为空'
+                  },
+                  stringLength: {
+                    min: 1,
+                    max: 20,
+                    message: '店铺名长度必须在1到20之间'
+                  }
+                }
+              },
+
+              merchantIntroduction: {
+                validators: {
+                  message: '店铺描述'
+                }
+              },
+
+              phone: {
+                validators: {
+                  notEmpty: {
+                    message: '电话号码不能为空'
+                  },
+                  regexp: {
+                    regexp: /^\d{11}/,
+                    message: '请输入有效的11位电话号码!'
+                  }
+                }
+              },
+              email: {
+                validators: {
+                  notEmpty: {
+                    message: '邮箱不能为空'
+                  },
+                }
+              },
+              profileImage: {
+                validators: {
+                  file: {
+                    extension: 'jpeg,jpg,png,webp',
+                    type: 'image/jpeg,image/png,image/webp',
+                    maxSize: 5242880, // 5MB
+                    message: '请选择小于5MB的JPEG、PNG、webp格式图片文件'
+                  }
                 }
               }
-            });
-          }
-        });
-      });
+            }
+          }).on('success.form.fv', function (e) {
+            //阻止表单提交
+            e.preventDefault();
+
+            //得到表单对象
+            let $form = $(e.target);
+            //获取数据
+            let data = new FormData($form[0]); // 使用FormData对象
+
+            // 获取照片文件
+            let photoInput = document.getElementById('profileImage');
+            if (photoInput.files.length > 0) {
+              let photo = photoInput.files[0];
+              data.append('photo', photo); // 添加照片数据到FormData对象
+            }
+
+
+            //发起ajax请求
+            $.ajax({
+              xhrFields: {
+                withCredentials: true
+              },//跨域权限开启
+              method: 'Post',
+              url: 'http://127.0.0.1:8080/hanfushopping/merchant/updateMerchant',
+              //表单数据
+              data: data,
+              processData: false,
+              contentType: false,
+            }).then(res => {
+                    
+                    if (res||data.get("code")==ssoUser.code) {
+                        $.toasts({
+                            type: 'success',
+                            content: '修改个人信息成功！',
+                            onHidden: function () {
+                               
+                                top.location.replace('../index.html');
+                            }
+                        });
+                    }else{
+                                _root.logout({}, (rtn) => {
+                                    if (rtn.hasError || !rtn.result) {
+                                      $.toasts({
+                                        type: 'danger',
+                                        content: '注销登录出错!',
+                          
+                                      })
+                          
+                                    } else {
+                          
+                                      $.toasts({
+                                        type: 'success',
+                                        content: '修改个人信息成功！（修改账号将会退出登录！）',
+                                        onHidden: function () {
+                                          top.location.replace('login.html');
+                                        }
+                                      });
+
+                             
+                            }
+                          });
+
+                    }
+
+                });
+            // then(response => {
+            //   if (response.result) {
+            //     $.toasts({
+            //       type: 'success',
+            //       content: '修改成功',
+            //     });
+            //   } else if (response.hasError) {
+            //     var errorMessage = rock.errorText(response, "修改失败!");
+            //     $.toasts({
+            //       type: 'danger',
+            //       content: errorMessage,
+            //       displayTime: 10000, // 将显示时间设置为 3 秒钟
+            //       onShown: function () {
+            //         if (response.errorCode === "1067") {
+            //           $("#code").focus();
+            //         }
+            //       }
+            //     });
+            //   }
+            // });
 
 
 
-			$("#loginUser").html(ssoUser.name);
-		}
-	})
-});
-//alert(ssoUser.name);
-    //前端表单验证
-    // $('#form').formValidation({
-    //     fields: {
-    //       code: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '账号不能为空'
-    //           },
-    //           stringLength: {
-    //             min: 1,
-    //             max: 20,
-    //             message: '用户名长度必须在1到20个字符之间'
-    //           }
-    //         }
-    //       },
+          });
 
-    //       name: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '店铺名不能为空'
-    //           },
-    //           stringLength: {
-    //             min: 1,
-    //             max: 20,
-    //             message: '店铺名长度必须在1到20之间'
-    //           }
-    //         }
-    //       },
-          
-    //       merchantIntroduction: {
-    //         validators: {
-    //             message: '店铺描述'
-    //           }
-    //         },
 
-    //       phone: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '电话号码不能为空'
-    //           },
-    //           regexp: {
-    //             regexp: /^\d{11}/,
-    //             message: '请输入有效的11位电话号码!'
-    //           }
-    //         }
-    //       },
-    //       email: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '邮箱不能为空'
-    //           },
-    //         }
-    //       },
-    //       profileImage: {
-    //         validators: {
-    //           file: {
-    //             extension: 'jpeg,jpg,png,webp',
-    //             type: 'image/jpeg,image/png,image/webp',
-    //             maxSize: 5242880, // 5MB
-    //             message: '请选择小于5MB的JPEG、PNG、webp格式图片文件'
-    //           }
-    //         }
-    //       }
-    //     }
-    //  }).on('success.form.fv', function (e) {
-    //     //阻止表单提交
-    //     e.preventDefault();
 
-    //     //得到表单对象
-    //     let $form = $(e.target);
-    //     //获取数据
-    //     let data = new FormData($form[0]); // 使用FormData对象
+          $("#loginUser").html(ssoUser.name);
+        }
+      })
+    });
 
-    //     // 获取照片文件
-    //     let photoInput = document.getElementById('profileImage');
-    //     if (photoInput.files.length > 0) {
-    //       let photo = photoInput.files[0];
-    //       data.append('photo', photo); // 添加照片数据到FormData对象
-    //     }
-        
-
-    //     //发起ajax请求
-    //     $.ajax({
-    //       method: 'Post',
-    //       url: 'http://127.0.0.1:8080/hanfushopping/merchant/updateMerchant',
-    //       //表单数据
-    //       data: data,
-    //       processData: false,
-    //       contentType: false,
-    //     }).then(response => {
-    //       if (response.result) {
-    //         $.toasts({
-    //           type: 'success',
-    //           content: '修改成功',
-    //         });
-    //       } else if (response.hasError) {
-    //         var errorMessage = rock.errorText(response, "修改失败!");
-    //         $.toasts({
-    //           type: 'danger',
-    //           content: errorMessage,
-    //           displayTime: 10000, // 将显示时间设置为 3 秒钟
-    //           onShown: function () {
-    //             if (response.errorCode === "1067") {
-    //               $("#code").focus();
-    //             }
-    //           }
-    //         });
-    //       }
-    //     });
-    //   });
-    //.on('success.form.fv', function (e) {
-    //     //阻止表单提交
-    //     e.preventDefault();
-    //     //得到表单对象
-    //     let $form = $(e.target);
-    //     let formData = new FormData($form[0]);
-
-    //     alert('表单验证通过,即将发起ajax');
-    //     //得到FormData对象
-    //     $.ajax({
-    //         url: "/updateUserInfo.php",
-    //         method: 'POST',
-    //         data: formData,
-    //         processData: false,
-    //         contentType: false,
-    //     }).then(function (res) {
-    //         if (res.code === 200) {
-    //             //更新成功
-    //         } else {
-    //             //更新失败
-    //         }
-    //     });
-    // });
-</script>
+  </script>
 
 </body>
+
 </html>
-
-
-
