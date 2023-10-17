@@ -1,5 +1,6 @@
 package org.study.spring.entity;
 
+import org.quincy.rock.core.dao.annotation.Column;
 import org.quincy.rock.core.dao.annotation.JoinTable;
 import org.quincy.rock.core.dao.annotation.JoinTables;
 import org.quincy.rock.core.dao.annotation.Table;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @ApiModel(description = "商品实体(在执行更新操作时采取动态更新策略，如果属性值为空，则忽略该属性)")
 @Table(name = "t_product", alias = "p")
 @JoinTables({ @JoinTable(name = "t_category", alias = "cg", onExpr = "cg.f_id=p.f_category_id"),
-	@JoinTable(name = "t_t_merchant", alias = "m", onExpr = "m.f_id=p.f_merchant_id")}
+	@JoinTable(name = "t_merchant", alias = "m", onExpr = "m.f_id=p.f_merchant_id")}
 
 		)
 public class Product extends Entity {
@@ -49,11 +50,20 @@ public class Product extends Entity {
     @ApiModelProperty(value = "分类id", position = 6)
     private String categoryId;
     
-    @ApiModelProperty(value = "商家id", position = 7)
-    private String merchantId;
-	
-    @Temporary
-	@ApiModelProperty(value = "返回是否有照片", position = 8)
-	private Boolean hasPhoto;
+    @ApiModelProperty(value = "分类名称", position = 7)
+	@Column(value = "f_name", tableAlias = "cg", ignoreInsert = true, ignoreUpdate = true)
+	private String categoryName;
 
+    
+    @ApiModelProperty(value = "商家id", position =8)
+    private String merchantId;
+    
+    @ApiModelProperty(value = "商家名称", position = 9)
+	@Column(value = "f_name", tableAlias = "m", ignoreInsert = true, ignoreUpdate = true)
+	private String merchantName;
+
+
+	@ApiModelProperty(value = "返回是否有照片", position = 10)
+	@Column(value = "f_photo_file is not null", calculated = true)
+	private Boolean hasPhoto;
 }

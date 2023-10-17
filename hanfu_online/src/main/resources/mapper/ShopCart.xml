@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.study.spring.dao.ShopCartDao">
+	<resultMap id="shopCartMap" type="ShopCart">
+		<id property="id" column="f_id" javaType="long" />
+		<result property="customerCode" column="f_customer_code" javaType="string" />
+		<result property="productId" column="f_product_id" javaType="long" />
+		<result property="quantity" column="f_quantity"  javaType="int" />
+	</resultMap>
+
+	<select id="findProduct" resultType="ShopCart" resultMap="shopCartMap">
+		SELECT *
+		FROM t_shopcart
+		WHERE
+		f_customer_code = #{code}
+		AND f_product_id =#{productID}
+	</select>
+	<insert id="addProduct">
+		INSERT INTO t_shopcart (f_customer_code,
+		f_product_id, f_quantity)
+		VALUES (#{code},#{productID},#{number});
+	</insert>
+	<update id="updateProduct">
+		UPDATE t_shopcart
+		SET f_quantity = f_quantity +#{number}
+		WHERE f_customer_code = #{code}
+		AND f_product_id = #{productID}
+	</update>
+</mapper>

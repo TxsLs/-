@@ -8,6 +8,9 @@ import org.quincy.rock.core.dao.sql.Predicate;
 import org.quincy.rock.core.dao.sql.Sort;
 import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +20,7 @@ import org.study.spring.BaseController;
 import org.study.spring.Entity;
 import org.study.spring.entity.Product;
 import org.study.spring.service.ProductService;
+import org.study.spring.entity.Photo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -58,5 +62,19 @@ public class ProductController extends BaseController<Product, ProductService> {
 		}
 		PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 		return Result.toResult(ps);
+	}
+	@ApiOperation(value = "下载商品照片")
+	@ApiImplicitParam(name = "id", value = "主键id", required = true, dataType = "long")
+	@RequestMapping(value = "/photo", method = { RequestMethod.GET })
+	public ResponseEntity<byte[]> photo(@RequestParam long id) {
+		log.debug("call photo");
+		Photo photo = this.service().getPhoto(id);
+		if (Photo.isEmpty(photo))
+			return null;
+		//
+		BodyBuilder builder = ResponseEntity.ok().contentLength(photo.length());
+		builder.contentType(MediaType.APPLICATION_OCTET_STREAM);
+		builder.header("Content-Disposition", "attachment; filename=" + photo.getPhotoFile());
+		return builder.body(photo.getPhoto());
 	}
 }

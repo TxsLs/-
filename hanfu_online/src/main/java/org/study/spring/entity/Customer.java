@@ -58,6 +58,7 @@ public class Customer extends Entity {
 	private Boolean hasPhoto;
 	
     @ApiModelProperty(value = "是否被封禁", position = 9)
+    @IgnoreInsertUpdate
     private byte isviolate;
 
 }

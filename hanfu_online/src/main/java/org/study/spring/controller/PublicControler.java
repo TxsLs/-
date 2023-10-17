@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true",origins = {"http://127.0.0.1:5501","http://locolhost:5501"})
 @Slf4j
 @Api(tags = "公用模块")
 @Controller
@@ -101,6 +101,7 @@ public class PublicControler {
 	public @ResponseBody Result<Customer> loginUser() {
 		log.debug("call loginUser");
 		Customer customer = null;
+		System.out.println(AppUtils.isLogin());
 		if (AppUtils.isLogin()) {
 			String code = AppUtils.getLoginUser().getUsername();
 			customer = service.findByCode(code);

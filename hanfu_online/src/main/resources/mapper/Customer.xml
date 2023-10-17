@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.study.spring.dao.CustomerDao">
+	
+	<resultMap id="resultMap" type="Customer">
+		<id property="id" column="id" javaType="long" />
+	</resultMap>
+	
+	<select id="getPhoto" resultType="Photo">
+		select f_id id, f_photo	photo,f_photo_file photoFile 
+		from t_customer
+		where f_id=#{id}
+	</select>
+
+	<update id="updatePhoto" parameterType="Photo">
+		update t_customer set f_photo=#{photo},f_photo_file=#{photoFile}
+		where f_id=#{id}
+	</update>
+	
+</mapper>
