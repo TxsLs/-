@@ -1,0 +1,201 @@
+$(function ($) {
+
+    var ssoUser = null;  //当前用户
+    _root.loginUser({}, function (rtn) {
+
+        if (rtn.hasError) {
+            alert(rock.errorText(rtn, "获得当前用户失败！"));
+        } else {
+            ssoUser = rtn.result;
+        }
+        if (rock.isNull(ssoUser)) {
+            $.toasts({
+                type: 'danger',
+                content: '未登录！请返回登录!',
+                delay: 3000,
+                onHidden: function () {
+                    top.location.replace('login.html');
+
+                }
+            });
+        } else {
+
+            //照片上传字段设置
+            $("#profileImage").change((evt) => {
+                var ele = evt.target, url;
+                if (rock.isMsie()) {
+                    url = ele.value;
+                } else {
+                    var file = ele.files[0];
+                    if (file) {
+                        url = window.URL.createObjectURL(file);
+                    }
+                }
+                $("#imgEditPhoto").attr("src", url);
+            });
+
+
+
+            $("#form").formValidation({
+                //验证字段
+
+                fields: {
+                    code: {
+                        validators: {
+                            notEmpty: {
+                                message: '账号不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 20,
+                                message: '用户名长度必须在1到20个字符之间'
+                            }
+                        }
+                    },
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: '姓名不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 20,
+                                message: '用户名长度必须在1到20个字符之间'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 20,
+                                message: '密码长度必须在6到20个字符之间'
+                            }
+                        }
+                    },
+
+                    confirmpassword: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+
+                            identical: {//相同
+                                field: 'password',
+                                message: '两次输入的密码不一致'
+                            }
+                        }
+                    },
+
+                    gender: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择性别'
+                            }
+                        }
+                    },
+                    phone: {
+                        validators: {
+                            notEmpty: {
+                                message: '电话号码不能为空'
+                            },
+                            regexp: {
+                                regexp: /^\d{11}/,
+                                message: '请输入有效的11位电话号码!'
+                            }
+                        }
+                    },
+                    profileImage: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png',
+                                type: 'image/jpeg,image/png',
+                                maxSize: 5242880, // 5MB
+                                message: '请选择小于5MB的JPEG或PNG格式图片文件'
+                            }
+                        }
+                    }
+                    //...
+                }
+            }).on('success.form.fv', function (e) {
+
+                //阻止表单提交
+                e.preventDefault();
+
+
+                //得到表单对象
+                let $form = $(e.target);
+                //获取数据
+                let data = new FormData($form[0]); // 使用FormData对象
+
+                // 获取照片文件
+                let photoInput = document.getElementById('profileImage');
+                if (photoInput.files.length > 0) {
+                    let photo = photoInput.files[0];
+                    data.append('photo', photo); // 添加照片数据到FormData对象
+                }
+
+                //得到序列化数据
+                $.ajax({
+                    url: "http://127.0.0.1:8080/hanfu/employee/addEmployee",
+                    method: 'post',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                }).then(response => {
+
+                    if (response.result) {
+                        $.toasts({
+                            type: 'success',
+                            content: '添加员工成功！',
+                            delay: 1500,
+                            autohide: true,
+                            onHidden: function () {
+                                parent.modalInstance.setData(true);
+                                parent.modalInstance.close();
+                            }
+                        });
+                    } else if (response.hasError) {
+                        var errorMessage = rock.errorText(response, "注册错误!");
+                        $.toasts({
+                            type: 'danger',
+                            content: errorMessage,
+                            delay: 3050, // 将显示时间设置
+                            onShown: function () {
+                                if (response.errorCode === "1067") {
+                                    $("#code").focus();
+                                }
+                            }
+                        });
+
+                    }
+
+
+
+
+
+                    //添加成功
+                    // $.toasts({
+                    //     type: 'success',
+                    //     content: '添加员工成功！',
+                    //     delay: 1000,
+                    //     autohide: true,
+                    //     onHidden: function () {
+                    //         parent.modalInstance.setData(true);
+                    //         parent.modalInstance.close();
+                    //     }
+                    // })
+
+
+
+
+                });
+
+            });
+
+        }
+    });
+});

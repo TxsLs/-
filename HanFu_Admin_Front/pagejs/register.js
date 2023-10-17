@@ -175,7 +175,7 @@ $(function () {
         $.toasts({
           type: 'danger',
           content: errorMessage,
-          displayTime: 10000, // 将显示时间设置
+          delay: 3050, // 将显示时间设置
           onShown: function () {
             if (response.errorCode === "1067") {
               $("#code").focus();

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -13,122 +14,138 @@
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
   <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
 </head>
+
 <body class="bg-body-tertiary py-3">
-<div class="container-fluid">
-  <div class="card border-0 shadow-sm">
-    <div class="card-body">
-      <form id="form">
-        <div class="mb-3">
-          <label for="name" class="form-label">姓名</label>
-          <input type="text" class="form-control" id="name" name="name">
-        </div>
-        <div class="mb-3">
-          <label for="username" class="form-label">用户名</label>
-          <input type="text" class="form-control" id="username" name="username">
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">密码</label>
-          <input type="text" class="form-control" id="password" name="password">
-        </div>
-        <div class="mb-3">
-          <label for="rePassword" class="form-label">确认密码</label>
-          <input type="text" class="form-control" id="rePassword" name="rePassword">
-        </div>
-        <div class="mb-3">
-          <label for="gender-1" class="form-label">性别</label>
-          <div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="gender" checked
-                     id="gender-1" value="1">
-              <label class="form-check-label" for="gender-1">男</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="gender"
-                     id="gender-2" value="0">
-              <label class="form-check-label" for="gender-2">女</label>
+  <div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <form id="form">
+
+          <div class="row mb-3">
+            <label for="role" class="col-sm-3 col-form-label text-sm-end">我的角色</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person-hearts"></i></span>
+                <select class="form-select" name="role" aria-label="role" id="admin" disabled>
+                  <option value="1">超级管理员</option>
+                  <option value="0">商城员工</option>
+                </select>
+              </div>
+              <div class="form-text">当前角色不可更改为其它角色</div>
             </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="phone" class="form-label">手机</label>
-          <input type="text" class="form-control" id="phone" name="phone" value="18878654123">
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">邮箱</label>
-          <input type="text" class="form-control" id="email" name="email" value="456456@qq.com">
-        </div>
-        <button type="submit" class="btn btn-primary">修改</button>
-      </form>
+
+          <div class="row mb-3" id="hide_id">
+            <label for="username" class="col-sm-3 col-form-label text-sm-end">Id</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
+                <input type="text" class="form-control" id="id" name="id" tabindex="1" autocomplete placeholder=""
+                  required data-bv-container="#err_username" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="username" class="col-sm-3 col-form-label text-sm-end">账号</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
+                <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2" autocomplete
+                  placeholder="请输入账号" data-bv-container="#err_username" pattern="^[A-Za-z0-9]{0,20}$">
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
+                <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2"
+                  aria-label="name" autocomplete placeholder="请输入姓名" data-bv-container="#err_username"
+                  pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row mb-3">
+            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-gender-ambiguous"></i></span>
+                <select class="form-select" id="gender" name="gender" tabindex="6">
+                  <option value="">请选择性别</option>
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row mb-3">
+            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
+            <div class="col-sm-9">
+              <div class="input-group ">
+                <input type="file" class="form-control" id="profileImage" name="profileImage">
+                <label class="input-group-text" for="avatar"><i class="bi bi-cloud-upload"></i>
+                  修改图片</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 ">
+            <div class="card-header bg-body text-center">
+              用户头像
+            </div>
+            <div class="card-body text-center">
+              <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-circle   bsa-wh-100 "
+                data-bs-toggle="modal" data-bs-target="#exampleModal">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="phone" class="col-sm-3 col-form-label text-sm-end">手机</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
+                <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" autocomplete
+                  placeholder="请输入电话号码" required data-bv-container="#err_phone" maxlength="11">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3 text-center">
+              <button type="submit" class="btn btn-primary">确认修改</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+
+
   </div>
+  <!--回到顶部开始-->
+  <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+  <!--回到顶部结束-->
 
 
-</div>
-<!--回到顶部开始-->
-<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
-<!--回到顶部结束-->
-
-
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../lib/formvalidation/js/formValidation.js"></script>
-<script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
-<script src="../lib/formvalidation/js/language/zh_CN.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
-<script src="../dist/js/app.js"></script>
-<!--假数据模拟,生产环境中请直接删除该js-->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
-<script>
-
-
-  $("#form").formValidation({
-    //验证字段
-    fields: {
-      name: {
-        validators: {
-          notEmpty: true
-        }
-      },
-      username: {
-        validators: {
-          notEmpty: true
-        }
-      },
-      //...
-    }
-  }).on('success.form.fv', function (e) {
-    //阻止表单提交
-    e.preventDefault();
-    //得到表单对象
-    let $form = $(e.target);
-    let data = $form.serialize();
-
-
-    //得到序列化数据
-    $.ajax({
-      url: "/useradd",
-      method: 'post',
-      data: data,
-      success: function (res) {
-        //添加成功
-        $.toasts({
-          type: 'success',
-          content: '修改成功',
-          delay: 1000,
-          autohide: true,
-          onHidden: function () {
-            parent.modalInstance.setData(true);
-            parent.modalInstance.close();
-          }
-        })
-
-      }
-    })
-
-  });
-
-
-</script>
-
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/formvalidation/js/formValidation.js"></script>
+  <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+  <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
+  <script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
+  <script type="text/javascript" src="../pagejs/common.js"></script>
+  <script type="text/javascript" src="../pagejs/user_edit.js"></script>
+ 
+ 
 </body>
+
 </html>
