@@ -1,24 +1,6 @@
 $(function ($) {
     $("#hide_id").hide();
-    var ssoUser = null;  //当前用户
-    _root.loginUser({}, function (rtn) {
-
-        if (rtn.hasError) {
-            alert(rock.errorText(rtn, "获得当前用户失败！"));
-        } else {
-            ssoUser = rtn.result;
-        }
-        if (rock.isNull(ssoUser)) {
-            $.toasts({
-                type: 'danger',
-                content: '未登录！请返回登录!',
-                onHidden: function () {
-                    top.location.replace('login.html');
-
-                }
-            });
-        } else {
-
+   
             //照片上传字段设置
             $("#profileImage").change((evt) => {
                 var ele = evt.target, url;
@@ -140,7 +122,6 @@ $(function ($) {
                     processData: false,
                     contentType: false,
                 }).then(response => {
-                    console.log(data)
                     if (response.result) {
                         $.toasts({
                             type: 'success',
@@ -148,6 +129,7 @@ $(function ($) {
                             delay: 1000,
                             autohide: true,
                             onHidden: function () {
+                                console.log(parent.modalInstance)
                                 parent.modalInstance.setData(true);
                                 parent.modalInstance.close();
                             }
@@ -167,21 +149,12 @@ $(function ($) {
 
                     }
 
-
-
-
-
-
-
-
-
-
                 });
 
             });
 
-        }
-    });
+        
+   
 });
 
 

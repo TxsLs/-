@@ -94,7 +94,7 @@ $(function ($) {
                         $.toasts({
                             type: 'success',
                             content: '修改密码成功！正在转到登录页！',
-                            delay: 3050, // 显示的时间（毫秒）
+                            delay: 2000, // 显示的时间（毫秒）
                             onHidden: function () {
 
                                 _root.logout({}, (rtn) => {

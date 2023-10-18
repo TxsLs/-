@@ -312,35 +312,48 @@ $(document).ready(function () {
             align: 'center',
             sortable: true,
             formatter: formatStatus,
-            events: {
-              'click .form-switch': function (event, value, row, index) {
-                event.preventDefault();
-                event.stopPropagation();
+            // events: {
+            //   'click .form-switch': function (event, value, row, index) {
+            //     event.preventDefault();
+            //     event.stopPropagation();
 
-                //获取当前状态
-                let $checkbox = $(event.target);
-                //获取即将去往的选中状态
-                let status = $checkbox.prop('checked');
+            //     //获取当前状态
+            //     let $checkbox = $(event.target);
+            //     $checkbox.prop('disabled', true);
+            //     //获取即将去往的选中状态
+            //     // let status = $checkbox.prop('checked');
 
-                //发送ajax改变用户的状态
-                $.ajax({
-                  url: `/userChangeStatus/${row.id}`,
-                  method: 'get',
-                }).then(response => {
-                  if (response.code === 200) {
-                    //修改状态
-                    $checkbox.prop('checked', status);
-                    //给出通知
-                    $.toasts({
-                      type: 'success',
-                      placement: 'top-center',
-                      content: '操作成功',
-                    })
-                  }
-                });
-              }
-            }
+            //     // // 判断选中行的 id 是否为 1，如果是则不允许修改
+            //     // if (row.admin === 1) {
+            //     //   // 将状态复选框设为不选中状态
+            //     //   $checkbox.prop('disabled', true);
+            //     //   // 返回，不执行修改操作
+            //     //   return;
+            //     // }
+
+            //     //发送ajax改变用户的状态
+
+            //     // $.ajax({
+            //     //   url: `/userChangeStatus/${row.id}`,
+            //     //   method: 'get',
+            //     // }).then(response => {
+            //     //   if (response.code === 200) {
+            //     //     //修改状态
+            //     //     $checkbox.prop('checked', status);
+            //     //     //给出通知
+            //     //     $.toasts({
+            //     //       type: 'success',
+            //     //       placement: 'top-center',
+            //     //       content: '操作成功',
+            //     //     })
+            //     //   }
+            //     // });
+
+            //   }
+            // }
+
           },
+
           {
             title: '操作',
             align: 'center',
@@ -402,8 +415,12 @@ $(document).ready(function () {
                 event.stopPropagation();
 
                 window.rolemodal = $.modal({
-                  url: 'user-role.html',
-                  title: '分配角色',
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('selectedUserData', JSON.stringify(row));
+                  },
+                  url: 'user-resetPwd.html',
+                  title: '重置用户密码',
                   //禁用掉底部的按钮区域
                   buttons: [],
                   modalDialogClass: 'modal-dialog-centered modal-lg',
@@ -413,6 +430,8 @@ $(document).ready(function () {
                       $('#table').bootstrapTable('refresh');
                       $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
                     }
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('selectedUserData');
                   }
                 })
 
@@ -509,12 +528,10 @@ $(document).ready(function () {
       function formatStatus(val, rows) {
 
         let uncheck = `<div class="form-check form-switch">
-<input class="form-check-input bsa-cursor-pointer" type="checkbox">
-</div>`;
+<input class="form-check-input bsa-cursor-pointer" type="checkbox" disabled>正常</div>`;
 
         let checked = `<div class="form-check form-switch">
-<input class="form-check-input bsa-cursor-pointer" type="checkbox" checked>
-</div>`
+<input class="form-check-input bsa-cursor-pointer" type="checkbox" checked disabled>离职</div>`
 
         return val === 1 ? checked : uncheck;
 
@@ -526,21 +543,28 @@ $(document).ready(function () {
       function formatAction(val, rows) {
 
         let html = '';
+        if (rows.admin == 1) {
+          html += `<button disabled type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+  data-bs-title="编辑用户信息"><i class="bi bi-pencil"></i></button>`;
+          html += `<button disabled type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+  data-bs-title="封禁？"><i class="bi bi-lock-fill"></i></button>`
+          html += `<button disabled type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+  data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
+        } else {
 
-
-        //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
-        html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+          //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
       data-bs-title="编辑用户信息"><i class="bi bi-pencil"></i></button>`;
 
-        //第二个按钮
-        html += `<button type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-title="删除？"><i class="bi bi-trash3"></i></button>`
+          //第二个按钮
+          html += `<button type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+      data-bs-title="封禁？"><i class="bi bi-lock-fill"></i></button>`
 
 
-        //第三个按钮
-        html += `<button type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-title="分配角色"><i class="bi bi-person-square"></i></button>`
-
+          //第三个按钮
+          html += `<button type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+      data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
+        }
         return html;
       }
 
