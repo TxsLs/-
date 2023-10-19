@@ -19,7 +19,6 @@ import org.boot.hf.admin.service.EmployeeService;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
 import org.quincy.rock.core.dao.sql.Sort;
-import org.quincy.rock.core.lang.DataType;
 import org.quincy.rock.core.util.IOUtil;
 import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
@@ -88,9 +87,8 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		log.debug("call updateEmployee");
 		String code = AppUtils.getLoginUser().getUsername();
 		Employee employee = service().findByCode(code);
-		if (AppUtils.isLogin() || employee.getAdmin() == 1) {
+		if (AppUtils.isLogin() && employee.getAdmin() == 1) {
 			boolean exist = this.service().existByName("code", vo.getCode(), vo.getId());
-
 			if (!exist) {
 				boolean result = this.service().update(vo, true, null);
 				if (result && file != null && !file.isEmpty()) {
@@ -98,7 +96,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 				}
 				return Result.of(result);
 			} else {
-				return Result.toResult("1067", "账号名已存在！请重试！");
+				return Result.toResult("1067", "账号已存在！请重试！");
 			}
 		} else {
 			return Result.toResult("1068", "未登录或权限不够！请返回登录界面！");

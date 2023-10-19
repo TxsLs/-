@@ -1,5 +1,7 @@
 package org.boot.hf.admin.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.boot.hf.admin.Dao;
 import org.boot.hf.admin.entity.Ban;
@@ -16,5 +18,7 @@ import org.boot.hf.admin.entity.Ban;
  */
 @Mapper
 public interface BanDao extends Dao<Ban> {
+
+	public List<Ban> getBanMes(long userId);
 
 }

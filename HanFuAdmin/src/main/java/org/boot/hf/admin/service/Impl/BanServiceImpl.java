@@ -1,6 +1,7 @@
 package org.boot.hf.admin.service.Impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.boot.hf.admin.BaseService;
 import org.boot.hf.admin.dao.BanDao;
@@ -27,6 +28,11 @@ public class BanServiceImpl extends BaseService<Ban, BanDao> implements BanServi
 		Date date = DateUtil.getDateByWord("now");
 		entity.setBeginTime(date);
 		return super.insert(entity, ignoreNullValue, excluded);
+	}
+
+	@Override
+	public List<Ban> getBanMes(long userId) {
+		return this.dao().getBanMes(userId);
 	}
 
 }

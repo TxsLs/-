@@ -1,5 +1,7 @@
 package org.boot.hf.admin.service;
 
+import java.util.List;
+
 import org.boot.hf.admin.Service;
 import org.boot.hf.admin.entity.Ban;
 
@@ -14,5 +16,7 @@ import org.boot.hf.admin.entity.Ban;
  * @since 1.0
  */
 public interface BanService extends Service<Ban> {
+
+	public List<Ban> getBanMes(long userId);
 
 }

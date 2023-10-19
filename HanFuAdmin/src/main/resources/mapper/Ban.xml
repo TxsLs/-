@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.boot.hf.admin.dao.BanDao">
+
+	<resultMap id="resultMapBan" type="Ban">
+		<id property="id" column="id" javaType="long" />
+	</resultMap>
+
+	<select id="getBanMes" resultType="Ban">
+		select f_id id, f_user_id
+		userId,f_reason reason,f_begin_time beginTime
+		from t_ban
+		where
+		f_user_id=#{userId}
+	</select>
+
+
+
+
+
+</mapper>

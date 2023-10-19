@@ -22,7 +22,7 @@
 		where f_id=#{id}
 	</update>
 
-	<update id="updateSelfInfo" parameterType="Employee">
+<!-- 	<update id="updateSelfInfo" parameterType="Employee">
 		update t_employee
 		<set>
 			<if test="code!=null">
@@ -39,6 +39,6 @@
 			</if>
 		</set>
 		where f_id=#{id}
-	</update>
+	</update> -->
 
 </mapper>

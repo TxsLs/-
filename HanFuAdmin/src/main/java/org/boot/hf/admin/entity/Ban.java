@@ -24,7 +24,7 @@ public class Ban extends Entity {
 	private static final long serialVersionUID = -1006515762719264021L;
 
 	@ApiModelProperty(value = "封禁者编号", required = true, position = 1)
-	private Integer userId;
+	private Long userId;
 
 	@ApiModelProperty(value = "封禁理由", required = true, position = 2)
 	private String reason;
