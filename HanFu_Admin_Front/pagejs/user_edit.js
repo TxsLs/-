@@ -129,7 +129,6 @@ $(function ($) {
                             delay: 1000,
                             autohide: true,
                             onHidden: function () {
-                                console.log(parent.modalInstance)
                                 parent.modalInstance.setData(true);
                                 parent.modalInstance.close();
                             }

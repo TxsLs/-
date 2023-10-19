@@ -386,31 +386,134 @@ $(document).ready(function () {
               },
               'click .del-btn': function (event, value, row, index) {
                 event.stopPropagation();
-                $.modal({
-                  body: '确定要删除当前用户' + row.name + '?',
-                  ok: function () {
+                window.modalInstance = $.modal({
 
-                    $.ajax({
-                      url: '/user/10',
-                      method: 'delete',
-                    }).then(response => {
-                      if (response.code === 200) {
-                        $.toasts({
-                          type: 'success',
-                          content: '删除成功',
-                          onHidden: function () {
-                            //刷新当前数据表格
-                            $('#table').bootstrapTable('refresh');
-                            $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                          }
-                        })
-                      }
-                    });
-
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('selectedUserData', JSON.stringify(row));
+                  },
+                  url: 'ban.html',
+                  title: '封禁用户',
+                  //禁用掉底部的按钮区域
+                  buttons: [],
+                  modalDialogClass: 'modal-dialog-centered modal-lg',
+                  onHidden: function (obj, data) {
+                    if (data === true) {
+                      //刷新当前数据表格
+                      $('#table').bootstrapTable('refresh');
+                      $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+                    }
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('selectedUserData');
                   }
+
                 })
 
               },
+
+              'click .unlock-btn': function (event, value, row, index) {
+                event.stopPropagation();
+
+                $.ajax({
+                  //跨域
+                  xhrFields: {
+                    withCredentials: true
+                  },
+                  //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
+                  url: 'http://127.0.0.1:8080/hanfu/ban/queryByBanId',
+                  method: 'get',
+                  data: { userId: row.id },
+                }).then(response => {
+
+                  //用数组在取出时单个的reason不会拆开
+                  var reasons = [];
+                  response.result.forEach(ban => {
+                    //reasons += ban.reason;
+                    reasons.push(ban.reason);
+                  });
+
+
+                  // var times = '';
+                  // response.result.forEach(ban => {
+                  //   times += ban.beginTime ;
+                  // });
+                  // console.log(times)
+
+                  // 遍历所有 Ban 对象，将 beginTime 格式化为日期时间字符串
+                  var formattedBeginTimes = response.result.map(ban => {
+                    // 将时间戳转换为 Date 对象
+                    var beginTime = new Date(ban.beginTime);
+                    // 使用 Intl.DateTimeFormat 对象进行格式化
+                    var formattedBeginTime = new Intl.DateTimeFormat('zh-CN', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit'
+                    }).format(beginTime);
+                    return formattedBeginTime;
+                  });
+
+                  // 将格式化后的 beginTime 数组和 reasons 字符串连接起来
+                  var bodyContent = '';
+                  for (var i = 0; i < formattedBeginTimes.length; i++) {
+                    bodyContent += '封禁日期：' + formattedBeginTimes[i] + '<br>';
+                    bodyContent += '封禁理由：' + reasons[i] + '<br><br>';
+                  }
+                  // // 将时间戳转换为 Date 对象
+                  // var beginTime = new Date(times);
+                  // // 使用日期时间格式函数格式化日期时间
+                  // var formattedBeginTime = beginTime.getFullYear() + '-' + (beginTime.getMonth() + 1) + '-' + beginTime.getDate() + ' ' +
+                  //   beginTime.getHours() + ':' + beginTime.getMinutes() + ':' + beginTime.getSeconds();
+
+                  window.modalInstance = $.modal({
+
+                    body: '确定要解封此用户:\n' + row.name + '?' + '<br><br>' + '此用户已被封禁\n' + response.result.length + '\n次' + '<br><br>' + bodyContent,
+
+                    cancelBtn: true,
+
+                    ok: function () {
+                      $.ajax({
+                        //跨域
+                        xhrFields: {
+                          withCredentials: true
+                        },
+                        url: 'http://127.0.0.1:8080/hanfu/employee/updateEmployee',
+                        method: 'post',
+                        data: { status: 1, id: row.id },
+                      }).then(response => {
+                        if (response.result) {
+                          $.toasts({
+                            type: 'success',
+                            content: '解封成功！',
+                            delay: 1500,
+                            onHidden: function () {
+                              //刷新当前数据表格
+                              $('#table').bootstrapTable('refresh');
+                              $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+                            }
+                          })
+                        }
+                      });
+
+                    }, cancel: function () {
+                      //刷新当前数据表格
+                      $('#table').bootstrapTable('refresh');
+                      $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+
+                    }
+
+
+                  })
+
+
+                });
+
+
+
+              },
+
               'click .role-btn': function (event, value, row, index) {
                 event.stopPropagation();
 
@@ -526,14 +629,15 @@ $(document).ready(function () {
 
       //格式化列数据演示 val:当前数据 rows:当前整行数据
       function formatStatus(val, rows) {
+        return rows.status === 1 ? '<span class="badge text-bg-success">正常</span>' : '<span class="badge text-bg-danger">离职</span>';
 
-        let uncheck = `<div class="form-check form-switch">
-<input class="form-check-input bsa-cursor-pointer" type="checkbox" disabled>正常</div>`;
+        //         let uncheck = `<div class="form-check form-switch">
+        // <input class="form-check-input bsa-cursor-pointer" type="checkbox" disabled>离职</div>`;
 
-        let checked = `<div class="form-check form-switch">
-<input class="form-check-input bsa-cursor-pointer" type="checkbox" checked disabled>离职</div>`
+        //         let checked = `<div class="form-check form-switch">
+        // <input class="form-check-input bsa-cursor-pointer" type="checkbox" checked disabled>正常</div>`
 
-        return val === 1 ? checked : uncheck;
+        //         return val === 1 ? checked : uncheck;
 
 
       }
@@ -550,7 +654,7 @@ $(document).ready(function () {
   data-bs-title="封禁？"><i class="bi bi-lock-fill"></i></button>`
           html += `<button disabled type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
   data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
-        } else {
+        } else if (rows.status == 1) {
 
           //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
           html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -558,12 +662,26 @@ $(document).ready(function () {
 
           //第二个按钮
           html += `<button type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-      data-bs-title="封禁？"><i class="bi bi-lock-fill"></i></button>`
+      data-bs-title="封禁该用户"><i class="bi bi-lock-fill"></i></button>`
 
 
           //第三个按钮
           html += `<button type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
       data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
+        } else {
+          //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button disabled type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+  data-bs-title="编辑用户信息"><i class="bi bi-pencil"></i></button>`;
+
+          //第二个按钮
+          html += `<button type="button" class="btn btn-light mx-1 btn-sm unlock-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+  data-bs-title="解除封禁"><i class="bi bi-unlock-fill"></i></button>`
+
+
+          //第三个按钮
+          html += `<button disabled type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+  data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
+
         }
         return html;
       }

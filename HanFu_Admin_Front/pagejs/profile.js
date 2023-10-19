@@ -19,7 +19,7 @@ $(function ($) {
                 content: '未登录！请返回登录',
                 onHidden: function () {
                     top.location.replace('login.html');
-                   
+
                 }
             });
         } else {
@@ -142,38 +142,38 @@ $(function ($) {
                     processData: false,
                     contentType: false,
                 }).then(res => {
-                    
-                    if (res||data.get("code")==ssoUser.code) {
+
+                    if (res && data.get("code") == ssoUser.code) {
                         $.toasts({
                             type: 'success',
                             content: '修改个人信息成功！',
                             onHidden: function () {
-                               
+
                                 top.location.replace('../index.html');
                             }
                         });
-                    }else{
-                                _root.logout({}, (rtn) => {
-                                    if (rtn.hasError || !rtn.result) {
-                                      $.toasts({
-                                        type: 'danger',
-                                        content: '注销登录出错!',
-                          
-                                      })
-                          
-                                    } else {
-                          
-                                      $.toasts({
-                                        type: 'success',
-                                        content: '修改个人信息成功！（修改账号将会退出登录！）',
-                                        onHidden: function () {
-                                          top.location.replace('login.html');
-                                        }
-                                      });
+                    } else {
+                        _root.logout({}, (rtn) => {
+                            if (rtn.hasError || !rtn.result) {
+                                $.toasts({
+                                    type: 'danger',
+                                    content: '注销登录出错!',
 
-                             
+                                })
+
+                            } else {
+
+                                $.toasts({
+                                    type: 'success',
+                                    content: '修改个人信息成功！（修改账号将会退出登录！）',
+                                    onHidden: function () {
+                                        top.location.replace('login.html');
+                                    }
+                                });
+
+
                             }
-                          });
+                        });
 
                     }
 
