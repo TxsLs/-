@@ -114,8 +114,6 @@
   <script src="../dist/js/app.js"></script>
   <script src="../pagejs/rockjs-1.0.js"></script>
   <script src="../pagejs/common.js"></script>
-  <!--假数据模拟,产环境中请直接删除该js-->
-  <!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
 
   <script>
     /**
@@ -139,7 +137,7 @@
         //设置高度就可以固定表头
         // height: 500,
         //请求地址
-        url: 'http://localhost:8080/spring-boot/product/queryPage',
+        url: 'http://127.0.0.1:8080/spring-boot/product/queryPage',
 
         queryParamsType: "page",
         responseHandler: function (res) {
@@ -640,17 +638,12 @@
         } else {          // 可以使用 productId 参数获取要添加的商品的唯一标识符
           // 可以在此处执行其他相关操作，比如发送请求到服务器，更新购物车数量等
           var quantity = document.getElementById('ProductNumber' + productId).value;
-          // 示例逻辑：将商品添加到购物车
-          console.log("添加商品到购物车，商品ID：" + productId + "商品数量:" + quantity);
+  
 
           $.toasts({
             type: 'success',
             content: '加入购物车成功',
           });
-
-
-          //待优化的点：这段代码用空间换时间，会加入多段数据进入购物车，
-          //可以做成时间换空间：先查有没有再更新购物车。
 
           // 准备请求数据
           var data = {
@@ -658,10 +651,10 @@
             productId: productId,
             quantity: quantity
           };
-          console.log(data);
+
           // 发送POST请求
           $.ajax({
-            url: 'http://127.0.0.1:8080/spring-boot/ShopCart/addCart',
+            url: 'http://127.0.0.1:8080/spring-boot/shopCart/addCart',
             method: 'POST',
             data: data,
             xhrFields: {

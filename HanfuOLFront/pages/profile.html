@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -13,199 +14,345 @@
     <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
     <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
 </head>
+
 <body class="bg-body-tertiary py-3">
-<div class="container-fluid">
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-body">
-            设置我的资料
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-5">
-                    <form id="form">
-
-                        <div class="row mb-3">
-                            <label for="username" class="col-sm-3 col-form-label text-sm-end">用户名</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="username" name="username">
+    <div class="container-fluid">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-body">
+                设置我的资料
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <form id="form">
+                            <div class="row mb-3">
+                                <label for="username" class="col-sm-3 col-form-label text-sm-end">账号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="ccode" name="ccode">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nickname" name="nickname">
+                            <div class="row mb-3">
+                                <label for="username" class="col-sm-3 col-form-label text-sm-end">用户名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="username" name="username">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
-                            <div class="col-sm-9">
-                                <div class="d-flex align-items-center h-100">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
-                                        <label class="form-check-label" for="inlineRadio1">男</label>
+                            <div class="row mb-3">
+                                <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
+                                <div class="col-sm-9">
+                                    <div class="d-flex align-items-center h-100">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio1" value="option1">
+                                            <label class="form-check-label" for="inlineRadio1">男</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio2" value="option2">
+                                            <label class="form-check-label" for="inlineRadio2">女</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">女</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="profileImage" name="profileImage">
+                                        <label class="input-group-text" for="avatar"><i class="bi bi-cloud-upload"></i>
+                                            上传图片</label>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <img id="imgEditPhoto" src="../dist/img/user.png" alt="头像"
+                                            class="rounded-circle   bsa-wh-100 ">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
-                            <div class="col-sm-9">
-                                <div class="input-group mb-3">
-                                    <input type="file" class="form-control" id="avatar" name="avatar" >
-                                    <label class="input-group-text" for="avatar"><i class="bi bi-cloud-upload"></i> 上传图片</label>
+                            <div class="row mb-3">
+                                <label for="phone" class="col-sm-3 col-form-label text-sm-end">手机</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="phone" name="phone">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="phone" class="col-sm-3 col-form-label text-sm-end">手机</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="phone" name="phone" value="19978451354" >
+                            <div class="row mb-3">
+                                <label for="email" class="col-sm-3 col-form-label text-sm-end">邮箱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        value="lujiahao@88.com">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="email" class="col-sm-3 col-form-label text-sm-end">邮箱</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="email" name="email" value="lujiahao@88.com" >
+                            <div class="row mb-3">
+                                <div class="col-sm-9 offset-sm-3">
+                                    <button class="btn btn-primary" onclick="updateCustomer(event)">确认修改</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="desc" class="col-sm-3 col-form-label text-sm-end">备注</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" id="desc" rows="3" name="desc"></textarea>
-                            </div>
-                        </div>
-                     <!-- 地址开始 -->
-                     <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label text-sm-end">地址</label>
-                        <div class="col-sm-9">
+                        </form>
+                            <!-- 地址开始 -->
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label text-sm-end">地址</label>
+                                <div class="col-sm-9">
 
-                            <!-- 地址列表 -->
-                            <div id="addressListDiv">
-                                <div id="address0" class="mb-3">
-                                    <input type="text" class="form-control" name="address[]" placeholder="地址1">
-                                    <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removeAddress(0)">删除</button>
+                                    <!-- 地址列表 -->
+                                    <div id="addressListDiv">
+                                    </div>
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="addAddress(0,0)">添加地址</button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addAddress()">添加地址</button>
-                        </div>
+                            <!-- 地址结束 -->
+                   
                     </div>
-                    <!-- 地址结束 -->
-                        <div class="row mb-3">
-                            <div class="col-sm-9 offset-sm-3">
-                                <button type="submit" class="btn btn-primary">确认修改</button>
-                            </div>
-                        </div>
-
-                    </form>
                 </div>
             </div>
+
+
+
         </div>
-
-
-       
     </div>
-</div>
-<!--回到顶部开始-->
-<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
-<!--回到顶部结束-->
+    <!--回到顶部开始-->
+    <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+    <!--回到顶部结束-->
 
 
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../lib/formvalidation/js/formValidation.js"></script>
-<script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
-<script src="../lib/formvalidation/js/language/zh_CN.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
-<script src="../dist/js/app.js"></script>
-<!--假数据模拟,生产环境中请直接删除该js-->
-<!-- <script src="../dist/js/bootstrap-admin.mock.js"></script> -->
-<script src="../pagejs/rockjs-1.0.js"></script>
-<script src="../pagejs/common.js"></script>
-<script>
-var ssoUser = null;  //当前用户
-		_root.loginCustomer({}, function (rtn, status) {
-			if (rtn.hasError) {
-				alert(rock.errorText(rtn, "获得当前用户失败！"));
-			} else {
-				ssoUser = rtn.result;
-			}
-			if (rock.isNull(ssoUser)) {
-				alert(ssoUser + "---------------");
-				$("#loginUser").html("未知用户");
-			} else {
-				console.log(ssoUser)
-				console.log(ssoUser.id)
-				$("#loginUser").html(ssoUser.name);
-                $("#username").attr("value", ssoUser.id);
-                $("#nickname").attr("value", ssoUser.name);
-			}
-		})
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/formvalidation/js/formValidation.js"></script>
+    <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+    <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+    <script src="../dist/js/bootstrap-admin.min.js"></script>
+    <script src="../dist/js/app.js"></script>
+    <script src="../pagejs/rockjs-1.0.js"></script>
+    <script src="../pagejs/common.js"></script>
+    <script>
+        $(function () {
+            var ssoUser = null;  //当前用户
+            _root.loginCustomer({}, function (rtn, status) {
+                if (rtn.hasError) {
+                    alert(rock.errorText(rtn, "获得当前用户失败！"));
+                } else {
+                    ssoUser = rtn.result;
+                }
+                if (rock.isNull(ssoUser)) {
+                    alert("请先登录");
+                    $("#loginUser").html("未知用户");
+                } else {
+                    console.log(ssoUser)
+                    $("#loginUser").html(ssoUser.name);
+                    //在此处加入信息填充逻辑
+                    $("#ccode").attr("value", ssoUser.code);
+                    $("#username").attr("value", ssoUser.name);
+                    $("#phone").attr("value", ssoUser.phone);
+                    $("#email").attr("value", ssoUser.email);
+                    //照片上传字段设置
+                    $("#profileImage").change((evt) => {
+                        var ele = evt.target, url;
+                        if (rock.isMsie()) {
+                            url = ele.value;
+                        } else {
+                            var file = ele.files[0];
+                            if (file) {
+                                url = window.URL.createObjectURL(file);
+                            }
+                        }
+                        $("#imgEditPhoto").attr("src", url);
+                    });
+                    //已有照片检测并填充
+                    if (ssoUser.hasPhoto) {
+                        var mvc = rock.initSvr(["customer"]);
+                        var Service = mvc.findService("customer");
+                        $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + ssoUser.id);
+                    }
+                    //性别填充
+                    // 获取所有的性别选项的 <input> 元素
+                    const genderInputs = document.getElementsByName("inlineRadioOptions");
+
+                    // 根据 gender 的值设置选中状态
+                    if (ssoUser.gender == 1) {
+                        genderInputs[0].checked = true; // 设置第一个选项为选中状态
+                    } else if (ssoUser.gender == 0) {
+                        genderInputs[1].checked = true; // 设置第二个选项为选中状态
+                    }
+
+                    //添加地址
+                    var mvc = rock.initSvr(["address"]);
+                    var Service = mvc.findService("address");
+                    var addresslist = Service.url("queryAllByName");
+                    $.ajax({
+                        url: addresslist,
+                        type: 'GET', // 请求类型，可以是 GET、POST、PUT 等
+                        dataType: 'json', // 预期的响应数据类型，例如 json、xml 等
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function (response) {
+                            // 检查 result 数组是否存在
+                            if (response.result && response.result.length > 0) {
+                                // 遍历 result 数组，并输出每个元素的 address 值
+                                for (var i = 0; i < response.result.length; i++) {
+                                    var address = response.result[i].address;
+                                    var id = response.result[i].id;
+                                    addAddress(address, id);
+                                }
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // 请求失败的处理逻辑
+                            console.log('Error:', error);
+                        }
+                    });
 
 
+                }
+            })
 
-    //前端表单验证
-    $('#form').formValidation({
-        fields: {
-            desc: {
-                validators: {
-                    notEmpty: true,
+        })
+    </script>
+    <script>
+        // 添加地址
+        function addAddress(address, myid) {
+            let addressListDiv = document.getElementById("addressListDiv");
+            let index = addressListDiv.children.length;
+            let addressInput = document.createElement("div");
+            addressInput.id = "address" + index;
+            addressInput.classList.add("mb-3");
+            addressInput.setAttribute('indexdata', myid);//修改或者删除地址的索引
+            let inputPlaceholder = address == 0 ? `地址${index + 1}` : address;
+            addressInput.innerHTML = `<input type="text" class="form-control" name="address[]" value=${inputPlaceholder}>
+            <button type="button" class="btn btn-primary btn-sm ml-2" onclick="updateAddress(${index})">保存</button>
+                                <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removeAddress(${index})">删除</button>
+                                ${address == 0 ? '<small>（未保存）</small>' : ''}`;
+
+            addressListDiv.appendChild(addressInput);
+        }
+
+        // 删除地址
+        function removeAddress(index) {
+            let addressDiv = document.getElementById("address" + index);
+            if (addressDiv) {
+                // 弹出确认对话框
+                let confirmation = window.confirm("确定要删除该地址吗？");
+                if (confirmation) {
+                    let isUnsaved = addressDiv.querySelector('small') !== null;
+                    if (isUnsaved) {//未保存的删除
+                        addressDiv.remove();
+                        $.toasts({
+                            type: 'success',
+                            content: '（未保存的地址）删除成功',
+                        })
+                    } else {
+                        $.ajax({
+                            url: "http://127.0.0.1:8080/spring-boot/address/remove",
+                            type: 'GET', // 请求类型，可以是 GET、POST、PUT 等
+                            data: { id: addressDiv.getAttribute('indexdata') },
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            success: function (response) {
+                                if (response.result) {
+                                    $.toasts({
+                                        type: 'success',
+                                        content: '删除成功',
+                                    })
+                                } else {
+                                    $.toasts({
+                                        type: 'danger',
+                                        content: '删除失败',
+                                    })
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                // 请求失败的处理逻辑
+                                console.log('Error:', error);
+                            }
+                        });
+                        addressDiv.remove();
+                    }
+
                 }
             }
         }
-    }).on('success.form.fv', function (e) {
-        //阻止表单提交
-        e.preventDefault();
-        //得到表单对象
-        let $form = $(e.target);
-        let data = $form.serialize();
 
-        alert('表单验证通过,即将发起ajax');
-        //得到序列化数据
-        $.ajax({
-            url: "/login.php",
-            method: 'POST',
-            data
-        }).then(function (res) {
-            if (res.code === 200) {
-                //登录成功
-            } else {
-                //登录失败
-            }
-        });
-    });
-</script>
-<script>
-    // 添加地址
-    function addAddress() {
-        let addressListDiv = document.getElementById("addressListDiv");
-        let index = addressListDiv.children.length;
-        let addressInput = document.createElement("div");
-        addressInput.id = "address" + index;
-        addressInput.classList.add("mb-3");
-        addressInput.innerHTML = `<input type="text" class="form-control" name="address[]" placeholder="地址${index + 1}">
-                                    <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removeAddress(${index})">删除</button>`;
-        addressListDiv.appendChild(addressInput);
-    }
+        //更新或者保存地址信息
+        function updateAddress(index) {
+            let addressDiv = document.getElementById("address" + index);
+            if (addressDiv) {
+                indexdata = addressDiv.getAttribute('indexdata');//获取到地址的主键
+                let inputElement = addressDiv.querySelector('input');
+                let addressValue = null;
+                if (inputElement !== null) {
+                    addressValue = inputElement.value;//获取地址的值
+                }
+                if (indexdata == 0) {
+                    let smallElement = addressDiv.querySelector('small');
+                    addressDiv.removeChild(smallElement);
+                    //添加新元素 
+                    //准备ajax数据
+                    var addressdata = {
+                        "address": addressValue
+                    };
+                    console.log(addressdata);
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/spring-boot/address/addNewAddress",
+                        type: 'POST', // 请求类型，可以是 GET、POST、PUT 等
+                        data: JSON.stringify(addressdata),
+                        contentType: "application/json",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function (response) {
+                            $.toasts({
+                                type: 'success',
+                                content: '更新成功',
+                            })
+                        },
+                        error: function (xhr, status, error) {
+                            // 请求失败的处理逻辑
+                            console.log('Error:', error);
+                        }
+                    });
+                    //location.href = location.href;
+                } else {
+                    //更新元素的值
+                    //准备ajax数据
+                    var addressdata = {
+                        "id": indexdata,
+                        "address": addressValue
+                    };
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/spring-boot/address/updateMap",
+                        type: 'GET', // 请求类型，可以是 GET、POST、PUT 等
+                        data: addressdata,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function (response) {
+                            $.toasts({
+                                type: 'success',
+                                content: '更新成功',
+                            })
+                        },
+                        error: function (xhr, status, error) {
+                            // 请求失败的处理逻辑
+                            console.log('Error:', error);
+                        }
+                    });
+                }
 
-    // 删除地址
-    function removeAddress(index) {
-        let addressDiv = document.getElementById("address" + index);
-        if (addressDiv) {
-            addressDiv.remove();
-            // 序号重排
-            let children = document.querySelectorAll("#addressListDiv > div");
-            for (let i = 0; i < children.length; i++) {
-                let input = children[i].querySelector("input");
-                input.placeholder = "地址" + (i + 1);
-                let button = children[i].querySelector("button");
-                button.setAttribute("onclick", `removeAddress(${i})`);
             }
         }
-    }
-</script>
+
+        //更新个人信息
+        function updateCustomer() {
+            // 阻止表单的默认提交行为
+            event.preventDefault();
+            $.toasts({
+                type: 'success',
+                content: '修改成功(*/ω＼*)',
+            })
+            //发送ajax修改个人信息 
+        }
+
+    </script>
 </body>
+
 </html>

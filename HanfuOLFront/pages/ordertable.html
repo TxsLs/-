@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -12,150 +13,289 @@
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../lib/bootstrap-table/dist/bootstrap-table.min.css">
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-  <title>订单详情</title>
+  <title>订单列表</title>
 </head>
+
 <body class="bg-body-tertiary">
-    <div class="col-12">
-        <div class="card border-0 shadow-sm">
-          <div class="card-header bg-body">
-            订单摘要
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <a href="../index.html" class="btn btn-primary" style="float: right;">返回首页</a> <!-- 添加返回首页的按钮 -->
-              <table class="table align-middle mb-0">
-                <thead>
-                <tr>
-                  <th>订单号</th>
-                  <th>商品</th>
-                  <th>下单人</th>
-                  <th>下单日期</th>
-                  <th>价格</th>
-                  <th>状态</th>
-                  <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>#157444499</td>
-                  <td>
-                    Apple iPhone 13 (A2634) 512GB
-                  </td>
-                  <td>欲饮琵琶码上催</td>
-                  <td>2022/7/16</td>
-                  <td>￥100.00</td>
-                  <td>
-                    <span class="badge bg-success">交易成功</span>
-                  </td>
-                  <td>
-                    <a href="javascript:" class="btn btn-sm btn-light"><i
-                      class="bi bi-gear"></i>设置地址</a>
-                    <a href="javascript:" class="btn btn-sm btn-light ms-4"><i
-                      class="bi bi-arrow-down"></i>删除订单</a>
-                      <a href="review.html" class="btn btn-sm btn-light ms-4"><i
-                        class="bi bi-pencil"></i>订单评价</a>
-                 </div>
-                </td>
-                </tr>
-                <tr>
-                  <td>#157444499</td>
-                  <td>
-                    Apple iPhone 13 (A2634) 512GB
-                  </td>
-                  <td>欲饮琵琶码上催</td>
-                  <td>2022/7/16</td>
-                  <td>￥100.00</td>
-                  <td>
-                    <span class="badge bg-success">交易成功</span>
-                  </td>
-                  <td>
-                    <a href="javascript:" class="btn btn-sm btn-light"><i
-                      class="bi bi-gear"></i>设置地址</a>
-                    <a href="javascript:" class="btn btn-sm btn-light ms-4"><i
-                      class="bi bi-arrow-down"></i>删除订单</a>
-                </td>
-                </tr>
-                <tr>
-                  <td>#157444499</td>
-                  <td>
-                    Apple iPhone 13 (A2634) 512GB
-                  </td>
-                  <td>欲饮琵琶码上催</td>
-                  <td>2022/7/16</td>
-                  <td>￥100.00</td>
-                  <td>
-                    <span class="badge bg-success">交易成功</span>
-                  </td>
-                  <td>
-                    <a href="javascript:" class="btn btn-sm btn-light"><i
-                      class="bi bi-gear"></i>设置地址</a>
-                    <a href="javascript:" class="btn btn-sm btn-light ms-4"><i
-                      class="bi bi-arrow-down"></i>删除订单</a>
-                </td>
-                </tr>
-                <tr>
-                  <td>#157444499</td>
-                  <td>
-                    Apple iPhone 13 (A2634) 512GB
-                  </td>
-                  <td>欲饮琵琶码上催</td>
-                  <td>2022/7/16</td>
-                  <td>￥100.00</td>
-                  <td>
-                    <span class="badge bg-success">交易成功</span>
-                  </td>
-                  <td>
-                    <a href="javascript:" class="btn btn-sm btn-light"><i
-                      class="bi bi-gear"></i>设置地址</a>
-                    <a href="javascript:" class="btn btn-sm btn-light ms-4"><i
-                      class="bi bi-arrow-down"></i>删除订单</a>
-                </td>
-                </tr>
-                <tr>
-                  <td>#157444499</td>
-                  <td>
-                    Apple iPhone 13 (A2634) 512GB
-                  </td>
-                  <td>欲饮琵琶码上催</td>
-                  <td>2022/7/16</td>
-                  <td>￥100.00</td>
-                  <td>
-                    <span class="badge bg-success">交易成功</span>
-                  </td>
-                  <td>
-                    <a href="javascript:" class="btn btn-sm btn-light"><i
-                      class="bi bi-gear"></i>设置地址</a>
-                    <a href="javascript:" class="btn btn-sm btn-light ms-4"><i
-                      class="bi bi-arrow-down"></i>删除订单</a>
-                </td>
-                </tr>
-                <tr>
-                  <td>#157444499</td>
-                  <td>
-                    Apple iPhone 13 (A2634) 512GB
-                  </td>
-                  <td>欲饮琵琶码上催</td>
-                  <td>2022/7/16</td>
-                  <td>￥100.00</td>
-                  <td>
-                    <span class="badge bg-success">交易成功</span>
-                  </td>
-                  <td>
-                      <a href="javascript:" class="btn btn-sm btn-light"><i
-                        class="bi bi-gear"></i>设置地址</a>
-                      <a href="javascript:" class="btn btn-sm btn-light ms-4"><i
-                        class="bi bi-arrow-down"></i>删除订单</a>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+  <div class="col-12">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-body">
+        订单摘要
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <a href="../index.html" class="btn btn-primary" style="float: right;">返回首页</a> <!-- 添加返回首页的按钮 -->
+          <table class="table align-middle mb-0" id="table">
+
+          </table>
         </div>
       </div>
+    </div>
+  </div>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/@popperjs/core/dist/umd/popper.min.js"></script>
+  <script src="../lib/@eonasdan/tempus-dominus/dist/js/tempus-dominus.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>
 
-<script>
 
-</script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
+  <script src="../pagejs/rockjs-1.0.js"></script>
+  <script src="../pagejs/common.js"></script>
+  <script>
+    var ssoUser = null;  //当前用户
+    _root.loginCustomer({}, function (rtn, status) {
+      if (rtn.hasError) {
+        alert(rock.errorText(rtn, "获得当前用户失败！"));
+      } else {
+        ssoUser = rtn.result;
+      }
+      if (rock.isNull(ssoUser)) {
+        console.log("非法访问——————小阳在看着你呢");
+      } else {
+        console.log(ssoUser);
+        console.log(ssoUser.id);
+      }
+    })
+    /**
+     * 获得表格组件
+     */
+    function getBootstrapTable() {
+      return $("#tableData");
+    }
+
+    $(function () {
+
+      $('#table').bootstrapTable({
+        // 配置语言
+        locale: 'zh-CN',
+        // 设置高度就可以固定表头
+        // height: 500,
+        // 使用ajax数据源
+        ajax: function (params) {
+          $.ajax({
+            url: 'http://127.0.0.1:8080/spring-boot/order/queryPage',
+            method: 'get',
+            data: {
+              pageSize: 5,  // 每页显示的条数
+              pageNum: 1,  // 当前页码
+              sort: 'id' + ' ' + 'asc' // 排序字段和排序方式
+            },
+            xhrFields: {
+              withCredentials: true
+            },
+            dataType: 'json',
+            success: function (res) {
+              var data = {};
+              if (res.hasError) {
+                alert(rock.errorText(res, "无法获得数据列表!"));
+              } else {
+                var ps = res.result;
+                data.total = ps.totalCount;
+                data.rows = ps.content;
+              }
+              params.success(data);
+              // 获取表格元素
+              const table = document.querySelector('#table');
+              // 遍历每个数据项，在每行元素上添加类名
+              res.result.content.forEach(function (item, index) {
+                const tr = table.rows[index + 1]; // 从第二行开始，因为第一行是表头
+                tr.cells[4].classList.add('oneprice'); // 为商品总价列添加类名
+                tr.cells[5].classList.add('price'); // 为商品总价列添加类名
+              });
+            },
+            error: function () {
+              alert('请求数据失败');
+            }
+          });
+        },
+        // 是否开启分页
+        pagination: true,
+        // 是客户端分页还是服务端分页
+        sidePagination: 'server',
+        // 初始化加载第一页，默认第一页
+        pageNumber: 1,
+        // 默认显示几条
+        pageSize: 5,
+        // 可供选择的每页的行数
+        pageList: [5, 10, 25, 50, 100],
+        // 在上百页的情况下体验较好 - 能够显示首尾页
+        paginationLoop: true,
+        // 展示首尾页的最小页数
+        paginationPagesBySide: 2,
+        // 唯一ID字段
+        uniqueId: 'id',
+        // 每行的唯一标识字段
+        idField: 'id',
+        // 是否启用点击选中行
+        clickToSelect: false,
+        // 是否显示详细视图和列表视图的切换按钮
+        showToggle: true,
+        // 是否显示所有的列
+        showColumns: true,
+        // 是否显示刷新按钮
+        showRefresh: true,
+        // 显示图标
+        showButtonIcons: true,
+        // 总数字段
+        totalField: 'total',
+        // 当字段为 undefined 显示
+        undefinedText: '-',
+        // 排序方式
+        sortOrder: 'asc',
+        // 默认排序
+        sortName: 'id',
+        // 按钮的类
+        buttonsClass: 'light',
+        // 类名前缀
+        buttonsPrefix: 'btn',
+        // 图标前缀
+        iconsPrefix: 'bi',
+        // 图标大小 undefined sm lg
+        iconSize: undefined,
+        // 图标的设置
+        icons: {
+          fullscreen: 'bi-arrows-fullscreen'
+        },
+        // 头部的那个复选框选中事件
+        onCheckAll: function (row) {
+          batchBtnStatusHandle();
+          culculateTotalPrice();
+        },
+        // 单行选中事件
+        onCheck: function (row) {
+          batchBtnStatusHandle();
+          culculateTotalPrice();
+        },
+        // 单行取消选中事件
+        onUncheck: function (row) {
+          batchBtnStatusHandle();
+          culculateTotalPrice();
+        },
+        // 头部的那个复选框取消选中事件
+        onUncheckAll: function (row) {
+          batchBtnStatusHandle();
+          culculateTotalPrice();
+        },
+        // 加载模板
+        loadingTemplate: function () {
+          return '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>';
+        },
+        onPostBody: function () {
+          // 重新启用弹出层
+          $('[data-bs-toggle="tooltip"]').each(function (i, el) {
+            new bootstrap.Tooltip(el);
+          });
+        },
+        // params是一个对象
+        queryParams: function (options) {
+          return {
+            pageSize: options.pageSize,
+            pageNum: options.pageNumber,
+            sort: options.sortName + ' ' + options.sortOrder
+          };
+        },
+        // 列
+        columns: [
+          {
+            checkbox: true,
+            // 是否显示该列
+            visible: true
+          },
+          {
+            title: 'id',
+            field: 'id',
+            // 使用[align]，[halign]和[valign]选项来设置列和它们的标题的对齐方式。h表示横向，v标识垂直
+            align: 'center',
+            // 是否作为排序列
+            sortable: true,
+            // 当列名称与实际名称不一致时可用
+            // sortName: 'id',
+            switchable: false,
+            // 列的宽度
+            width: 8,
+            // 宽度单位
+            widthUnit: 'rem'
+          },
+          {
+            title: '订单编号',
+            field: 'code',
+            align: 'center',
+            sortable: true
+          },
+          {
+            title: '订单状态',
+            field: 'orderStatus',
+            align: 'center',
+            sortable: true
+          },
+          {
+            title: '地址',
+            field: 'address',
+            align: 'center',
+            sortable: true
+          },
+          {
+            title: '商品总价',
+            field: 'totalPrice',
+            align: 'center',
+            sortable: true,
+          }, {
+            title: '下单时间',
+            field: 'createdTime',
+            align: 'center',
+            sortable: true
+          }, {
+            title: '电话',
+            field: 'phone',
+            align: 'center',
+            sortable: true
+          },
+          {
+            title: '操作',
+            align: 'center',
+            formatter: function (value, row) {
+              return '<div style="display: flex; justify-content: space-evenly">' +
+                '<button class="btn btn-primary" onclick="viewDetails(\'' + row.id + '\')">查看详情</button>' +
+                '<button class="btn btn-success" onclick="editAddress(\'' + row.id + '\')">修改地址和手机号</button>' +
+                '<button class="btn btn-danger" onclick="deleteOrder(\'' + row.id + '\')">删除</button>' +
+                '</div>';
+            }
+          }
+        ]
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //处理批量按钮的disabled状态
+      function batchBtnStatusHandle() {
+        let rowSelected = $("#table").bootstrapTable('getSelections');
+        if (rowSelected.length > 0) {
+          $('.batch-btn').attr('disabled', false)
+        } else {
+          $('.batch-btn').attr('disabled', true)
+        }
+      }
+
+
+
+    });
+
+
+  </script>
 </body>
+
 </html>
