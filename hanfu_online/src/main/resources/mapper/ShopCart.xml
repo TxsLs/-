@@ -29,4 +29,11 @@
 		WHERE f_customer_code = #{code}
 		AND f_product_id = #{productID}
 	</update>
+	<update id="updateSCProduct">
+		UPDATE t_shopcart
+		SET f_quantity = #{number}
+		WHERE f_customer_code = #{code}
+		AND f_product_id = #{productID}
+	</update>
+	
 </mapper>

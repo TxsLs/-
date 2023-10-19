@@ -43,4 +43,15 @@ public interface ShopCartDao extends Dao<ShopCart> {
 	 * @return 更新数据条数
 	 */
 	public boolean addProduct(String code,long productID,int number);
+	/**
+	 * <b>updateSCProduct。</b>
+	 * <p><b>详细说明：</b></p>
+	 * <!-- 更新购物车中已有的商品 -->
+	 * 无。
+	 * @param code
+	 * @param productID
+	 * @param number
+	 * @return 是否成功
+	 */
+	public boolean updateSCProduct(String code,long productID,int number);
 }

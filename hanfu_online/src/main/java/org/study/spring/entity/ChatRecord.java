@@ -22,7 +22,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(description = "地址实体")
+@ApiModel(description = "聊天记录实体")
 @Table(name = "t_chat_record", alias = "cr")
 public class ChatRecord extends Entity {
 	

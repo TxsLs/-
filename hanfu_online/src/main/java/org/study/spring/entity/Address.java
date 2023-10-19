@@ -29,12 +29,9 @@ public class Address extends Entity {
 	 */
 	private static final long serialVersionUID = 7255324056018475158L;
 
-	@ApiModelProperty(value = "代码", required = true, position = 1)
-	private String code;
+	@ApiModelProperty(value = "顾客id", required = true, position = 1)
+	private String customerCode;
 
-	@ApiModelProperty(value = "顾客id", required = true, position = 2)
-	private String customerId;
-
-	@ApiModelProperty(value = "地址", position = 3)
+	@ApiModelProperty(value = "地址", position = 2)
 	private String address;
 }

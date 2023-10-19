@@ -53,6 +53,9 @@ public class Customer extends Entity {
     private Date createTime;
 
 	
+    
+    
+    
 	@ApiModelProperty(value = "返回是否有照片", position = 8)
     @Column(value = "f_photo_file is not null", calculated = true)
 	private Boolean hasPhoto;

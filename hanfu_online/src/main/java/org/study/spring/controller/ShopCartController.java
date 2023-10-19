@@ -1,7 +1,5 @@
 package org.study.spring.controller;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
@@ -76,5 +74,20 @@ public class ShopCartController extends BaseController<ShopCart, ShopCartService
 		ok = this.service().addProduct(code, productId, quantity);
 		return Result.of(ok);
 	}
-
+	
+	@ApiOperation(value = "动态更新购物车")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "顾客账号", required = true),
+			@ApiImplicitParam(name = "productId", value = "商品id", required = true, dataType = "long"),
+			@ApiImplicitParam(name = "quantity", value = "数量", required = true, dataType = "int") })
+	@RequestMapping(value = "/updateCart", method = { RequestMethod.POST })
+	public @ResponseBody Result<Boolean> updateCart(@RequestParam String code, @RequestParam long productId,
+			@RequestParam int quantity) {
+		log.debug("call updateCart");
+		boolean ok = false;
+		ok = this.service().updateProduct(code, productId, quantity);
+		return Result.of(ok);
+	}
+	
+	
+	
 }

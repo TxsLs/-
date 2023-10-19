@@ -6,8 +6,6 @@ import org.study.spring.dao.ShopCartDao;
 import org.study.spring.entity.ShopCart;
 import org.study.spring.service.ShopCartService;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
 @Service
 public class ShopCartServiceImpl extends BaseService<ShopCart, ShopCartDao> implements ShopCartService {
 
@@ -19,9 +17,14 @@ public class ShopCartServiceImpl extends BaseService<ShopCart, ShopCartDao> impl
 		if (this.dao().findProduct(code, productID) != null) {
 			return this.dao().updateProduct(code, productID, number);
 		} else {
-			log.debug(this.dao().findProduct(code, productID)+"-----------------------");
 			return this.dao().addProduct(code, productID, number);
 		}
+	}
+
+	@Override
+	public boolean updateProduct(String code, long productId, int quantity) {
+
+		return this.dao().updateSCProduct(code, productId, quantity);
 	}
 
 }
