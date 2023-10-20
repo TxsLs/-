@@ -41,6 +41,8 @@ public class Order extends Entity {
 	private String totalPrice;
 
 	@ApiModelProperty(value = "订单状态", position = 3)
+	@IgnoreInsert
+	@IgnoreUpdate
 	private String orderStatus;
 
 	@ApiModelProperty(value = "地址", position = 4)

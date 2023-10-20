@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Api(tags = "订单管理模块")
+@Api(tags = "订单详情管理模块")
 @Controller
 @RequestMapping("/orderdetail")
 public class OrderDetailController extends BaseController<OrderDetail, OrderDetailService> {
@@ -54,4 +54,6 @@ public class OrderDetailController extends BaseController<OrderDetail, OrderDeta
 		return Result.toResult(ps);
 	}
 
+	
+	
 }

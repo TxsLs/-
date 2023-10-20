@@ -1,5 +1,9 @@
 package org.study.spring.controller;
 
+import java.time.LocalDateTime;
+
+import javax.validation.Valid;
+
 import org.apache.commons.lang3.StringUtils;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
@@ -9,6 +13,7 @@ import org.quincy.rock.core.lang.DataType;
 import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,8 +58,28 @@ public class OrderController extends BaseController<Order, OrderService> {
 			}
 			PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 			return Result.toResult(ps);
-		}else {
+		} else {
 			throw new LoginException("未登录!");
 		}
 	}
+
+	@ApiOperation(value = "添加一个实体", notes = "该接口继承自BaseController")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "vo", value = "实体值对象", required = true),
+			@ApiImplicitParam(name = "ignoreNullValue", value = "是否忽略空值(default=false)", dataType = "boolean") })
+	@RequestMapping(value = "/addorder", method = { RequestMethod.POST })
+	public @ResponseBody Long addorder(@Valid @RequestBody Order vo,
+			@RequestParam(defaultValue = "false") boolean ignoreNullValue) {
+		log.debug("call add");
+		if (AppUtils.isLogin()) {
+			String code = AppUtils.getLoginUser().getUsername();
+			LocalDateTime now = LocalDateTime.now();
+			vo.setCode(code + now);//订单号当前时间
+			vo.setCustomerCode(code);
+			this.service().insert(vo, ignoreNullValue);
+			return vo.getId();//返回订单id值
+		} else {
+			throw new LoginException("未登录!");
+		}
+	}
+
 }

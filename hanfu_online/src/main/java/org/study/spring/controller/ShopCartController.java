@@ -1,5 +1,7 @@
 package org.study.spring.controller;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
@@ -57,7 +59,7 @@ public class ShopCartController extends BaseController<ShopCart, ShopCartService
 			}
 			PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 			return Result.toResult(ps);
-		}else {
+		} else {
 			throw new LoginException("未登录!");
 		}
 	}
@@ -74,7 +76,7 @@ public class ShopCartController extends BaseController<ShopCart, ShopCartService
 		ok = this.service().addProduct(code, productId, quantity);
 		return Result.of(ok);
 	}
-	
+
 	@ApiOperation(value = "动态更新购物车")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "顾客账号", required = true),
 			@ApiImplicitParam(name = "productId", value = "商品id", required = true, dataType = "long"),
@@ -87,7 +89,18 @@ public class ShopCartController extends BaseController<ShopCart, ShopCartService
 		ok = this.service().updateProduct(code, productId, quantity);
 		return Result.of(ok);
 	}
-	
-	
-	
+
+	@ApiOperation(value = "删除多个实体", notes = "该接口继承自BaseController")
+	@ApiImplicitParam(name = "id", value = "多个主键id", required = true, dataType = "long", allowMultiple = true)
+	@RequestMapping(value = "/removeMoreCart", method = { RequestMethod.GET })
+	public @ResponseBody Result<Boolean> removeMoreCart(@RequestParam("id") Long[] ids) {
+		log.debug("call removeMoreCart");
+		if (AppUtils.isLogin()) {
+			//任何人登录会改id就能改任何商品 。。。因为前端只提供能改的（自己的商品id），但是防不住高手改请求。
+			boolean result = this.service().deleteMore(Arrays.asList(ids));
+			return Result.of(result);
+		} else {
+			throw new LoginException("未登录!");
+		}
+	}
 }

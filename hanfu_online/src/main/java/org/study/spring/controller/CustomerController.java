@@ -53,12 +53,6 @@ public class CustomerController extends BaseController<Customer, CustomerService
 	public @ResponseBody Result<Boolean> addCustomer(@ApiIgnore Customer vo,
 			@RequestPart(value = "photo", required = false) MultipartFile file) throws IOException {
 		log.debug("call addCustomer");
-//		boolean result = this.service().insert(vo, true);
-//		if (result && file != null && !file.isEmpty()) {
-//			result = this.updatePhoto(vo.id(), file);
-//		}
-//		return Result.of(result);
-//	}
         boolean exist = this.service().existByName("code", vo.getCode(), null);
 		boolean result = false;
 		if (!exist) {//注册账户时先判断输入的账户名是否存在
