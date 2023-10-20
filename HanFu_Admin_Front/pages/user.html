@@ -25,12 +25,13 @@
   <div class="container-fluid">
     <div class="card border-0 shadow-sm">
       <div class="card-header bg-body search-area">
-        <form class="row row-cols-sm-auto g-3 py-2 align-items-center">
+        <form id="searchForm" name="searchForm" class="row row-cols-sm-auto g-3 py-2 align-items-center">
           <div class="col-12">
             <div class="row">
-              <label for="username" class="col-sm-auto col-form-label">性名</label>
+              <label for="name" class="col-sm-auto col-form-label">性名</label>
               <div class="col">
-                <input type="email" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="name" name="name"
+                  pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
               </div>
             </div>
           </div>
@@ -38,7 +39,7 @@
             <div class="row">
               <label for="phone" class="col-sm-auto col-form-label">手机号</label>
               <div class="col">
-                <input type="email" class="form-control" id="phone" name="phone">
+                <input type="tel" class="form-control" id="phone" name="phone" maxlength="11">
               </div>
             </div>
           </div>
@@ -62,7 +63,7 @@
               <label for="status" class="col-sm-auto col-form-label">用户状态</label>
               <div class="col">
                 <select class="selectpicker" id="status" name="status">
-                  <option value="3">所有</option>
+                  <option value="">所有</option>
                   <option value="0">停用</option>
                   <option value="1">正常</option>
                 </select>
@@ -70,28 +71,41 @@
             </div>
           </div>
 
-
-          <div class="col-12 gap-2">
-
-            <button type="button" class="btn btn-light bsa-querySearch-btn">
-              <i class="bi bi-search"></i>搜索
-            </button>
-            <button type="button" class="btn btn-light bsa-reset-btn">
-              <i class="bi bi-arrow-clockwise"></i>重置
-            </button>
-
+          <div class="col-12">
+            <div class="row">
+              <label for="admin" class="col-sm-auto col-form-label">用户角色</label>
+              <div class="col">
+                <select class="selectpicker" id="admin" name="admin">
+                  <option value="">所有</option>
+                  <option value="0">商城员工</option>
+                  <option value="1">超级管理员</option>
+                </select>
+              </div>
+            </div>
           </div>
+
+
 
         </form>
       </div>
       <div class="card-body">
         <!--  表格上方左侧的工具条区域    -->
         <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
-          <button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增
+          <button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增员工
           </button>
-          <button class="btn btn-light batch-btn" ><i class="bi bi-trash"></i> 批量删除</button>
-          <button class="btn btn-light"><i class="bi bi-box-arrow-down"></i> 导入</button>
-          <button class="btn btn-light"><i class="bi bi-box-arrow-up"></i> 导出</button>
+          <!-- <button class="btn btn-light batch-btn" ><i class="bi bi-trash"></i> 批量删除</button> -->
+          <!-- <button class="btn btn-light"><i class="bi bi-box-arrow-down"></i> 导入</button>
+          <button class="btn btn-light"><i class="bi bi-box-arrow-up"></i> 导出</button> -->
+          <!-- <div class="col-12 gap-2"> -->
+
+          <button type="button" class="btn btn-light search-btn" onclick="loadTableData();">
+            <i class="bi bi-search"></i>搜索
+          </button>
+          <button type="button" class="btn btn-light bsa-reset-btn">
+            <i class="bi bi-arrow-clockwise"></i>重置
+          </button>
+
+          <!-- </div> -->
         </div>
         <!--  数据表格    -->
         <table id="table"></table>

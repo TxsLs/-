@@ -7,47 +7,16 @@
 // employeeService.addPostMethod("updateUser", true);
 // employeeService.addGetMethod("deletePhoto", true);
 
+function loadTableData() {
 
-
-$(document).ready(function () {
-
-  // 新增用户
-  $('.add-btn').on('click', function () {
-    // window :建议加上该前缀,否则在子页面中通过parent.modalInstance 获取不到该实例对象,因为它现在处于一个匿名函数里
-    window.modalInstance = $.modal({
-      url: 'user-add.html',
-      title: '新增员工',
-      //禁用掉底部的按钮区域
-      buttons: [],
-      modalDialogClass: 'modal-dialog-centered modal-lg',
-      onHidden: function (obj, data) {
-        if (data === true) {
-          //刷新当前数据表格
-          $('#table').bootstrapTable('refresh');
-          $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-        }
-      }
-    })
-  })
-
-
-
-
-
-  /**
-   * columns表示列，里面的对象 title是表头信息，field是服务端返回的字段名称
-   * 1.不做分页，返回的数据格式是 [{},{}]
-   * 2.如果要开启分页，需要配置pagination:true, sidePagination:'client|server'
-   * 3.客户端分页所需要的格式和不做分页时是一样的 都是 :[{},{}]
-   * 4.服务端分页返回的格式为：{rows:[{},{}],total:200}
-   * 参考：https://github.com/wenzhixin/bootstrap-table-examples/blob/master/json/data2.json
-   */
 
   _root.loginUser(null, function (rtn, status) {
     if (rtn.hasError) {
       alert(rock.errorText(rtn, "连接到服务器失败！"));
     } else if (rtn.notNull) {
 
+      // 销毁第一个表格实例
+      $('#table').bootstrapTable('destroy');
       $('#table').bootstrapTable({
         //配置语言
         locale: 'zh-CN',
@@ -57,6 +26,8 @@ $(document).ready(function () {
         url: 'http://127.0.0.1:8080/hanfu/employee/queryPage',
 
         queryParamsType: "page",
+
+
         responseHandler: function (res) {
           var data = {};
           if (res.hasError) {
@@ -70,6 +41,9 @@ $(document).ready(function () {
           // alert(res.data);
           return data;
         },
+
+
+
         //固定列功能开启
         fixedColumns: true,
         //左侧固定列数
@@ -193,35 +167,37 @@ $(document).ready(function () {
         },
         //params是一个对象
         queryParams: function (options) {
+          var param = rock.formData($("#searchForm"));
+          //var param = {};
+          param.pageSize = options.pageSize;
+          param.pageNum = options.pageNumber;
+          param.sort = options.sortName + " " + options.sortOrder;
+          param.limit = options.limit;
+          param.sort = options.sort;
+          param.sortOrder = options.sortOrder
+          return param;
 
-          // var param = {};
-          // param.pageSize = options.pageSize;
-          // param.pageNum = options.pageNumber;
-          // param.sort = options.sortName + " " + options.sortOrder;
-
-          // return param;
-
-          return {
-            // 每页数据量
-            limit: options.limit,
-            // sql语句起始索引
-            offset: options.offset,
-            page: (options.offset / options.limit) + 1,
-            // 排序的列名
-            sort: options.sort,
-            // 排序方式 'asc' 'desc'
-            sortOrder: options.order,
-            //关键词
-            keywords: $('input[name=keyword]').val(),
-            //开始时间
-            beginTime: $('#joinTime').val(),
-            //结束时间
-            // endTime: $('#endTime').val(),  
-            pageSize: options.pageSize,
-            pageNum: options.pageNumber,
-            sort: options.sortName + " " + options.sortOrder,
-
-          }
+          // return {
+          //   // 每页数据量
+          //   limit: options.limit,
+          //   // sql语句起始索引
+          //   offset: options.offset,
+          //   page: (options.offset / options.limit) + 1,
+          //   // 排序的列名
+          //   sort: options.sort,
+          //   // 排序方式 'asc' 'desc'
+          //   sortOrder: options.order,
+          //   //关键词
+          //   keywords: $('input[name=keyword]').val(),
+          //   //开始时间
+          //   beginTime: $('#joinTime').val(),
+          //   //结束时间
+          //   // endTime: $('#endTime').val(),  
+          //   pageSize: options.pageSize,
+          //   pageNum: options.pageNumber,
+          //   sort: options.sortName + " " + options.sortOrder,
+          //   //param: rock.formData($("#searchForm"))
+          // }
         },
         //列
         columns: [
@@ -550,41 +526,41 @@ $(document).ready(function () {
 
 
       //批量处理
-      $('.batch-btn').on('click', function () {
-        //获取所有选中行的id
-        let id = [];
-        let rowSelected = $("#table").bootstrapTable('getSelections');
-        $.each(rowSelected, function (index, row) {
-          id.push(row.id);
-        })
+      // $('.batch-btn').on('click', function () {
+      //   //获取所有选中行的id
+      //   let id = [];
+      //   let rowSelected = $("#table").bootstrapTable('getSelections');
+      //   $.each(rowSelected, function (index, row) {
+      //     id.push(row.id);
+      //   })
 
-        //发送ajax
-        $.modal({
-          body: '确定要删除所选用户吗?',
-          ok: function () {
-            $.ajax({
-              url: '/user/10',
-              method: 'delete',
-              data: { id },
-            }).then(response => {
-              if (response.code === 200) {
-                $.toasts({
-                  type: 'success',
-                  delay: 1500,
-                  content: '删除成功',
-                  onHidden: function () {
+      //   //发送ajax
+      //   $.modal({
+      //     body: '确定要删除所选用户吗?',
+      //     ok: function () {
+      //       $.ajax({
+      //         url: '/user/10',
+      //         method: 'delete',
+      //         data: { id },
+      //       }).then(response => {
+      //         if (response.code === 200) {
+      //           $.toasts({
+      //             type: 'success',
+      //             delay: 1500,
+      //             content: '删除成功',
+      //             onHidden: function () {
 
-                    $('#table').bootstrapTable('refresh');
-                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                    //把批量删除按钮变成禁止点击
-                    $('.batch-btn').attr('disabled', true)
-                  }
-                })
-              }
-            });
-          }
-        })
-      })
+      //               $('#table').bootstrapTable('refresh');
+      //               $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+      //               //把批量删除按钮变成禁止点击
+      //               $('.batch-btn').attr('disabled', true)
+      //             }
+      //           })
+      //         }
+      //       });
+      //     }
+      //   })
+      // })
 
 
       function ignoreClickToSelectOn(e) {
@@ -696,11 +672,12 @@ $(document).ready(function () {
       $('.bsa-reset-btn').on('click', function () {
 
         //把所有的字段都恢复默认值
-        $('#username').val('');
+        $('#name').val('');
         $('#phone').val('');
-        $('#beginTime').val('');
+        $('#joinTime').val('');
         $('#endTime').val('');
-        $('#status').selectpicker('val', ['0']).trigger("change");
+        $('#status').selectpicker('val', ['']).trigger("change");
+        $('#admin').selectpicker('val', ['']).trigger("change");
         //刷新回到第一页
         $('#table').bootstrapTable('refresh');
         $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
@@ -865,5 +842,45 @@ $(document).ready(function () {
       top.location.replace('login.html');
     }
   })
+
+
+}
+
+$(document).ready(function () {
+
+  // 新增用户
+  $('.add-btn').on('click', function () {
+    // window :建议加上该前缀,否则在子页面中通过parent.modalInstance 获取不到该实例对象,因为它现在处于一个匿名函数里
+    window.modalInstance = $.modal({
+      url: 'user-add.html',
+      title: '新增员工',
+      //禁用掉底部的按钮区域
+      buttons: [],
+      modalDialogClass: 'modal-dialog-centered modal-lg',
+      onHidden: function (obj, data) {
+        if (data === true) {
+          //刷新当前数据表格
+          $('#table').bootstrapTable('refresh');
+          $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+        }
+      }
+    })
+  })
+
+  loadTableData();
+
+
+
+
+  /**
+   * columns表示列，里面的对象 title是表头信息，field是服务端返回的字段名称
+   * 1.不做分页，返回的数据格式是 [{},{}]
+   * 2.如果要开启分页，需要配置pagination:true, sidePagination:'client|server'
+   * 3.客户端分页所需要的格式和不做分页时是一样的 都是 :[{},{}]
+   * 4.服务端分页返回的格式为：{rows:[{},{}],total:200}
+   * 参考：https://github.com/wenzhixin/bootstrap-table-examples/blob/master/json/data2.json
+   */
+
+
 
 });
