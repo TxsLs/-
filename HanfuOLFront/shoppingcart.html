@@ -68,7 +68,7 @@
 							<i class="fa fa-times"></i> 清空
 						</span>
 						&nbsp;&nbsp;&nbsp;
-						<button class="btn btn-primary" onclick="addOrder()">确认结算</button>
+						<button class="btn btn-primary" onclick="addOrder(event)">确认结算</button>
 						加一个“订单添加”逻辑，订单列表加一个，订单详情也要加一个。
 						逻辑：添加一个订单，删除购物车表内容，添加订单表对应的订单详情。
 						订单号用code+id的格式。
@@ -137,7 +137,7 @@
 				} else {          // 可以使用 productId 参数获取要添加的商品的唯一标识符
 					// 可以在此处执行其他相关操作，比如发送请求到服务器，更新购物车数量等
 					$.toasts({
-						type: 'success',
+						type: 'loading',
 						content: '修改商品数量成功',
 					});
 
@@ -189,51 +189,126 @@
 		}
 
 		//添加订单
-		function addOrder() {
-			// 根据订单总额的计算方法和表单结算信息  等待修改
-			// ajax订单详情
-			$.ajax({
-				url: 'http://127.0.0.1:8080/spring-boot/shopCart/updateCart',
-				method: 'POST',
-				data: data,
-				xhrFields: {
-					withCredentials: true
-				},
-				success: function (response) {
-					// 请求成功，处理响应数据
-					console.log("修改商品数量成功");
-				},
-				error: function (xhr, status, error) {
-					// 请求失败，处理错误
-					console.error(error);
-				}
-			});
-			// 请求订单
-			$.ajax({
-				url: 'http://127.0.0.1:8080/spring-boot/shopCart/updateCart',
-				method: 'POST',
-				data: data,
-				xhrFields: {
-					withCredentials: true
-				},
-				success: function (response) {
-					// 请求成功，处理响应数据
-					console.log("修改商品数量成功");
-				},
-				error: function (xhr, status, error) {
-					// 请求失败，处理错误
-					console.error(error);
-				}
-			});
-			console.log("按钮被点击了！");
+		function addOrder(event) {
+			event.preventDefault();
+			var totalPrice = document.querySelector('#totalPrice').innerText;//总价
+			totalPrice = totalPrice.match(/\d+(\.\d+)?/); // 匹配数字部分
+			if (totalPrice[0] == 0) {
+				alert("请选中商品进行结算");
+			} else {
+				var addressValue = document.querySelector('#address').value;
+				if (addressValue == "") {
+					alert("地址不能为空");
+				} else {
+					var phoneNumber = document.querySelector('#phone').value;
+					if (phoneNumber == "") {
+						alert("手机号不能为空");
+					} else {
+						var productids = [];
+						var quantities=[];
+						//根据订单总额的计算方法和表单结算信息，购物车中删除对应选中的商品  等待修改
+						const checkboxes = document.querySelectorAll('input[name="btSelectItem"]');
+						for (let i = 0; i < checkboxes.length; i++) {
+							if (checkboxes[i].checked) {
+								const row = checkboxes[i].closest('tr'); // 找到最近的父级 <tr> 元素
+								const productid = parseInt(row.querySelector('.productid').textContent, 10); // 获取id单元格
+								const quantity=parseInt(row.querySelector('#quantity'+i).value, 10);
+								productids.push(productid); // 将 productid 添加到列表中
+								quantities.push(quantity)
+							}
+						}
+						console.log(productids); // 输出所有选中产品的 ID
 
+						// 将数组转换为逗号分隔的字符串
+						const params = productids.join(',');
+						$.ajax({
+							url: 'http://127.0.0.1:8080/spring-boot/shopCart/removeMoreCart',
+							method: 'GET',
+							data: { id: params },
+							xhrFields: {
+								withCredentials: true
+							},
+							success: function (response) {
+								// 请求成功，处理响应数据
+								console.log("删除成功");
+							},
+							error: function (xhr, status, error) {
+								// 请求失败，处理错误
+								console.error(error);
+							}
+						});
+						// 请求订单
+						var orderdata = {
+							"totalPrice": totalPrice[0],
+							"address": addressValue,
+							"phone": phoneNumber
+						}
+						$.ajax({
+							url: 'http://127.0.0.1:8080/spring-boot/order/addorder',
+							method: 'POST',
+							data: JSON.stringify(orderdata),
+							contentType: "application/json",
+							xhrFields: {
+								withCredentials: true
+							},
+							success: function (response) {
+								// 请求成功，处理响应数据
+								//订单详情
+								for (let i = 0; i < productids.length; i++) {//循环加入
+									var orderDetailData={
+										"orderId": response,//订单主键
+										"productId": productids[i],//商品id
+										"quantity": quantities[i]//商品数量
+									};
+									$.ajax({
+									url: 'http://127.0.0.1:8080/spring-boot//orderdetail/add',
+									method: 'POST',
+									data: JSON.stringify(orderDetailData),
+									contentType: "application/json",
+									xhrFields: {
+										withCredentials: true
+									},
+									success: function (response) {
+										// 请求成功，处理响应数据
+										console.log("添加商品详情成功");
+									},
+									error: function (xhr, status, error) {
+										// 请求失败，处理错误
+										console.error(error);
+									}
+								});
+								}
+
+								
+							},
+							error: function (xhr, status, error) {
+								// 请求失败，处理错误
+								console.error(error);
+							}
+						});
+
+						$.toasts({
+							type: 'primary',
+							content: '订单发起成功',
+							onHidden: function () {
+								//去订单页
+								location.href="pages/ordertable.html";
+							}
+						});
+
+					}
+				}
+			}
 		}
+
+
+
 
 	</script>
 	<script>
 
 		/**
-		 * 获得表格组件
+		 * 获得表格组件，填充购物车表
 		 */
 		function getBootstrapTable() {
 			return $("#tableData");
@@ -275,7 +350,7 @@
 							// 遍历每个数据项，在每行元素上添加类名
 							res.result.content.forEach(function (item, index) {
 								const tr = table.rows[index + 1]; // 从第二行开始，因为第一行是表头
-								tr.cells[1].classList.add('productid'); // 为商品id列添加类名
+								tr.cells[2].classList.add('productid'); // 为商品id列添加类名
 								tr.cells[4].classList.add('oneprice'); // 为商品总价列添加类名
 								tr.cells[5].classList.add('price'); // 为商品总价列添加类名
 							});
@@ -406,7 +481,7 @@
 						sortable: true,
 						formatter: function (value, row, index) {
 							// 格式化显示商品数量为可编辑的输入框
-							return '<input type="number" min="1" value="' + value + '" onchange="updateQuantity1(this, ' + index + ')" />';
+							return '<input id="quantity'+index+'" type="number" min="1" value="' + value + '" onchange="updateQuantity1(this, ' + index + ')" />';
 						}
 					},
 					{
