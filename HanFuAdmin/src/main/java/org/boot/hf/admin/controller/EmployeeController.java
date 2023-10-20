@@ -1,7 +1,6 @@
 package org.boot.hf.admin.controller;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -252,21 +251,34 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 	}
 
 	@ApiOperation(value = "条件分页查询", notes = "")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "工号(支持like)，允许null"),
+	@ApiImplicitParams({ @ApiImplicitParam(name = "phone", value = "工号(支持like)，允许null", dataType = "long"),
 			@ApiImplicitParam(name = "name", value = "名称(支持like)，允许null"),
+			@ApiImplicitParam(name = "joinTime", value = "开始时间，允许null"),
+			@ApiImplicitParam(name = "endTime", value = "结束时间，允许null"),
+			@ApiImplicitParam(name = "admin", value = "角色，允许null"),
+			@ApiImplicitParam(name = "status", value = "状态，允许null"),
 			@ApiImplicitParam(name = "sort", value = "排序规则字符串"),
 			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
 			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
-	public @ResponseBody Result<PageSet<Employee>> queryPage(String code, String name, String sort,
-			@Min(1) @RequestParam long pageNum, @Min(1) @RequestParam int pageSize) {
+	public @ResponseBody Result<PageSet<Employee>> queryPage(String phone, String name, String sort, String joinTime,
+			String endTime, String admin, String status, @Min(1) @RequestParam long pageNum,
+			@Min(1) @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
 
-		if (StringUtils.isNotEmpty(code))
-			where.like("code", code);
+		if (StringUtils.isNotEmpty(phone))
+			where.like("code", phone);
 		if (StringUtils.isNotEmpty(name))
 			where.like("name", name);
+		if (StringUtils.isNotEmpty(admin))
+			where.like("admin", admin);
+		if (StringUtils.isNotEmpty(status))
+			where.like("status", status);
+		if (StringUtils.isNotEmpty(joinTime) && StringUtils.isNotEmpty(endTime)) {
+			where.between("joinTime", joinTime, endTime); // created_time为时间字段名
+		}
+
 		PageSet<Employee> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize, "password");
 		return Result.toResult(ps);
 	}
