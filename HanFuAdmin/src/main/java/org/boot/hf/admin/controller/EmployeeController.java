@@ -52,7 +52,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "name", value = "名称", required = true, paramType = "form"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = true, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, paramType = "form"),
-			@ApiImplicitParam(name = "phone", value = "电话号", required = true, paramType = "form", dataType = "int") })
+			@ApiImplicitParam(name = "phone", value = "电话号", required = true, paramType = "form", dataType = "long") })
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> addEmployee(@Validated({ Default.class }) @ApiIgnore Employee vo,
 			@RequestPart(value = "photo", required = false) MultipartFile file) throws IOException {
@@ -77,7 +77,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "name", value = "名称", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "admin", value = "是否管理员(1-是,0-不是)", required = false, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = false, paramType = "form", dataType = "int"),
-			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "int"),
+			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "long"),
 			@ApiImplicitParam(name = "status", value = "设置工作状态(1-在职,0-离职)", required = false, paramType = "form", dataType = "int") })
 	@RequestMapping(value = "/updateEmployee", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> updateEmployee(
@@ -108,7 +108,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			@ApiImplicitParam(name = "code", value = "账号", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "name", value = "名称", required = false, paramType = "form"),
 			@ApiImplicitParam(name = "gender", value = "性别(1-男,2-女)", required = false, paramType = "form", dataType = "int"),
-			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "int") })
+			@ApiImplicitParam(name = "phone", value = "电话号", required = false, paramType = "form", dataType = "long") })
 	@RequestMapping(value = "/updateSelfInfo", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> updateSelfInfo(
 			@Validated({ Update.class, Default.class }) @ApiIgnore Employee vo,
@@ -188,6 +188,34 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 			String code = AppUtils.getLoginUser().getUsername();
 			ok = this.service().changeSelfPassword(code, oldPassword, newPassword);
 		}
+		return Result.of(ok);
+	}
+
+	@ApiOperation(value = "员工找回自己的密码", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "newPassword", value = "新密码", required = true),
+			@ApiImplicitParam(name = "code", value = "账号", required = true),
+			@ApiImplicitParam(name = "name", value = "姓名", required = true),
+			@ApiImplicitParam(name = "phone", value = "电话号", required = true, dataType = "long"), })
+	@RequestMapping(value = "/findSelfPassword", method = { RequestMethod.POST })
+	public @ResponseBody Result<Boolean> findSelfPassword(@NotBlank @RequestParam String code,
+			@NotBlank @RequestParam String name, @NotNull @RequestParam Long phone,
+			@NotBlank @RequestParam String newPassword) {
+		log.debug("call changeSelfPassword");
+		boolean ok = false;
+		//if (AppUtils.isLogin()) {
+		//String code = AppUtils.getLoginUser().getUsername();
+		Employee employee = this.service().findByCode(code);
+		if (employee != null && employee.getCode().equals(code) && employee.getName().equals(name)
+				&& employee.getPhone().equals(phone)) {
+			ok = this.service().changePassword(code, newPassword);
+		} else if (employee.getStatus().equals(0)) {
+			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
+
+		} else {
+			return Result.toResult("1069", "用户信息不匹配，请重试！");
+		}
+
+		//}
 		return Result.of(ok);
 	}
 
