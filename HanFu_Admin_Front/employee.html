@@ -204,13 +204,37 @@
         </div>
       </div>
     </li>
-    <!--    管理员信息    -->
-    <li class="dropdown">
+
+    <!-- 未登录状态 -->
+    <li id="login-dropdown" class="dropdown">
       <div class="bsa-header-item" data-bs-toggle="dropdown">
         <div class="bsa-user-area">
-          <img src="dist/img/avatar.jpg" class="bsa-user-avatar" alt="用户头像">
+          <i class="bi bi-emoji-wink"></i>
+          请登录!
+        </div>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <a class="dropdown-item" href="pages/login.html" target="_self">
+            <i class="bi bi-box-arrow-in-right me-2"></i>登录
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item bsa-clear-cache" href="pages/register.html" target="_self">
+            <i class="bi bi-person-plus me-2"></i>注册
+          </a>
+        </li>
+      </ul>
+    </li>
+
+
+    <!--    员工信息    -->
+    <li id="profile-dropdown" class="dropdown">
+      <div class="bsa-header-item" data-bs-toggle="dropdown">
+        <div class="bsa-user-area">
+          <img id="avatarImage" src="dist/img/avatar.jpg" class="bsa-user-avatar" alt="用户头像">
           <div class="bsa-user-details">
-            <div class="bsa-ellipsis-1 bsa-fs-15">欲饮琵琶码上催</div>
+            <div class="bsa-ellipsis-1 bsa-fs-15" id="loginUser"></div>
             <!-- 管理员角色RBAC权限设计时可用(不需要可删除,上面的用户名可自动垂直居中)  -->
             <div class="bsa-ellipsis-1 bsa-fs-13 text-muted">商城员工</div>
           </div>
@@ -233,7 +257,12 @@
           <div class="dropdown-divider"></div>
         </li>
         <li class="bsa-logout"><a class="dropdown-item" href="javascript:"><i
-              class="bi bi-box-arrow-right me-2"></i>退出登录</a>
+              class="bi bi-person-dash me-2"></i>退出登录</a>
+        </li>
+        <li>
+          <div class="dropdown-divider"></div>
+        </li>
+        <li class="bsa-del"><a class="dropdown-item" href="javascript:"><i class="bi bi-person-fill-x"></i>注销账号</a>
         </li>
       </ul>
     </li>
@@ -452,67 +481,11 @@
   <script src="lib/bootstrap-quicktab/dist/js/bootstrap-quicktab.min.js"></script>
   <script src="dist/js/bootstrap-admin.min.js"></script>
   <script src="dist/js/app.js"></script>
-  <!--假数据模拟,生产环境中请直接删除该js-->
-  <script src="dist/js/bootstrap-admin.mock.js"></script>
+  <script type="text/javascript" src="dist/js/rockjs-1.0.js"></script>
+  <script type="text/javascript" src="pagejs/common.js"></script>
 
-  <script>
-    $(document).ready(function () {
-
-      // var {
-      //   OverlayScrollbars,
-      //   ScrollbarsHidingPlugin,
-      //   SizeObserverPlugin,
-      //   ClickScrollPlugin
-      // } = OverlayScrollbarsGlobal;
-      // const osInstance = OverlayScrollbars(document.querySelector('body'), {});
-
-
-      //头部搜索框处理(不需要可以删除,不明白的可以看bootstrap-admin官方文档)
-      $(document).on('search.bsa.navbar-search', function (e, inputValue, data) {
-        //先得到请求地址,组合后大概是这样pages/search.html?keyword=dsadsa&type=article&user=admin2
-        let url = data.action + '?keyword=' + inputValue + '&' + $.param(data.params);
-
-        //然后通过tab打开一个搜索结果的窗口
-        Quicktab.get('.qtab').addTab({
-          title: '<i class="bi bi-search"></i><span class="text-danger ms-2">' + inputValue + '</span>',
-          url: url,
-          close: true,
-        })
-      })
-
-      //退出登录
-      $(document).on('click', '.bsa-logout', function (e) {
-        e.preventDefault();
-        $.modal({
-          body: '确定要退出吗？',
-          cancelBtn: true,
-          ok: function () {
-
-            //请求退出路由
-            $.ajax({
-              method: 'post',
-              url: '/logout',
-            }).then(response => {
-
-              if (response.code === 200) {//跳转到后台首页
-
-                $.toasts({
-                  type: 'success',
-                  content: '退出成功',
-                  onHidden: function () {
-                    top.location.replace('/pages/login.html');
-                  }
-                })
-              }
-            });
-
-
-          }
-        })
-
-
-      });
-    });
+  <script type="text/javascript" src="pagejs/employee.js">
+   
   </script>
 </body>
 

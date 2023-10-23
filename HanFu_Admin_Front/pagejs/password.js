@@ -1,7 +1,7 @@
 
-var ssoUser = null;  //获取当前用户
-$(function ($) {
 
+$(function ($) {
+    var ssoUser = null;  //获取当前用户
     _root.loginUser({}, function (rtn) {
         if (rtn.hasError) {
             alert(rock.errorText(rtn, "获得当前用户失败！"));
@@ -12,6 +12,7 @@ $(function ($) {
             $.toasts({
                 type: 'danger',
                 content: '未登录！请返回登录',
+                delay:3000,
                 onHidden: function () {
                     location.href = 'login.html';
                 }

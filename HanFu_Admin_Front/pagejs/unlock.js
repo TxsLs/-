@@ -66,7 +66,6 @@ $(function () {
 
         var reason = $('#reason').val();
         var code = $('#code').val();
-        console.log(code)
         var name = $('#name').val();
         var phone = $('#phone').val();
         var dataToSend = {

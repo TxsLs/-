@@ -52,26 +52,27 @@
                     <!-- <div id="err_phone" style="text-align: left;"></div> -->
                 </div>
 
-
-
-                <!-- 
-        <div class="mb-3">
-          <div class="input-group">
-            <span class="input-group-text bg-white"><i class="bi bi-file-image"></i></span>
-            <input type="file" class="form-control" id="profileImage" name="profileImage" tabindex="10"
-              accept="image/*">
-          </div>
-        </div>
-
-        <div class="mb-3 ">
-          <div class="card-header bg-body text-center">
-            用户头像
-          </div>
-          <div class="card-body text-center">
-            <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-circle   bsa-wh-100 "
-              data-bs-toggle="modal" data-bs-target="#exampleModal">
-          </div>
-        </div> -->
+                <div class="mb-3">
+                  <div class="input-group bsa-show_hide_password">
+                    <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="newPassword" maxlength="20" autocomplete="off"
+                      aria-label="password" tabindex="4" placeholder="请输入密码" required data-bv-container="#err_password"
+                      pattern="^[\S]{0,20}$">
+                    <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
+                  </div>
+        
+                </div>
+        
+                <!-- 添加确认密码输入框 -->
+                <div class="mb-3">
+                  <div class="input-group bsa-show_hide_password">
+                    <span class="input-group-text bg-white"><i class="bi bi-shield-check"></i></span>
+                    <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" maxlength="20"
+                      autocomplete="off" tabindex="4" placeholder="请再次输入密码" required data-bv-container="#err_confirmpassword">
+                    <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
+                  </div>
+                  <!-- <div id="err_confirmpassword" style="text-align: left;"></div> -->
+                </div>
 
                 <div class="d-grid gap-2">
                     <button class="btn btn-outline-primary" tabindex="12" type="submit"><i class="bi bi-binoculars"></i>

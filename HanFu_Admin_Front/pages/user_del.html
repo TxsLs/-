@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+    <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+    <meta name="author" content="ajiho">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+    <title>华裳在线汉服商城管理员模块</title>
+</head>
+<body class="bg-body-tertiary">
+
+<div class="d-flex align-items-center justify-content-center">
+  <div style="width: 400px;max-width: 100%;margin-top: 12vh;" class="p-2">
+    <h2 class="text-center">验证个人信息</h2>
+
+    <form id="check" name="check" class="form-horizontal" >
+      <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text bg-white "><i class="bi bi-person-vcard"></i></i></span>
+          <input type="text" class="form-control" id="code" name="code" maxlength="20" autocomplete="on"
+								tabindex="2" placeholder="请输入帐号" required data-bv-container="#err_userid"
+								pattern="^[A-Za-z0-9]{0,20}$">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="input-group bsa-show_hide_password">
+          <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
+          <input type="password" class="form-control" id="password" name="password" maxlength="20" autocomplete="on" 
+								tabindex="4" placeholder="请输入密码" required data-bv-container="#err_password" aria-label="password"
+								pattern="^[\S]{0,20}$">
+        
+          <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
+        </div>
+      </div>
+
+     
+
+   
+
+    
+
+      <div class="d-grid gap-2">
+        <button class="btn btn-outline-success" tabindex="10" type="submit"><i class="bi bi-box-arrow-in-right"></i> 确定注销账号</button>
+      </div>
+
+    </form>
+    
+   
+
+  </div>
+</div>
+
+
+<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../lib/jquery/dist/jquery.min.js"></script>
+<script src="../lib/formvalidation/js/formValidation.js"></script>
+<script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+<script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+<script src="../dist/js/bootstrap-admin.min.js"></script>
+<script src="../dist/js/app.js"></script>
+
+<script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
+<script type="text/javascript" src="../pagejs/common.js"></script>
+<script type="text/javascript" src="../pagejs/user_del.js"></script>
+
+
+
+</body>
+</html>
