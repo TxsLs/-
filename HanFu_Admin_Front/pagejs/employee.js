@@ -98,7 +98,7 @@ $(document).ready(function () {
     $(document).on('click', '.bsa-del', function (e) {
       e.preventDefault();
       $.modal({
-        body: '确定要注销账号吗？（此操作将删除此账号的所有信息且不可更改！请谨慎考虑！）',
+        body: '确定要注销账号吗？（此操作将删除此账号的所有信息！请谨慎考虑！）',
         cancelBtn: true,
 
         ok: function () {

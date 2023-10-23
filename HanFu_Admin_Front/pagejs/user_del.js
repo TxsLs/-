@@ -147,7 +147,11 @@ _root.loginUser({}, function (rtn) {
 
 
 
+                },
+                cancel: function () {
+                    location.reload();
                 }
+
             })
 
 
