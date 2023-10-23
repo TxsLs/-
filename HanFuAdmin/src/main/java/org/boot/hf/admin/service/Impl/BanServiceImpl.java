@@ -31,8 +31,8 @@ public class BanServiceImpl extends BaseService<Ban, BanDao> implements BanServi
 	}
 
 	@Override
-	public List<Ban> getBanMes(long userId) {
-		return this.dao().getBanMes(userId);
+	public List<Ban> getBanMes(long userId,int type) {
+		return this.dao().getBanMes(userId,type);
 	}
 
 }

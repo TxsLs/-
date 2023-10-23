@@ -19,6 +19,6 @@ import org.boot.hf.admin.entity.Ban;
 @Mapper
 public interface BanDao extends Dao<Ban> {
 
-	public List<Ban> getBanMes(long userId);
+	public List<Ban> getBanMes(long userId,int type);
 
 }

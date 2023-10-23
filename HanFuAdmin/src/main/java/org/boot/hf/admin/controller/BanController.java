@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,11 +38,12 @@ import lombok.extern.slf4j.Slf4j;
 public class BanController extends BaseController<Ban, BanService> {
 
 	@ApiOperation(value = "根据指定的id数据")
-	@ApiImplicitParam(name = "userId", value = "封禁id", required = true)
+	@ApiImplicitParams({ @ApiImplicitParam(name = "userId", value = "封禁id", required = true,dataType = "long"),
+		@ApiImplicitParam(name = "type", value = "类型",required = true, dataType = "int") })
 	@RequestMapping(value = "/queryByBanId", method = { RequestMethod.GET })
-	public @ResponseBody Result<List<Ban>> queryByBanId(@NotNull @RequestParam Long userId) {
+	public @ResponseBody Result<List<Ban>> queryByBanId(@NotNull @RequestParam Long userId,@NotNull @RequestParam Integer type) {
 		log.debug("call queryByBanId");
-		List<Ban> vo = this.service().getBanMes(userId);
+		List<Ban> vo = this.service().getBanMes(userId,type);
 		return Result.toResult(vo);
 	}
 

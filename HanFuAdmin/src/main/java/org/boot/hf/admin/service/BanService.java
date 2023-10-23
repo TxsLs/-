@@ -17,6 +17,6 @@ import org.boot.hf.admin.entity.Ban;
  */
 public interface BanService extends Service<Ban> {
 
-	public List<Ban> getBanMes(long userId);
+	public List<Ban> getBanMes(long userId,int type);
 
 }
