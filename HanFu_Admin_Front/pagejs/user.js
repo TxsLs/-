@@ -173,8 +173,7 @@ function loadTableData() {
           param.pageNum = options.pageNumber;
           param.sort = options.sortName + " " + options.sortOrder;
           param.limit = options.limit;
-          param.sort = options.sort;
-          param.sortOrder = options.sortOrder
+          param.sortOrder = options.sortOrder;
           return param;
 
           // return {
@@ -398,7 +397,9 @@ function loadTableData() {
                   //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
                   url: 'http://127.0.0.1:8080/hanfu/ban/queryByBanId',
                   method: 'get',
-                  data: { userId: row.id },
+                  data: { userId: row.id,
+                  type:1
+                  },
                 }).then(response => {
 
                   //用数组在取出时单个的reason不会拆开
@@ -603,7 +604,7 @@ function loadTableData() {
         return val === true ? '男' : '女';
       }
 
-      //格式化列数据演示 val:当前数据 rows:当前整行数据
+     // 格式化列数据演示 val:当前数据 rows:当前整行数据
       function formatStatus(val, rows) {
         return rows.status === 1 ? '<span class="badge text-bg-success">正常</span>' : '<span class="badge text-bg-danger">离职</span>';
 
