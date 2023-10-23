@@ -52,4 +52,6 @@ public class UnlockRequest extends Entity {
 	@ApiModelProperty(value = "封禁理由", required = true, position = 7)
 	private Integer status;
 
+	@ApiModelProperty(value = "封禁理由", required = true, position = 8)
+	private Date processingTime;
 }

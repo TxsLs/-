@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 
-@CrossOrigin(allowCredentials = "true",origins = {"http://127.0.0.1:5500", "http://localhost:5500" })
+@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5500", "http://localhost:5500" })
 @Slf4j
 @Api(tags = "公用模块")
 @Controller
@@ -54,7 +54,8 @@ public class PublicControler {
 			@ApiImplicitParam(name = "captcha", value = "验证码") })
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> login(@NotBlank @RequestParam String username,
-			@NotBlank @RequestParam String password, String captcha, @ApiIgnore HttpSession session) {
+			@NotBlank @RequestParam String password, String captcha, @ApiIgnore HttpSession session,
+			Integer sessionTimeoutInMinutes) {
 		session.removeAttribute(AppUtils.CURRENT_LOGIN_USER_KEY);
 		log.debug("call userLogin");
 		if (AppUtils.useCaptcha) {
@@ -74,15 +75,25 @@ public class PublicControler {
 		} else if (user.getAdmin() == 0) {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());
-			
+
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+			// 设置Session的有效期
+			if (sessionTimeoutInMinutes != null && sessionTimeoutInMinutes > 0) {
+				int sessionTimeoutInDays = sessionTimeoutInMinutes * 60 * 24 * 60;
+				session.setMaxInactiveInterval(sessionTimeoutInDays);
+			}
+			log.debug("Session的超时时间设置为：{}秒", session.getMaxInactiveInterval());
 			return Result.of(false);
-			} 
-		else {
+		} else {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getPassword(), Arrays.asList());
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
-		
+			// 设置Session的有效期
+			if (sessionTimeoutInMinutes != null && sessionTimeoutInMinutes > 0) {
+				int sessionTimeoutInDays = sessionTimeoutInMinutes * 60 * 24 * 60;
+				session.setMaxInactiveInterval(sessionTimeoutInDays);
+			}
+			log.debug("Session的超时时间设置为：{}秒", session.getMaxInactiveInterval());
 			return Result.of(true);
 		}
 

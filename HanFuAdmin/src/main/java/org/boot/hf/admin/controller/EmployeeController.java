@@ -231,6 +231,22 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		return Result.of(result);
 	}
 
+	@ApiOperation(value = "checkpwd", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "用户代码", required = true),
+			@ApiImplicitParam(name = "password", value = "密码", required = true) })
+	@RequestMapping(value = "/checkpwd", method = { RequestMethod.POST })
+	//@Secured({ "ROLE_ADMIN" })
+	public @ResponseBody Result<Boolean> checkpwd(@NotBlank @RequestParam String code,
+			@NotBlank @RequestParam String password) {
+		log.debug("call checkpwd");
+		boolean ok = false;
+		Employee result = this.service().checkPassword(code, password);
+		if (result != null) {
+			ok = true;
+		}
+		return Result.of(ok);
+	}
+
 	@ApiOperation(value = "上传员工照片", notes = "照片大小不要超过500K")
 	@ApiImplicitParam(name = "id", value = "主键id", required = true, dataType = "long")
 	@RequestMapping(value = "/uploadPhoto", method = { RequestMethod.POST })
