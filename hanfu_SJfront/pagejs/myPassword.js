@@ -85,7 +85,7 @@ $(function ($) {
                     xhrFields: {
                         withCredentials: true
                     },
-                    url: "http://127.0.0.1:8080/hanfushopping/merchant/changeSelfPassword",
+                    url: "http://127.0.0.1:8082/hanfushopping/merchant/changeSelfPassword",
                     method: 'POST',
                     data: data
                 }).then(response => {

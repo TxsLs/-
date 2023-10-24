@@ -131,7 +131,7 @@ $(function ($) {
             withCredentials: true
           },//跨域权限开启
           method: 'Post',
-          url: 'http://127.0.0.1:8080/hanfushopping/merchant/updateMerchant',
+          url: 'http://127.0.0.1:8082/hanfushopping/merchant/updateMerchant',
           //表单数据
           data: data,
           processData: false,

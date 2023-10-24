@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60000" debug="false">
 	<!-- 变量 -->
-	<property name="app_name" value="spring-boot" />
+	<property name="app_name" value="spring-boot-merchant" />
 	<property name="package_name" value="com.example.demo" />
-	<property name="log_dir" value="${user.home}/logs/${app_name}" />
+	<property name="log_dir" value="d:/repos/logs/${app_name}" />
 	
 	<contextName>${app_name}</contextName>
 	<timestamp key="curr_time" datePattern="yyyy-MM-dd HH:mm:ss_SSS" />	

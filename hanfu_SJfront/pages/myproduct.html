@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -12,8 +13,8 @@
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../lib/bootstrap-table/dist/bootstrap-table.min.css">
   <link rel="stylesheet"
-        href="../lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css">
-  <link rel="stylesheet" href="../lib/@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css"/>
+    href="../lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css">
+  <link rel="stylesheet" href="../lib/@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css" />
   <link rel="stylesheet" href="../lib/bootstrap-select/dist/css/bootstrap-select.min.css">
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
   <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
@@ -21,107 +22,94 @@
 
 <body class="bg-body-tertiary py-3">
 
-<div class="container-fluid">
-  <div class="card border-0 shadow-sm">
-    <div class="card-header bg-body search-area">
-      <form class="row row-cols-sm-auto g-3 py-2 align-items-center">
-        <div class="col-12">
-          <div class="row">
-            <label for="username" class="col-sm-auto col-form-label">商品名</label>
-            <div class="col">
-              <input type="email" class="form-control" id="username" name="username">
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="row">
-            <label for="phone" class="col-sm-auto col-form-label">商品编号</label>
-            <div class="col">
-              <input type="email" class="form-control" id="phone" name="phone">
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="row">
-            <label for="beginTime" class="col-sm-auto col-form-label">创建时间</label>
-            <div class="col">
-              <div class="input-group">
-                <input type="text" readonly class="form-control" aria-label="q"
-                       placeholder="开始时间"
-                       name="beginTime" id="beginTime">
-                <span class="input-group-text"><i class="bi bi-arrow-left-right"></i></span>
-                <input type="text" readonly class="form-control" aria-label="q"
-                       placeholder="更新时间"
-                       name="endTime" id="endTime">
+  <div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-body search-area">
+        <form class="row row-cols-sm-auto g-3 py-2 align-items-center" id="searchForm" name="searchForm">
+          <div class="col-12">
+            <div class="row">
+              <label for="name" class="col-sm-auto col-form-label">商品名称</label>
+              <div class="col">
+                <input type="text" class="form-control" id="name" name="name"
+                  pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-12">
-          <div class="row">
-            <label for="status" class="col-sm-auto col-form-label">商品状态</label>
-            <div class="col">
-              <select class="selectpicker" id="status" name="status">
-                <option value="0">所有</option>
-                <option value="1">上架</option>
-                <option value="2">下架</option>
-              </select>
+
+          <div class="col-12">
+            <div class="row">
+              <label for="categoryName" class="col-sm-auto col-form-label">商品分类</label>
+              <div class="col">
+                <input type="text" class="form-control" id="categoryName" name="categoryName"
+                  pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
+              </div>
             </div>
           </div>
-        </div>
+
+          <div class="col-12">
+            <div class="row">
+              <label for="status" class="col-sm-auto col-form-label">商品状态</label>
+              <div class="col">
+                <select class="selectpicker" id="status" name="status">
+                  <option value="">所有</option>
+                  <option value="1">上架</option>
+                  <option value="0">下架</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
 
-        <div class="col-12 gap-2">
+          <div class="col-12 gap-2">
 
-          <button type="button" class="btn btn-light bsa-querySearch-btn">
-            <i class="bi bi-search"></i>搜索
-          </button>
-          <button type="button" class="btn btn-light bsa-reset-btn">
-            <i class="bi bi-arrow-clockwise"></i>重置
-          </button>
+            <button type="button" class="btn btn-light bsa-querySearch-btn">
+              <i class="bi bi-search"></i>搜索
+            </button>
+            <button type="button" class="btn btn-light bsa-reset-btn">
+              <i class="bi bi-arrow-clockwise"></i>重置
+            </button>
 
-        </div>
+          </div>
 
-      </form>
-    </div>
-    <div class="card-body">
-      <!--  表格上方左侧的工具条区域    -->
-      <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
-        <button class="btn btn-light add-btn"><i
-          class="bi bi-plus"></i> 新增
-        </button>
-        <button class="btn btn-light batch-btn" disabled><i class="bi bi-trash"></i> 批量删除</button>
-        <button class="btn btn-light"><i class="bi bi-box-arrow-down"></i> 导入</button>
-        <button class="btn btn-light"><i class="bi bi-box-arrow-up"></i> 导出</button>
+        </form>
       </div>
-      <!--  数据表格    -->
-      <table id="table"></table>
+      <div class="card-body">
+        <!--  表格上方左侧的工具条区域    -->
+        <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
+          <button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增
+          </button>
+          <button class="btn btn-light batch-btn" disabled><i class="bi bi-trash"></i> 批量删除</button>
+
+        </div>
+        <!--  数据表格    -->
+        <table id="table"></table>
+      </div>
     </div>
   </div>
-</div>
-<!--回到顶部开始-->
-<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
-<!--回到顶部结束-->
+  <!--回到顶部开始-->
+  <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+  <!--回到顶部结束-->
 
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../lib/@popperjs/core/dist/umd/popper.min.js"></script>
-<script src="../lib/@eonasdan/tempus-dominus/dist/js/tempus-dominus.min.js"></script>
-<script src="../lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
-<script src="../lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="../lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>
-<script src="../lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<script src="../lib/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
-<script src="../dist/js/app.js"></script>
-<!-- 假数据模拟,生产环境中请直接删除该js -->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/@popperjs/core/dist/umd/popper.min.js"></script>
+  <script src="../lib/@eonasdan/tempus-dominus/dist/js/tempus-dominus.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>
+  <script src="../lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  <script src="../lib/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js"></script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
 
-<script src="../pagejs/myProduct.js"></script>
+  <script src="../js2/rockjs-1.0.js"></script>
+  <script src="../pagejs/common.js"></script>
+  <script src="../pagejs/myProduct.js"></script>
 
-<script>
- 
-</script>
+  <script>
+
+  </script>
 
 </body>
+
 </html>

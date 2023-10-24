@@ -31,10 +31,10 @@ public class ProductServiceImpl extends BaseService<Product, ProductDao> impleme
 		return dao().updatePhoto(photo) > 0;
 	}
 
-	@Override
-	public boolean insert(Product entity, boolean ignoreNullValue, String... excluded) {
-		Date date=DateUtil.getDateByWord("now");
-		entity.setCreatedTime(date);;
-		return super.insert(entity, ignoreNullValue, excluded);
-	}
+//	@Override
+//	public boolean insert(Product entity, boolean ignoreNullValue, String... excluded) {
+//		Date date=DateUtil.getDateByWord("now");
+//		entity.setCreatedTime(date);;
+//		return super.insert(entity, ignoreNullValue, excluded);
+//	}
 }
