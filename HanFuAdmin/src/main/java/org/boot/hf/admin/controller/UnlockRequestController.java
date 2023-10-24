@@ -63,52 +63,49 @@ public class UnlockRequestController extends BaseController<UnlockRequest, Unloc
 			if (employee != null && employee.getCode().equals(vo.getCode()) && employee.getName().equals(vo.getName())
 					&& employee.getPhone().equals(vo.getPhone())) {
 				ok = this.service().insert(vo, true);
-			}
-
-			else {
+			}else {
 				return Result.toResult("1069", "用户信息不匹配，请重试！");
 			}
-		} else {
+		} else if (employee.getStatus()==1) {
+			return Result.toResult("1071", "你的账户未被封禁！");
+		}else {
 			return Result.toResult("1070", "你已提交过申请！请勿重复提交！");
 		}
 		//}
 		return Result.of(ok);
 	}
-	
-	
+
 	@ApiOperation(value = "条件分页查询", notes = "")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "phone", value = "工号(支持like)，允许null", dataType = "long"),
 			@ApiImplicitParam(name = "name", value = "名称(支持like)，允许null"),
 			@ApiImplicitParam(name = "joinTime", value = "开始时间，允许null"),
 			@ApiImplicitParam(name = "endTime", value = "结束时间，允许null"),
-			@ApiImplicitParam(name = "admin", value = "角色，允许null"),
+			@ApiImplicitParam(name = "type", value = "角色，允许null"),
 			@ApiImplicitParam(name = "status", value = "状态，允许null"),
 			@ApiImplicitParam(name = "sort", value = "排序规则字符串"),
 			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
 			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
-	public @ResponseBody Result<PageSet<UnlockRequest>> queryPage(String phone, String name, String sort, String joinTime,
-			String endTime, String admin, String status, @Min(1) @RequestParam long pageNum,
+	public @ResponseBody Result<PageSet<UnlockRequest>> queryPage(String phone, String name, String sort,
+			String joinTime, String endTime, String type, String status, @Min(1) @RequestParam long pageNum,
 			@Min(1) @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
 
 		if (StringUtils.isNotEmpty(phone))
-			where.like("code", phone);
+			where.like("phone", phone);
 		if (StringUtils.isNotEmpty(name))
 			where.like("name", name);
-		if (StringUtils.isNotEmpty(admin))
-			where.like("admin", admin);
+		if (StringUtils.isNotEmpty(type))
+			where.like("type", type);
 		if (StringUtils.isNotEmpty(status))
 			where.like("status", status);
 		if (StringUtils.isNotEmpty(joinTime) && StringUtils.isNotEmpty(endTime)) {
-			where.between("joinTime", joinTime, endTime); // created_time为时间字段名
+			where.between("requestTime", joinTime, endTime); // created_time为时间字段名
 		}
 
 		PageSet<UnlockRequest> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 		return Result.toResult(ps);
 	}
-	
-	
 
 }

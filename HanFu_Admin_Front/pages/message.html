@@ -48,7 +48,7 @@
           </div>
           <div class="col-12">
             <div class="row">
-              <label for="joinTime" class="col-sm-auto col-form-label">注册时间段</label>
+              <label for="joinTime" class="col-sm-auto col-form-label">申请时间段</label>
               <div class="col">
                 <div class="input-group">
                   <input type="text" readonly class="form-control" aria-label="q" placeholder="开始时间" name="joinTime"
@@ -63,12 +63,12 @@
 
           <div class="col-12">
             <div class="row">
-              <label for="status" class="col-sm-auto col-form-label">用户状态</label>
+              <label for="status" class="col-sm-auto col-form-label">申诉信息状态</label>
               <div class="col">
                 <select class="selectpicker" id="status" name="status">
                   <option value="">所有</option>
-                  <option value="0">停用</option>
-                  <option value="1">正常</option>
+                  <option value="0">未处理</option>
+                  <option value="1">已处理</option>
                 </select>
               </div>
             </div>
@@ -76,12 +76,14 @@
 
           <div class="col-12">
             <div class="row">
-              <label for="admin" class="col-sm-auto col-form-label">用户角色</label>
+              <label for="admin" class="col-sm-auto col-form-label">申诉类型</label>
               <div class="col">
-                <select class="selectpicker" id="admin" name="admin">
+                <select class="selectpicker" id="type" name="type">
                   <option value="">所有</option>
-                  <option value="0">商城员工</option>
-                  <option value="1">超级管理员</option>
+                  <option value="1">商城员工</option>
+                  <option value="2">顾客</option>
+                  <option value="3">商家</option>
+                  <option value="4">违规商品</option>
                 </select>
               </div>
             </div>
@@ -91,7 +93,7 @@
 
         </form>
 
-
+        <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
 
 
         <button type="button" class="btn btn-light search-btn" onclick="loadTableData();">
@@ -101,10 +103,10 @@
           <i class="bi bi-arrow-clockwise"></i>重置
         </button>
 
+</div>
 
 
-
-        <ul class="nav nav-underline" id="msgType">
+        <!-- <ul class="nav nav-underline" id="msgType">
           <li class="nav-item" role="presentation">
             <button class="nav-link active text-dark-emphasis" type="button" data-type="0" role="tab">全部消息
             </button>
@@ -123,7 +125,7 @@
           <button class="btn btn-outline-info btn-sm">删除</button>
           <button class="btn btn-outline-info btn-sm">标记已读</button>
           <button class="btn btn-outline-info btn-sm">全部已读</button>
-        </div>
+        </div> -->
         <table id="table"></table>
       </div>
     </div>

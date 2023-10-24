@@ -312,7 +312,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		Predicate where = DaoUtil.and();
 
 		if (StringUtils.isNotEmpty(phone))
-			where.like("code", phone);
+			where.like("phone", phone);
 		if (StringUtils.isNotEmpty(name))
 			where.like("name", name);
 		if (StringUtils.isNotEmpty(admin))

@@ -1,4 +1,9 @@
-loadTableData();
+
+
+$(document).ready(function () {
+  loadTableData();
+})
+
 function loadTableData() {
 
   _root.loginUser(null, function (rtn, status) {
@@ -6,428 +11,355 @@ function loadTableData() {
       alert(rock.errorText(rtn, "连接到服务器失败！"));
     } else if (rtn.notNull) {
 
-      $(document).ready(function () {
 
 
 
-        //默认0代表全部
-        let msgType = 0;
 
-        $('#msgType').on('click', 'button', function () {
-          msgType = $(this).attr('data-type');
+      //默认0代表全部
+      // let msgType = 0;
 
-          //移除所有的active类
-          $('#msgType button').removeClass('active');
-          //给当前button添加激活类
-          $(this).addClass('active');
+      // $('#msgType').on('click', 'button', function () {
+      //   msgType = $(this).attr('data-type');
 
-          $('#table').bootstrapTable('refresh');
-          // $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-        })
+      //   //移除所有的active类
+      //   $('#msgType button').removeClass('active');
+      //   //给当前button添加激活类
+      //   $(this).addClass('active');
 
-        // 销毁第一个表格实例
-        $('#table').bootstrapTable('destroy');
-        $('#table').bootstrapTable({
-          //配置语言
-          locale: 'zh-CN',
-          //设置高度，就可以固定表头
-          // height: 380,
-          //请求地址
-          url: 'http://127.0.0.1:8080/hanfu/unlock/queryPage',
-          queryParamsType: "page",
-          responseHandler: function (res) {
-            var data = {};
-            if (res.hasError) {
-              alert(rock.errorText(res, "未登录！无法获得数据列表!"));
+      //   $('#table').bootstrapTable('refresh');
+      //   // $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+      // })
+
+      // 销毁第一个表格实例
+      $('#table').bootstrapTable('destroy');
+      $('#table').bootstrapTable({
+        //配置语言
+        locale: 'zh-CN',
+        //设置高度，就可以固定表头
+        // height: 380,
+        //请求地址
+        url: 'http://127.0.0.1:8080/hanfu/unlock/queryPage',
+        queryParamsType: "page",
+        responseHandler: function (res) {
+          var data = {};
+          if (res.hasError) {
+            alert(rock.errorText(res, "未登录！无法获得数据列表!"));
+          }
+          else {
+            var ps = res.result;
+            data.total = ps.totalCount;
+            data.rows = ps.content;
+          }
+          // alert(res.data);
+          return data;
+          //return res.data;
+        },
+        //是否开启分页
+        pagination: true,
+        //是客户端分页还是服务端分页  'client','server',由于演示没有后端提供服务，所以采用前端分页演示
+        sidePagination: 'server',
+        // 初始化加载第一页，默认第一页
+        pageNumber: 1,
+        //默认显示几条
+        pageSize: 5,
+        //可供选择的每页的行数 - (亲测大于1000存在渲染问题)
+        pageList: [5, 10, 25, 50, 100],
+        //在上百页的情况下体验较好 - 能够显示首尾页
+        paginationLoop: true,
+        // 展示首尾页的最小页数
+        paginationPagesBySide: 2,
+        // 唯一ID字段
+        uniqueId: 'id',
+        // 每行的唯一标识字段
+        idField: 'id',
+        // 是否启用点击选中行
+        clickToSelect: false,
+        // 请求得到的数据类型
+        dataType: 'json',
+        // 是否显示所有的列
+        showColumns: true,
+        // 是否显示刷新按钮
+        showRefresh: true,
+        // 显示图标
+        showButtonIcons: true,
+        // 显示文本
+        showButtonText: false,
+        // 显示全屏
+        showFullscreen: false,
+        // 开关控制分页
+        showPaginationSwitch: false,
+        // 请求方法
+        method: 'get',
+        // 工具按钮容器
+        toolbar: '#toolbar',
+        // 是否显示详细视图和列表视图的切换按钮
+        showToggle: true,
+        // 显示图标
+        showButtonIcons: true,
+        // 显示文本
+        showButtonText: false,
+        // 显示全屏
+        showFullscreen: false,
+        // 开关控制分页
+        showPaginationSwitch: false,
+        // 总数字段
+        totalField: 'total',
+        // 当字段为 undefined 显示
+        undefinedText: '-',
+        // 排序方式
+        sortOrder: "desc",
+        //默认排序
+        sortName: "requestTime",
+        // 按钮的类
+        buttonsClass: 'light',
+        // 类名前缀
+        buttonsPrefix: 'btn',
+        // 图标前缀
+        iconsPrefix: 'bi',
+        // 图标大小 undefined sm lg
+        iconSize: undefined,
+        // 图标的设置  这里只做了一个演示，可设置项目参考 https://examples.bootstrap-table.com/#options/table-icons.html
+        icons: {
+          fullscreen: 'bi-arrows-fullscreen',
+        },
+        //加载模板,不改的话，默认的会超出不好看
+        loadingTemplate: function () {
+          return '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>';
+        },
+        //params是一个对象
+        queryParams: function (options) {
+
+          var param = rock.formData($("#searchForm"));
+          //var param = {};
+          param.pageSize = options.pageSize;
+          param.pageNum = options.pageNumber;
+          param.sort = options.sortName + " " + options.sortOrder;
+          param.limit = options.limit;
+          param.sortOrder = options.sortOrder;
+          return param;
+
+          // return {
+          //   // 每页数据量
+          //   limit: params.limit,
+          //   // sql语句起始索引
+          //   offset: params.offset,
+          //   page: (params.offset / params.limit) + 1,
+          //   // 排序的列名
+          //   sort: params.sort,
+          //   // 排序方式 'asc' 'desc'
+          //   sortOrder: params.order,
+          //   // 消息类型
+          //   msgType: 1,
+          // }
+        },
+        onPostBody: function () {
+          //重新启用弹出层,否则formatter格式化函数返回的html字符串上的tooltip提示不生效
+          $('[data-bs-toggle="tooltip"]').each(function (i, el) {
+            new bootstrap.Tooltip(el)
+          })
+        },
+        onLoadSuccess: function () {
+          //重新启用弹出层,否则formatter格式化函数返回的html字符串上的tooltip提示不生效
+          $('[data-bs-toggle="tooltip"]').each(function (i, el) {
+            new bootstrap.Tooltip(el)
+          })
+        },
+        //列
+        columns: [
+          {
+            checkbox: true,
+            //是否显示该列
+            visible: true,
+          },
+          {
+            title: '用户账号',
+            field: 'code',
+            align: 'left',
+            // formatter: formatContent
+          },
+          {
+            title: '名称',
+            field: 'name',
+            align: 'center',
+          },
+          {
+            title: '电话号',
+            field: 'phone',
+            align: 'center',
+          },
+          {
+            title: '申请提交时间',
+            field: 'requestTime',
+            align: 'center',
+            sortable: true,
+            formatter: function (value) {
+              // 使用 Date 对象将 value 转换为日期时间
+              var datetime = new Date(value);
+
+              // 获取年、月、日、小时、分钟、秒
+              var year = datetime.getFullYear();
+              var month = String(datetime.getMonth() + 1).padStart(2, '0');
+              var day = String(datetime.getDate()).padStart(2, '0');
+              var hour = String(datetime.getHours()).padStart(2, '0');
+              var minute = String(datetime.getMinutes()).padStart(2, '0');
+              var second = String(datetime.getSeconds()).padStart(2, '0');
+
+              // 返回格式化后的日期时间字符串
+              return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
             }
-            else {
-              var ps = res.result;
-              data.total = ps.totalCount;
-              data.rows = ps.content;
+          },
+          {
+            title: '申请处理时间',
+            field: 'processingTime',
+            align: 'center',
+            sortable: true,
+            formatter: function (value) {
+
+              if (value == null) {
+                return null;
+              }
+              // 使用 Date 对象将 value 转换为日期时间
+              var datetime = new Date(value);
+
+              // 获取年、月、日、小时、分钟、秒
+              var year = datetime.getFullYear();
+              var month = String(datetime.getMonth() + 1).padStart(2, '0');
+              var day = String(datetime.getDate()).padStart(2, '0');
+              var hour = String(datetime.getHours()).padStart(2, '0');
+              var minute = String(datetime.getMinutes()).padStart(2, '0');
+              var second = String(datetime.getSeconds()).padStart(2, '0');
+
+              // 返回格式化后的日期时间字符串
+              return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
             }
-            // alert(res.data);
-            return data;
-            //return res.data;
           },
-          //是否开启分页
-          pagination: true,
-          //是客户端分页还是服务端分页  'client','server',由于演示没有后端提供服务，所以采用前端分页演示
-          sidePagination: 'server',
-          // 初始化加载第一页，默认第一页
-          pageNumber: 1,
-          //默认显示几条
-          pageSize: 5,
-          //可供选择的每页的行数 - (亲测大于1000存在渲染问题)
-          pageList: [5, 10, 25, 50, 100],
-          //在上百页的情况下体验较好 - 能够显示首尾页
-          paginationLoop: true,
-          // 展示首尾页的最小页数
-          paginationPagesBySide: 2,
-          // 唯一ID字段
-          uniqueId: 'id',
-          // 每行的唯一标识字段
-          idField: 'id',
-          // 是否启用点击选中行
-          clickToSelect: false,
-          // 请求得到的数据类型
-          dataType: 'json',
-          // 请求方法
-          method: 'get',
-          // 工具按钮容器
-          //toolbar: '#toolbar',
-          // 总数字段
-          totalField: 'total',
-          // 当字段为 undefined 显示
-          undefinedText: '-',
-          // 排序方式
-          sortOrder: "desc",
-          //默认排序
-          sortName: "requestTime",
-          // 按钮的类
-          buttonsClass: 'light',
-          // 类名前缀
-          buttonsPrefix: 'btn',
-          // 图标前缀
-          iconsPrefix: 'bi',
-          // 图标大小 undefined sm lg
-          iconSize: undefined,
-          // 图标的设置  这里只做了一个演示，可设置项目参考 https://examples.bootstrap-table.com/#options/table-icons.html
-          icons: {
-            fullscreen: 'bi-arrows-fullscreen',
+          {
+            title: '申诉理由',
+            field: 'reason',
+            align: 'center',
+            formatter: formatContent
           },
-          //加载模板,不改的话，默认的会超出不好看
-          loadingTemplate: function () {
-            return '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>';
-          },
-          //params是一个对象
-          queryParams: function (options) {
-
-            var param = rock.formData($("#searchForm"));
-            //var param = {};
-            param.pageSize = options.pageSize;
-            param.pageNum = options.pageNumber;
-            param.sort = options.sortName + " " + options.sortOrder;
-            param.limit = options.limit;
-            param.sortOrder = options.sortOrder;
-            return param;
-
-            // return {
-            //   // 每页数据量
-            //   limit: params.limit,
-            //   // sql语句起始索引
-            //   offset: params.offset,
-            //   page: (params.offset / params.limit) + 1,
-            //   // 排序的列名
-            //   sort: params.sort,
-            //   // 排序方式 'asc' 'desc'
-            //   sortOrder: params.order,
-            //   // 消息类型
-            //   msgType: 1,
-            // }
-          },
-          //列
-          columns: [
-            {
-              checkbox: true,
-              //是否显示该列
-              visible: true,
-            },
-            {
-              title: '用户账号',
-              field: 'code',
-              align: 'left',
-              // formatter: formatContent
-            },
-            {
-              title: '姓名/商品名称',
-              field: 'name',
-              align: 'center',
-            },
-            {
-              title: '电话号',
-              field: 'phone',
-              align: 'center',
-            },
-            {
-              title: '申请提交时间',
-              field: 'requestTime',
-              align: 'center',
-              sortable: true,
-              formatter: function (value) {
-                // 使用 Date 对象将 value 转换为日期时间
-                var datetime = new Date(value);
-
-                // 获取年、月、日、小时、分钟、秒
-                var year = datetime.getFullYear();
-                var month = String(datetime.getMonth() + 1).padStart(2, '0');
-                var day = String(datetime.getDate()).padStart(2, '0');
-                var hour = String(datetime.getHours()).padStart(2, '0');
-                var minute = String(datetime.getMinutes()).padStart(2, '0');
-                var second = String(datetime.getSeconds()).padStart(2, '0');
-
-                // 返回格式化后的日期时间字符串
-                return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+          {
+            title: '申诉类型',
+            field: 'type',
+            align: 'center',
+            sortable: true,
+            formatter: function (value) {
+              switch (value) {
+                case 1:
+                  return "商城员工";
+                case 2:
+                  return "顾客";
+                case 3:
+                  return "商家";
+                default:
+                  return "违规商品";
               }
+
             },
-            {
-              title: '申请处理时间',
-              field: 'processingTime',
-              align: 'center',
-              sortable: true,
-              formatter: function (value) {
-                // 使用 Date 对象将 value 转换为日期时间
-                var datetime = new Date(value);
+          },
+          {
+            title: '申请处理状态',
+            field: 'status',
+            align: 'center',
+            sortable: true,
+            formatter: formatStatus,
+          },
 
-                // 获取年、月、日、小时、分钟、秒
-                var year = datetime.getFullYear();
-                var month = String(datetime.getMonth() + 1).padStart(2, '0');
-                var day = String(datetime.getDate()).padStart(2, '0');
-                var hour = String(datetime.getHours()).padStart(2, '0');
-                var minute = String(datetime.getMinutes()).padStart(2, '0');
-                var second = String(datetime.getSeconds()).padStart(2, '0');
-
-                // 返回格式化后的日期时间字符串
-                return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-              }
-            },
-            {
-              title: '申诉理由',
-              field: 'reason',
-              align: 'center',
-              formatter: formatContent
-            },
-            {
-              title: '申诉类型',
-              field: 'type',
-              align: 'center',
-              sortable: true,
-              formatter: function (value) {
-                switch (value) {
-                  case 1:
-                    return "商城员工";
-                  case 2:
-                    return "顾客";
-                  case 3:
-                    return "商家";
-                  default:
-                    return "违规商品";
-                }
-
-              },
-            },
-            {
-              title: '申请处理状态',
-              field: 'status',
-              align: 'center',
-              sortable: true,
-              formatter: function (value) {
-                return value == 1 ? "已处理" : "未处理";
-              },
-            },
-
-            {
-              title: '操作',
-              align: 'center',
-              // formatter: formatAction,
-              events: {
-                'click .edit-btn': function (event, value, row, index) {
-                  event.stopPropagation();
-
-                  window.modalInstance = $.modal({
-                    onShow: function () {
-                      // 将所选行的数据存储到 sessionStorage
-                      sessionStorage.setItem('selectedUserData', JSON.stringify(row));
-                    },
-                    url: 'user-edit.html',
-                    title: '编辑用户信息',
-                    //禁用掉底部的按钮区域
-                    buttons: [],
-                    modalDialogClass: 'modal-dialog-centered modal-lg',
-                    onHidden: function (obj, data) {
-                      if (data === true) {
-                        //刷新当前数据表格
-                        $('#table').bootstrapTable('refresh');
-                        $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                      }
-                      // 使用完数据后清除 sessionStorage 中的数据
-                      sessionStorage.removeItem('selectedUserData');
-                    }
-                  });
-
-                },
-                'click .del-btn': function (event, value, row, index) {
-                  event.stopPropagation();
-                  window.modalInstance = $.modal({
-
-                    onShow: function () {
-                      // 将所选行的数据存储到 sessionStorage
-                      sessionStorage.setItem('selectedUserData', JSON.stringify(row));
-                    },
-                    url: 'ban.html',
-                    title: '封禁用户',
-                    //禁用掉底部的按钮区域
-                    buttons: [],
-                    modalDialogClass: 'modal-dialog-centered modal-lg',
-                    onHidden: function (obj, data) {
-                      if (data === true) {
-                        //刷新当前数据表格
-                        $('#table').bootstrapTable('refresh');
-                        $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                      }
-                      // 使用完数据后清除 sessionStorage 中的数据
-                      sessionStorage.removeItem('selectedUserData');
-                    }
-
-                  })
-
-                },
-
-                'click .unlock-btn': function (event, value, row, index) {
-                  event.stopPropagation();
-
-                  $.ajax({
-                    //跨域
-                    xhrFields: {
-                      withCredentials: true
-                    },
-                    //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
-                    url: 'http://127.0.0.1:8080/hanfu/ban/queryByBanId',
-                    method: 'get',
-                    data: {
-                      userId: row.id,
-                      type: 1
-                    },
-                  }).then(response => {
-
-                    //用数组在取出时单个的reason不会拆开
-                    var reasons = [];
-                    response.result.forEach(ban => {
-                      //reasons += ban.reason;
-                      reasons.push(ban.reason);
-                    });
+          {
+            title: '操作',
+            align: 'center',
+            formatter: formatAction,
+            events: {
 
 
-                    // var times = '';
-                    // response.result.forEach(ban => {
-                    //   times += ban.beginTime ;
-                    // });
-                    // console.log(times)
 
-                    // 遍历所有 Ban 对象，将 beginTime 格式化为日期时间字符串
-                    var formattedBeginTimes = response.result.map(ban => {
-                      // 将时间戳转换为 Date 对象
-                      var beginTime = new Date(ban.beginTime);
-                      // 使用 Intl.DateTimeFormat 对象进行格式化
-                      var formattedBeginTime = new Intl.DateTimeFormat('zh-CN', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                      }).format(beginTime);
-                      return formattedBeginTime;
-                    });
+              'click .do-btn': function (event, value, row, index) {
+                event.stopPropagation();
 
-                    // 将格式化后的 beginTime 数组和 reasons 字符串连接起来
-                    var bodyContent = '';
-                    for (var i = 0; i < formattedBeginTimes.length; i++) {
-                      bodyContent += '封禁日期：' + formattedBeginTimes[i] + '<br>';
-                      bodyContent += '封禁理由：' + reasons[i] + '<br><br>';
-                    }
-                    // // 将时间戳转换为 Date 对象
-                    // var beginTime = new Date(times);
-                    // // 使用日期时间格式函数格式化日期时间
-                    // var formattedBeginTime = beginTime.getFullYear() + '-' + (beginTime.getMonth() + 1) + '-' + beginTime.getDate() + ' ' +
-                    //   beginTime.getHours() + ':' + beginTime.getMinutes() + ':' + beginTime.getSeconds();
+                var dataToSend = {
+                  id: row.id,
+                  status: 1,
+                };
+                window.modalInstance = $.modal({
 
-                    window.modalInstance = $.modal({
+                  body: '确定处理此申请？',
 
-                      body: '确定要解封此用户:\n' + row.name + '?' + '<br><br>' + '此用户已被封禁\n' + response.result.length + '\n次' + '<br><br>' + bodyContent,
+                  cancelBtn: true,
 
-                      cancelBtn: true,
-
-                      ok: function () {
-                        $.ajax({
-                          //跨域
-                          xhrFields: {
-                            withCredentials: true
-                          },
-                          url: 'http://127.0.0.1:8080/hanfu/employee/updateEmployee',
-                          method: 'post',
-                          data: { status: 1, id: row.id },
-                        }).then(response => {
-                          if (response.result) {
-                            $.toasts({
-                              type: 'success',
-                              content: '解封成功！',
-                              delay: 1500,
-                              onHidden: function () {
-                                //刷新当前数据表格
-                                $('#table').bootstrapTable('refresh');
-                                $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                              }
-                            })
+                  ok: function () {
+                    $.ajax({
+                      //跨域
+                      xhrFields: {
+                        withCredentials: true
+                      },
+                      url: 'http://127.0.0.1:8080/hanfu/unlock/updateMap',
+                      method: 'post',
+                      data: JSON.stringify(dataToSend),
+                      contentType: "application/json",
+                    }).then(response => {
+                      if (response.result) {
+                        $.toasts({
+                          type: 'success',
+                          content: '处理成功！',
+                          delay: 1500,
+                          onHidden: function () {
+                            //刷新当前数据表格
+                            $('#table').bootstrapTable('refresh');
+                            $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
                           }
-                        });
-
-                      }, cancel: function () {
-                        //刷新当前数据表格
-                        $('#table').bootstrapTable('refresh');
-                        $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-
+                        })
                       }
+                    });
+
+                  }, cancel: function () {
+                    //刷新当前数据表格
+                    $('#table').bootstrapTable('refresh');
+                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+
+                  }
 
 
-                    })
+                })
 
-
-                  });
-
-
-
-                },
-
-                'click .role-btn': function (event, value, row, index) {
-                  event.stopPropagation();
-
-                  window.rolemodal = $.modal({
-                    onShow: function () {
-                      // 将所选行的数据存储到 sessionStorage
-                      sessionStorage.setItem('selectedUserData', JSON.stringify(row));
-                    },
-                    url: 'user-resetPwd.html',
-                    title: '重置用户密码',
-                    //禁用掉底部的按钮区域
-                    buttons: [],
-                    modalDialogClass: 'modal-dialog-centered modal-lg',
-                    onHidden: function (obj, data) {
-                      if (data === true) {
-                        //刷新当前数据表格
-                        $('#table').bootstrapTable('refresh');
-                        $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                      }
-                      // 使用完数据后清除 sessionStorage 中的数据
-                      sessionStorage.removeItem('selectedUserData');
-                    }
-                  })
-
-                }
               }
+
+
             }
+          }
 
 
-          ]
-        });
+        ]
+      });
+
+      // 格式化列数据演示 val:当前数据 rows:当前整行数据
+      function formatStatus(val, rows) {
+        return rows.status === 1 ? '<span class="badge text-bg-success">已处理</span>' : '<span class="badge text-bg-danger">未处理</span>';
 
 
+      }
+      //格式化列数据演示 val:当前数据 rows:当前整行数据
+      function formatAction(val, rows) {
 
+        let html = '';
 
-        function formatContent(val, rows) {
-          return `<a class="text-decoration-none text-body" href="message_detail.html?id=${rows.id}">${val}</a>`;
+        if (rows.status == 0) { //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button type="button" class="btn btn-light btn-sm do-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+data-bs-title="点击已读"><i class="bi bi-book-half"></i></button>`;
+        } else {//第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button disabled type="button" class="btn btn-light btn-sm do-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+data-bs-title="点击已读"><i class="bi bi-book-half"></i></button>`;
         }
 
-      });
+
+        return html;
+      }
+
+      function formatContent(val, rows) {
+        return `<a class="text-decoration-none text-body" href="message_detail.html?reason=${rows.reason}"title="点击查看详情"data-bs-toggle="tooltip">${val}</a>`;
+      }
+
+
 
 
       //重置处理
@@ -439,7 +371,7 @@ function loadTableData() {
         $('#joinTime').val('');
         $('#endTime').val('');
         $('#status').selectpicker('val', ['']).trigger("change");
-        $('#admin').selectpicker('val', ['']).trigger("change");
+        $('#type').selectpicker('val', ['']).trigger("change");
         //刷新回到第一页
         $('#table').bootstrapTable('refresh');
         $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
@@ -602,7 +534,16 @@ function loadTableData() {
 
 
     } else {
-      top.location.replace('login.html');
+
+      $.toasts({
+        type: 'danger',
+        content: '未登录！',
+        delay: 1500,
+        onHidden: function () {
+          top.location.replace('login.html');
+        }
+      })
+
     }
   })
 

@@ -840,7 +840,14 @@ function loadTableData() {
       $('select').selectpicker();
 
     } else {
-      top.location.replace('login.html');
+      $.toasts({
+        type: 'danger',
+        content: '未登录！',
+        delay: 1500,
+        onHidden: function () {
+          top.location.replace('login.html');
+        }
+      })
     }
   })
 
