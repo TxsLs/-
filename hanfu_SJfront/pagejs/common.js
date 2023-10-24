@@ -27,6 +27,7 @@ rock.initSvr = function (svrNames) {
  * @param services 业务服务对象 
  */
 rock.initBasicMethod = function (services) {
+	
 	if (!$.isArray(services))
 		services = [services];
 	services.forEach(function (service, i) {
