@@ -63,7 +63,7 @@ function loadTableData() {
         //点击那些元素可以忽略勾选
         ignoreClickToSelectOn: ignoreClickToSelectOn,
         // 是否显示详细视图和列表视图的切换按钮
-        showToggle: true,
+        showToggle: false,
         // 请求得到的数据类型
         dataType: 'json',
         // 请求方法
@@ -147,31 +147,30 @@ function loadTableData() {
             new bootstrap.Tooltip(el)
           })
         },
-       //回调函数修改图片元素
-       onLoadSuccess: function (data) {
-        //重新启用弹出层,否则formatter格式化函数返回的html字符串上的tooltip提示不生效
-        $('[data-bs-toggle="tooltip"]').each(function (i, el) {
-          new bootstrap.Tooltip(el)
-        });
-        // 在这里遍历每一行数据，并插入图片
-        var rows = data.rows;
-        var mvc = rock.initSvr(["product"]);
-        var productService = mvc.findService("product");
-        for (var i = 0; i < rows.length; i++) {
-          var row = rows[i];
-          var hasPhoto = $('#table').bootstrapTable("getRowByUniqueId", row.id).hasPhoto;
+        //回调函数修改图片元素
+        onLoadSuccess: function (data) {
+          //重新启用弹出层,否则formatter格式化函数返回的html字符串上的tooltip提示不生效
+          $('[data-bs-toggle="tooltip"]').each(function (i, el) {
+            new bootstrap.Tooltip(el)
+          });
+          // 在这里遍历每一行数据，并插入图片
+          var rows = data.rows;
+          var mvc = rock.initSvr(["product"]);
+          var productService = mvc.findService("product");
+          for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var hasPhoto = $('#table').bootstrapTable("getRowByUniqueId", row.id).hasPhoto;
 
-          // var $imgPhoto = $('#table').find("img.img-photo");
-          // 找到目标行内的图片元素
-          var $imgPhoto = $('#table').find("tr[data-uniqueid='" + row.id + "'] img.img-photo");
-          if (hasPhoto) {
-            $imgPhoto.attr("src", productService.url("photo") + "?id=" + row.id);
+            // var $imgPhoto = $('#table').find("img.img-photo");
+            // 找到目标行内的图片元素
+            var $imgPhoto = $('#table').find("tr[data-uniqueid='" + row.id + "'] img.img-photo");
+            if (hasPhoto) {
+              $imgPhoto.attr("src", productService.url("photo") + "?id=" + row.id);
+            }else {
+              $imgPhoto.attr("src", "../dist/img/nophoto.png");
+            }
           }
-          else {
-            $imgPhoto.attr("src", "../dist/img/nophoto.png");
-          }
-        }
-      },
+        },
         //params是一个对象
         queryParams: function (options) {
 
@@ -225,7 +224,7 @@ function loadTableData() {
             widthUnit: 'rem'
           },
           {
-            title: '商品名',
+            title: '商品名称',
             field: 'name',
             align: 'center',
             sortable: true,
@@ -241,7 +240,7 @@ function loadTableData() {
             }
           },
           {
-            title: '描述',
+            title: '商品描述',
             field: 'description',
             align: 'center',
             sortable: true,
@@ -253,33 +252,28 @@ function loadTableData() {
             align: 'center',
             sortable: true,
           },
-         
+
           {
             title: '分类名称',
             field: 'categoryName',
             align: 'center',
             sortable: true,
           },
-          {
-            title: '描述',
-            field: 'description',
-            align: 'center',
-            sortable: true,
-          },
+
 
           {
-            title: '图片',
+            title: '商品图片',
             align: 'center',
             formatter: function (value, row, index) {
-              return '<img src="' + value + '" class="img-photo" style="max-width: 200px;">';
+              return '<img src="' + value + '" class="img-photo" style="max-width: 100%;max-height:100%">';
             }
-          }, 
+          },
           {
-            title: '状态',
+            title: '商品状态',
             field: 'status',
             align: 'center',
             sortable: true,
-            //formatter: formatStatus,
+            formatter: formatStatus,
             // events: {
             //   'click .form-switch': function (event, value, row, index) {
             //     event.preventDefault();
@@ -318,8 +312,12 @@ function loadTableData() {
                 event.stopPropagation();
 
                 window.modalInstance = $.modal({
-                  url: 'user-edit.html',
-                  title: '用户编辑',
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('selectedUserData', JSON.stringify(row));
+                  },
+                  url: 'product-edit.html',
+                  title: '编辑商品信息',
                   //禁用掉底部的按钮区域
                   buttons: [],
                   modalDialogClass: 'modal-dialog-centered modal-lg',
@@ -329,8 +327,10 @@ function loadTableData() {
                       $('#table').bootstrapTable('refresh');
                       $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
                     }
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('selectedUserData');
                   }
-                })
+                });
 
               },
               'click .del-btn': function (event, value, row, index) {
@@ -459,27 +459,37 @@ function loadTableData() {
 
       // }
 
-      function formatGender(val, rows) {
-        return val === true ? '男' : '女';
-      }
+
 
       //格式化列数据演示 val:当前数据 rows:当前整行数据
       function formatStatus(val, rows) {
+        //return rows.status === 1 ? '<span class="badge text-bg-success">已上架</span>' : '<span class="badge text-bg-danger">未上架</span>';
+        if (rows.status == 1 && rows.empStatus == 1) {
+          return '<span class="badge text-bg-success">已上架</span>';
+        } else if (rows.status == 0) {
+          return '<span class="badge text-bg-info">未上架</span>';
+        } else if (rows.empStatus == 0) {
+          return '<span class="badge text-bg-danger">被封禁</span>';
+        }
 
-        let uncheck = `<div class="form-check form-switch">
-  <input class="form-check-input bsa-cursor-pointer" type="checkbox">
-</div>`;
+        //         let uncheck = `<div class="form-check form-switch">
+        //   <input class="form-check-input bsa-cursor-pointer" type="checkbox">
+        // </div>`;
 
-        let checked = `<div class="form-check form-switch">
-  <input class="form-check-input bsa-cursor-pointer" type="checkbox" checked>
-</div>`
+        //         let checked = `<div class="form-check form-switch">
+        //   <input class="form-check-input bsa-cursor-pointer" type="checkbox" checked>
+        // </div>`
 
-        return val === 1 ? checked : uncheck;
+        //         return val === 1 ? checked : uncheck;
 
 
       }
 
       function formatContent(val, rows) {
+        if (val == null) {
+          return null;
+        }
+
         return `<a class="text-decoration-none text-body" href="product_detail.html?reason=${rows.description}"title="点击查看详情"data-bs-toggle="tooltip">${val}</a>`;
       }
 
@@ -487,20 +497,48 @@ function loadTableData() {
       function formatAction(val, rows) {
 
         let html = '';
+        if (rows.status == 0 && rows.empStatus == 1) {
+          //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="修改商品信息"><i class="bi bi-pencil"></i></button>`;
+
+          //第二个按钮
+          html += `<button type="button" class="btn btn-light mx-1 btn-sm up-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="上架商品"><i class="bi bi-arrow-up-circle"></i></button>`
 
 
-        //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
-        html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="修改用户"><i class="bi bi-pencil"></i></button>`;
+          //第三个按钮
+          html += `<button type="button" class="btn btn-light btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
+        } else if (rows.empStatus == 0) {
+          //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button  type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+data-bs-title="修改商品信息"><i class="bi bi-pencil"></i></button>`;
 
-        //第二个按钮
-        html += `<button type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="删除用户"><i class="bi bi-trash3"></i></button>`
+          //第二个按钮
+          html += `<button  type="button" class="btn btn-light mx-1 btn-sm unlock-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+data-bs-title="申请解封此商品"><i class="bi bi-unlock-fill"></i></button>`
 
 
-        //第三个按钮
-        html += `<button type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="分配角色"><i class="bi bi-person-square"></i></button>`
+          //第三个按钮
+          html += `<button  type="button" class="btn btn-light btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
+        } else if (rows.status == 1 && rows.empStatus == 1) {
+          //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
+          html += `<button  type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+ data-bs-title="修改商品信息"><i class="bi bi-pencil"></i></button>`;
+
+          //第二个按钮
+          html += `<button  type="button" class="btn btn-light mx-1 btn-sm dw-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+ data-bs-title="下架此商品"><i class="bi bi-bag-dash-fill"></i></button>`
+
+
+          //第三个按钮
+          html += `<button  type="button" class="btn btn-light btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+ data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
+        }
+
+
 
         return html;
       }
@@ -693,12 +731,12 @@ function loadTableData() {
 
 $(document).ready(function () {
 
-  // 新增用户
+  // 新增
   $('.add-btn').on('click', function () {
     // window :建议加上该前缀,否则在子页面中通过parent.modalInstance 获取不到该实例对象,因为它现在处于一个匿名函数里
     window.modalInstance = $.modal({
-      url: 'user-add.html',
-      title: '新增员工',
+      url: 'product-add.html',
+      title: '新增商品',
       //禁用掉底部的按钮区域
       buttons: [],
       modalDialogClass: 'modal-dialog-centered modal-lg',
