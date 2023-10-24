@@ -348,6 +348,10 @@
             $.toasts({
                 type: 'success',
                 content: '修改成功(*/ω＼*)',
+                onHidden: function () {
+                // 刷新当前页面
+                location.reload();
+              }
             })
             //发送ajax修改个人信息 
         }

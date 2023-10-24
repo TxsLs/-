@@ -302,7 +302,7 @@
           // param.sort = options.sortName + " " + options.sortOrder;
 
           // return param;
-         
+
 
           return {
             // 每页数据量
@@ -383,7 +383,15 @@
             field: 'categoryName',
             align: 'center',
             sortable: true,
-          }, {
+          },
+          {
+            title: '商家id',
+            field: 'merchantId',
+            align: 'center',
+            sortable: true,
+            visible: false
+          },
+          {
             title: '商家名称',
             field: 'merchantName',
             align: 'center',
@@ -407,13 +415,14 @@
             align: 'center',
             formatter: function (value, row, index) {
               return '<button class="btn btn-danger btn-add-to-cart"' +
-                ' onclick="addToCart(' + row.id + ')">加入购物车</button>';
+                ' onclick="addToCart(' + row.id + ')">加入购物车</button>' +
+                '<button class="btn btn-primary btn-contact-seller" onclick="contactSeller(' + row.merchantId + ')">联系商家</button>';
             }
           }
         ]
-      
-      
-      
+
+
+
       });
 
 
@@ -638,7 +647,7 @@
         } else {          // 可以使用 productId 参数获取要添加的商品的唯一标识符
           // 可以在此处执行其他相关操作，比如发送请求到服务器，更新购物车数量等
           var quantity = document.getElementById('ProductNumber' + productId).value;
-  
+
 
           $.toasts({
             type: 'success',
@@ -681,6 +690,12 @@
 
       }
       )
+    }
+
+
+    function contactSeller(merchantId) {
+      // 打开消息页面，并传递 merchantId
+      top.location.replace('message.html?merchantId=' + merchantId);
     }
 
   </script>

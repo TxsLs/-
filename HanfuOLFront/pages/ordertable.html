@@ -287,10 +287,76 @@
             align: 'center',
             formatter: function (value, row) {
               return '<div style="display: flex; justify-content: space-evenly">' +
-                '<button class="btn btn-primary" onclick="viewDetails(\'' + row.id + '\')">查看详情</button>' +
-                '<button class="btn btn-success" onclick="editAddress(\'' + row.id + '\')">修改地址和手机号</button>' +
+                '<button class="btn btn-primary show-btn">查看详情</button>' +
+                '<button class="btn btn-info comment-btn">评论商品</button>'+
+                '<button class="btn btn-success edit-btn">修改地址和手机号</button>' +
                 '<button class="btn btn-danger" onclick=deleteOrder(\'' + row.id + '\')>删除</button>' +
                 '</div>';
+            },
+            events: {
+              'click .edit-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('OrderData', JSON.stringify(row));
+                  },
+                  url: 'order-edit.html',
+                  title: '修改地址和手机号',
+                  //禁用掉底部的按钮区域
+                  buttons: [],
+                  modalDialogClass: 'modal-dialog-centered modal-lg',
+                  onHidden: function (obj, data) {
+                    if (data === true) {
+                      //刷新当前数据表格
+                      $('#table').bootstrapTable('refresh');
+                      $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+                    }
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('OrderData');
+                  }
+                });
+
+              },
+              'click .show-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('OrderData', row.id);
+                  },
+                  url: 'order-show.html',
+                  title: '查看商品详情',
+                  //禁用掉底部的按钮区域
+                  buttons: [],
+                  modalDialogClass: 'modal-dialog-centered modal-lg',
+                  onHidden: function (obj, data) {
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('OrderData');
+                  }
+                });
+
+              },
+              'click .comment-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('OrderData', row.id);
+                  },
+                  url: 'review.html',
+                  title: '评论商品',
+                  //禁用掉底部的按钮区域
+                  buttons: [],
+                  modalDialogClass: 'modal-dialog-centered modal-lg',
+                  onHidden: function (obj, data) {
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('OrderData');
+                  }
+                });
+
+              },
+
             }
           }
         ]

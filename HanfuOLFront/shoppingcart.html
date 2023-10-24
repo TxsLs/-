@@ -30,14 +30,6 @@
 		<a href="index.html" class="btn btn-primary" style="float: right;">返回首页</a> <!-- 添加返回首页的按钮 -->
 		<h1>购物车</h1>
 		<div class="card-body">
-			<!--  表格上方左侧的工具条区域    -->
-			<div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
-				<button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增
-				</button>
-				<button class="btn btn-light batch-btn" disabled><i class="bi bi-trash"></i> 批量删除</button>
-				<button class="btn btn-light"><i class="bi bi-box-arrow-down"></i> 导入</button>
-				<button class="btn btn-light"><i class="bi bi-box-arrow-up"></i> 导出</button>
-			</div>
 			<!--  数据表格    -->
 			<table id="table" class="table"></table>
 		</div>
@@ -69,9 +61,6 @@
 						</span>
 						&nbsp;&nbsp;&nbsp;
 						<button class="btn btn-primary" onclick="addOrder(event)">确认结算</button>
-						加一个“订单添加”逻辑，订单列表加一个，订单详情也要加一个。
-						逻辑：添加一个订单，删除购物车表内容，添加订单表对应的订单详情。
-						订单号用code+id的格式。
 					</div>
 				</form>
 			</div>
@@ -261,7 +250,7 @@
 										"quantity": quantities[i]//商品数量
 									};
 									$.ajax({
-									url: 'http://127.0.0.1:8080/spring-boot//orderdetail/add',
+									url: 'http://127.0.0.1:8080/spring-boot/orderdetail/add',
 									method: 'POST',
 									data: JSON.stringify(orderDetailData),
 									contentType: "application/json",
@@ -351,8 +340,8 @@
 							res.result.content.forEach(function (item, index) {
 								const tr = table.rows[index + 1]; // 从第二行开始，因为第一行是表头
 								tr.cells[2].classList.add('productid'); // 为商品id列添加类名
-								tr.cells[4].classList.add('oneprice'); // 为商品总价列添加类名
-								tr.cells[5].classList.add('price'); // 为商品总价列添加类名
+								tr.cells[5].classList.add('oneprice'); // 为商品总价列添加类名
+								tr.cells[6].classList.add('price'); // 为商品总价列添加类名
 							});
 						},
 						error: function () {
@@ -475,6 +464,12 @@
 						sortable: true
 					},
 					{
+						title: '商品名称',
+						field: 'productName',
+						align: 'center',
+						sortable: true
+					},
+					{
 						title: '商品数量',
 						field: 'quantity',
 						align: 'center',
@@ -490,6 +485,7 @@
 						align: 'center',
 						sortable: true
 					},
+					
 					{
 						title: '商品总价',
 						field: 'totalPrice', // 修改field属性

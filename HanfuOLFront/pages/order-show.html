@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
+  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+  <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+
+<body class="bg-body-tertiary py-3">
+  <div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <!--  数据表格    -->
+        <div id="table-container"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/formvalidation/js/formValidation.js"></script>
+  <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+  <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
+  <script src="../lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+  <script type="text/javascript" src="../pagejs/rockjs-1.0.js"></script>
+  <script type="text/javascript" src="../pagejs/common.js"></script>
+
+  <script>
+    $(function ($) {
+      // 从 sessionStorage 中获取数据
+      var OrderID = sessionStorage.getItem('OrderData');
+      $.ajax({
+        url: 'http://127.0.0.1:8080/spring-boot/orderdetail/queryAllByName',
+        method: 'GET',
+        data: {
+          propName: "orderId",
+          propValue: OrderID
+        },
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function (response) {
+          // 请求成功，处理响应数据
+          console.log(response.result);
+          getData(response.result);
+        },
+        error: function (xhr, status, error) {
+          // 请求失败，处理错误
+          console.error(error);
+        }
+      });
+
+
+
+
+      // AJAX请求函数
+      function getData(data) {
+
+        // 清空表格容器
+        $('#table-container').empty();
+
+        // 创建数据表格
+        var table = $('<table>').addClass('table');
+
+        // 创建表头
+        var thead = $('<thead>').append($('<tr>').append($('<th>').text('订单id')).append($('<th>').text('商品id')).append($('<th>').text('商品数量')).append($('<th>').text('商品名称')).append($('<th>').text('商品总价')));
+        table.append(thead);
+
+        // 创建表体
+        var tbody = $('<tbody>');
+        $.each(data, function (index, item) {
+          var tr = $('<tr>').append($('<td>').text(item.orderId)).append($('<td>').text(item.productId)).append($('<td>').text(item.quantity)).append($('<td>').text(item.productName)).append($('<td>').text(item.productPrice*item.quantity));
+          tbody.append(tr);
+        });
+        table.append(tbody);
+
+        // 将数据表格添加到表格容器中
+        $('#table-container').append(table);
+      }
+
+    });
+  </script>
+
+</body>
+
+</html>

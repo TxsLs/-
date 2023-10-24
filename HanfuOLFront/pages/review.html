@@ -22,6 +22,9 @@
 
         <div class="card-footer bg-body">
             <form id="commentForm">
+请选择要评论的商品：
+
+
                 <div class="form-group">
                     <label for="reply-input">评论商品：</label>
                     <textarea class="form-control" id="reply-input" name="reply" rows="3"></textarea>
@@ -45,7 +48,7 @@
             </form>
             <!-- 提交成功提示框 -->
             <div id="successMessage" class="alert alert-success d-none" role="alert">
-                提交评论成功！将返回订单表页。
+                提交评论成功！2s后关闭该窗口
             </div>
 
             <!-- 提交失败提示框 -->
@@ -117,9 +120,9 @@
       document.getElementById("successMessage").classList.remove("d-none");
       document.getElementById("errorMessage").classList.add("d-none");
     
-      // 2秒后跳转到ordertable页
+      
       setTimeout(function() {
-        window.location.href = 'ordertable.html';
+       parent.modalInstance.close();
       }, 2000);
     }
     

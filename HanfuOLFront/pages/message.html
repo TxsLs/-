@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -14,167 +15,171 @@
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
   <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
 </head>
+
 <body class="bg-body-tertiary py-3">
-<div class="container-fluid">
-  <div class="card border-0 shadow-sm">
-    <div class="card-body">
-      <a href="../index.html" class="btn btn-primary" style="float: right;">返回首页</a> <!-- 添加返回首页的按钮 -->
-      <ul class="nav nav-underline" id="msgType">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active text-dark-emphasis"
-                  type="button" data-type="0" role="tab">全部消息
+  <div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <a href="../index.html" class="btn btn-primary" style="float: right;">返回首页</a> <!-- 添加返回首页的按钮 -->
+        <div class="nav nav-underline" id="msgType">
+          <button class="nav-link active text-dark-emphasis" type="button" data-type="0" role="tab">全部消息
           </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link text-dark-emphasis"
-                  type="button" data-type="1" role="tab">通知
-            <span class="badge text-bg-warning align-text-bottom">4</span>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link text-dark-emphasis"
-                  type="button" data-type="2" role="tab">私信
-          </button>
-        </li>
-      </ul>
-      <div class="d-flex flex-wrap gap-2 my-3">
-        <button class="btn btn-outline-info btn-sm">删除</button>
-        <button class="btn btn-outline-info btn-sm">标记已读</button>
-        <button class="btn btn-outline-info btn-sm">全部已读</button>
+        </div>
+        <div class="d-flex flex-wrap gap-2 my-3">
+          <button class="btn btn-outline-info btn-sm">删除</button>
+          <button class="btn btn-outline-info btn-sm">全部已读</button>
+        </div>
+        <table id="table"></table>
       </div>
-      <table id="table"></table>
     </div>
   </div>
-</div>
 
-<!--回到顶部开始-->
-<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
-<!--回到顶部结束-->
+  <!--回到顶部开始-->
+  <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+  <!--回到顶部结束-->
 
-<script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/jquery/dist/jquery.min.js"></script>
-<script src="../lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
-<script src="../lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="../dist/js/bootstrap-admin.min.js"></script>
-<script src="../dist/js/app.js"></script>
-<!--假数据模拟,生产环境中请直接删除该js-->
-<script src="../dist/js/bootstrap-admin.mock.js"></script>
-<script>
-  $(document).ready(function () {
-    //默认0代表全部
-    let msgType = 0;
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+  <script src="../lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
 
-    $('#msgType').on('click', 'button', function () {
-      msgType = $(this).attr('data-type');
+  <script>
+    $(document).ready(function () {
+      //默认0代表全部
+      let msgType = 0;
 
-      //移除所有的active类
-      $('#msgType button').removeClass('active');
-      //给当前button添加激活类
-      $(this).addClass('active');
+      $('#msgType').on('click', 'button', function () {
+        msgType = $(this).attr('data-type');
 
-      $('#table').bootstrapTable('refresh');
-      // $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-    })
+        //移除所有的active类
+        $('#msgType button').removeClass('active');
+        //给当前button添加激活类
+        $(this).addClass('active');
 
-    $('#table').bootstrapTable({
-      //配置语言
-      locale: 'zh-CN',
-      //设置高度，就可以固定表头
-      // height: 380,
-      //请求地址
-      url: '/msg',
-      responseHandler: function (res) {
-        return res.data;
-      },
-      //是否开启分页
-      pagination: true,
-      //是客户端分页还是服务端分页  'client','server',由于演示没有后端提供服务，所以采用前端分页演示
-      sidePagination: 'client',
-      // 初始化加载第一页，默认第一页
-      pageNumber: 1,
-      //默认显示几条
-      pageSize: 5,
-      //可供选择的每页的行数 - (亲测大于1000存在渲染问题)
-      pageList: [5, 10, 25, 50, 100],
-      //在上百页的情况下体验较好 - 能够显示首尾页
-      paginationLoop: true,
-      // 展示首尾页的最小页数
-      paginationPagesBySide: 2,
-      // 唯一ID字段
-      uniqueId: 'id',
-      // 每行的唯一标识字段
-      idField: 'id',
-      // 是否启用点击选中行
-      clickToSelect: false,
-      // 请求得到的数据类型
-      dataType: 'json',
-      // 请求方法
-      method: 'get',
-      // 总数字段
-      totalField: 'total',
-      // 当字段为 undefined 显示
-      undefinedText: '-',
-      // 排序方式
-      sortOrder: "asc",
-      // 按钮的类
-      buttonsClass: 'light',
-      // 类名前缀
-      buttonsPrefix: 'btn',
-      // 图标前缀
-      iconsPrefix: 'bi',
-      // 图标大小 undefined sm lg
-      iconSize: undefined,
-      // 图标的设置  这里只做了一个演示，可设置项目参考 https://examples.bootstrap-table.com/#options/table-icons.html
-      icons: {
-        fullscreen: 'bi-arrows-fullscreen',
-      },
-      //加载模板,不改的话，默认的会超出不好看
-      loadingTemplate: function () {
-        return '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>';
-      },
-      //params是一个对象
-      queryParams: function (params) {
-        return {
-          // 每页数据量
-          limit: params.limit,
-          // sql语句起始索引
-          offset: params.offset,
-          page: (params.offset / params.limit) + 1,
-          // 排序的列名
-          sort: params.sort,
-          // 排序方式 'asc' 'desc'
-          sortOrder: params.order,
-          // 消息类型
-          msgType: 1,
-        }
-      },
-      //列
-      columns: [
-        {
-          checkbox: true,
-          //是否显示该列
-          visible: true,
+        $('#table').bootstrapTable('refresh');
+        // $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+      })
+
+      $('#table').bootstrapTable({
+        // 配置语言
+        locale: 'zh-CN',
+        // 是否开启分页
+        pagination: true,
+        // 是客户端分页还是服务端分页  'client','server',由于演示没有后端提供服务，所以采用前端分页演示
+        sidePagination: 'client',
+        // 初始化加载第一页，默认第一页
+        pageNum: 1,
+        // 默认显示几条
+        pageSize: 5,
+        // 可供选择的每页的行数 - (亲测大于1000存在渲染问题)
+        pageList: [5, 10, 25, 50, 100],
+        // 在上百页的情况下体验较好 - 能够显示首尾页
+        paginationLoop: true,
+        // 展示首尾页的最小页数
+        paginationPagesBySide: 2,
+        // 唯一ID字段
+        uniqueId: 'id',
+        // 每行的唯一标识字段
+        idField: 'id',
+        // 是否启用点击选中行
+        clickToSelect: false,
+        // 总数字段
+        totalField: 'total',
+        // 当字段为 undefined 显示
+        undefinedText: '-',
+        // 排序方式
+        sortOrder: "desc",
+        // 排序的时间
+        sortName: "sentTime",
+        // 按钮的类
+        buttonsClass: 'light',
+        // 类名前缀
+        buttonsPrefix: 'btn',
+        // 图标前缀
+        iconsPrefix: 'bi',
+        // 图标大小 undefined sm lg
+        iconSize: undefined,
+        // 图标的设置  这里只做了一个演示，可设置项目参考 https://examples.bootstrap-table.com/#options/table-icons.html
+        icons: {
+          fullscreen: 'bi-arrows-fullscreen',
         },
-        {
-          title: '标题内容',
-          field: 'content',
-          align: 'left',
-          formatter: formatContent
+        // 加载模板,不改的话，默认的会超出不好看
+        loadingTemplate: function () {
+          return '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>';
         },
-        {
-          title: '加入时间',
-          field: 'create_at',
-          align: 'center',
+        // 列
+        columns: [
+          {
+            checkbox: true,
+            // 是否显示该列
+            visible: true,
+          },
+          {
+            title: '聊天编号',
+            field: 'code',
+            align: 'center',
+          },
+          {
+            title: '内容',
+            field: 'messageContent',
+            align: 'left',
+            formatter: formatContent
+          },
+          {
+            title: '时间',
+            field: 'sentTime',
+            align: 'center',
+            sortable: true,
+          },
+          {
+            title: '是否已读',
+            field: 'status',
+            align: 'center',
+            formatter: function (value) {
+              if (value == 0) {
+                return '<span style="color: red;">未读</span>';
+              } else if (value == 1) {
+                return '<span style="color: black;">已读</span>';
+              }
+            }
+          }
+
+        ],
+        // 使用 ajax 方法来进行数据请求
+        ajax: function (params) {
+          $.ajax({
+            url: 'http://127.0.0.1:8080/spring-boot/chatRecord/queryPage',
+            type: 'get',
+            xhrFields: {
+              withCredentials: true
+            },
+            data: {
+              pageNum: 1,
+              pageSize: 5
+            },
+            success: function (res) {
+              console.log(res);
+              // 提取聊天记录数据
+              var chatRecords = res.result.content;
+              // 将数据赋值给表格的数据源
+              params.success({ total: res.result.totalCount, rows: chatRecords });
+            },
+            error: function (error) {
+              console.error(error);
+            }
+          });
         }
-      ]
+      });
+
+      //添加聊天详情链接
+      function formatContent(val, rows) {
+        return `<a class="text-decoration-none text-body" href="message_detail.html?id=${rows.id}">${val}</a>`;
+      }
+
     });
-
-
-    function formatContent(val, rows) {
-      return `<a class="text-decoration-none text-body" href="message_detail.html?id=${rows.id}">${val}</a>`;
-    }
-
-  });
-</script>
+  </script>
 </body>
+
 </html>
