@@ -124,7 +124,7 @@ public class ProductControllrer extends BaseController<Product, ProductService> 
 			photo.setPhoto(file.getBytes());
 			String extName = FilenameUtils.getExtension(file.getOriginalFilename());
 			String fileName = IOUtil.getUniqueFileName("up", "." + extName);
-			photo.setPhotoFile(fileName);
+			photo.setPhotofile(fileName);
 		}
 		return this.service().updatePhoto(photo);
 	}
@@ -140,7 +140,7 @@ public class ProductControllrer extends BaseController<Product, ProductService> 
 		//
 		BodyBuilder builder = ResponseEntity.ok().contentLength(photo.length());
 		builder.contentType(MediaType.APPLICATION_OCTET_STREAM);
-		builder.header("Content-Disposition", "attachment; filename=" + photo.getPhotoFile());
+		builder.header("Content-Disposition", "attachment; filename=" + photo.getPhotofile());
 		return builder.body(photo.getPhoto());
 	}
 

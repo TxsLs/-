@@ -52,7 +52,7 @@ public class PublicControler {
 			@ApiImplicitParam(name = "captcha", value = "验证码") })
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> login(@RequestParam String username, @RequestParam String password,
-			String captcha, @ApiIgnore HttpSession session) {
+			String captcha, @ApiIgnore HttpSession session, Integer sessionTimeoutInMinutes) {
 		session.removeAttribute(AppUtils.CURRENT_LOGIN_USER_KEY);
 		log.debug("call userLogin");
 		if (AppUtils.useCaptcha) {
@@ -69,16 +69,22 @@ public class PublicControler {
 
 		} else if (user.getIsviolate() == 0) {
 			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
-		} 
+		}
 
 		else {
 			User loginUser = new User(//spring安全的uer
 					user.getCode(), user.getMerchantPassword(), Arrays.asList());
 			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+			// 设置Session的有效期
+			if (sessionTimeoutInMinutes != null && sessionTimeoutInMinutes > 0) {
+				int sessionTimeoutInDays = sessionTimeoutInMinutes * 60 * 24 * 60;
+				session.setMaxInactiveInterval(sessionTimeoutInDays);
+			}
+			log.debug("Session的超时时间设置为：{}秒", session.getMaxInactiveInterval());
+
 			return Result.of(true);
 		}
 
-	
 		/*Merchant merchant = service.checkPassword(username, password);
 		if (merchant == null) {
 			return Result.toResult("1001", "用户或密码不正确!");

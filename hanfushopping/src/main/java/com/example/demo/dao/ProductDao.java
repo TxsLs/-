@@ -15,15 +15,12 @@ public interface ProductDao extends Dao<Product>{
 
 	public Page<Product> findPageByCondition(Map<String, Object> condition);
 
-	public int updateSelfInfo(Product vo);
+
 
 	public Photo getPhoto(long id);
 
 	public int updatePhoto(Photo photo);
 
-	default int changePassword(String code, String newPassword) {
-		return updateMap(MapUtil.asMap("password", newPassword), DaoUtil.and().equal("code", code));
-	}
 
 	default Product findByCode(String code) {
 		return findByName("code", code);

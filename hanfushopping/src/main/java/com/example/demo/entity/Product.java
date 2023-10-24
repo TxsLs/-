@@ -60,4 +60,7 @@ public class Product extends Entity {
 
 	@ApiModelProperty(value = "商品状态", required = true, position = 10)
 	private Integer status;
+	
+	@ApiModelProperty(value = "商品状态", required = true, position = 11)
+	private Integer empStatus;
 }

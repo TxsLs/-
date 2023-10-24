@@ -4,21 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.dao.MerchantDao">
-	
+
 	<resultMap id="resultMap" type="Merchant">
 		<id property="id" column="id" javaType="long" />
 	</resultMap>
-	
+
 	<select id="getPhoto" resultType="Photo">
-		select f_id id, f_photo	photo,f_photo_file photoFile 
+		select f_id id, f_photo
+		photo,f_photo_file photoFile
 		from t_merchant
 		where f_id=#{id}
 	</select>
 
 	<update id="updatePhoto" parameterType="Photo">
-		update t_merchant set f_photo=#{photo},f_photo_file=#{photoFile}
+		update t_merchant set
+		f_photo=#{photo},f_photo_file=#{photoFile}
 		where f_id=#{id}
 	</update>
-	
+
 
 </mapper>
