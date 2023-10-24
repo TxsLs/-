@@ -42,7 +42,7 @@ public class LoginUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> authList = new ArrayList<>();
 		//authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-		User su = new User(code, user.getPassword(), authList);
+		User su = new User(code, user.getMerchantPassword(), authList);
 		return su;
 	}
 

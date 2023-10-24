@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /spring-boot
+    context-path: /hanfushopping
     application-display-name: 华裳在线
     
 spring: 
@@ -11,6 +11,10 @@ spring:
   messages:
     encoding: utf-8
     basename: i18n/message-resources
+#  thymeleaf:
+#    enabled: true
+#    prefix: classpath:/static/templates/   # 模板文件所在的相对路径 
+#    suffix: .html   # 模板文件的后缀名  
     
   security:
     user:
@@ -77,6 +81,7 @@ encoder:
     enable: false
     use-captcha: false
     
-logging:
-  config: classpath:logback.xml
+
+
+
   

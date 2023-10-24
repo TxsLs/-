@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0
  */
 @Slf4j
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5500", "http://localhost:5500" })
 public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	@Autowired
 	private S service;

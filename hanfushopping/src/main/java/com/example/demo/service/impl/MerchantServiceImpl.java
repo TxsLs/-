@@ -28,7 +28,7 @@ public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> impl
 	@Transactional
 	public boolean changeSelfPassword(String code, String oldPassword, String newPassword) {
 		Merchant vo = this.findByCode(code);
-		if (vo == null || !passwordEncoder.matches(oldPassword, vo.getPassword()))
+		if (vo == null || !passwordEncoder.matches(oldPassword, vo.getMerchantPassword()))
 			return false;
 		else {
 			String encodedPassword = passwordEncoder.encode(newPassword);
@@ -46,7 +46,7 @@ public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> impl
 	@Override
 	public Merchant checkPassword(String code, String password) {
 		Merchant vo = this.findByCode(code);
-		if (vo == null || !passwordEncoder.matches(password, vo.getPassword()))
+		if (vo == null || !passwordEncoder.matches(password, vo.getMerchantPassword()))
 			return null;
 		else {
 			return vo;
@@ -73,7 +73,7 @@ public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> impl
 	@Override
 	public boolean insert(Merchant entity, boolean ignoreNullValue, String... excluded) {
 		Date date=DateUtil.getDateByWord("now");
-		entity.setCreated_time(date);;
+		entity.setCreatedTime(date);;
 		return super.insert(entity, ignoreNullValue, excluded);
 	}
 }

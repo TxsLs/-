@@ -1,5 +1,8 @@
 package com.example.demo.service.impl;
 
+import java.util.Date;
+
+import org.quincy.rock.core.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,14 +15,11 @@ import com.example.demo.service.ProductService;
 @Service
 public class ProductServiceImpl extends BaseService<Product, ProductDao> implements ProductService {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	@Override
-	public Product findByCode(String code) {
-		return this.dao().findByName("code", code);
+	public Product findByCode(String id) {
+		return this.dao().findByName("code", id);
 	}
-	
+
 	@Override
 	public Photo getPhoto(long id) {
 		return this.dao().getPhoto(id);
@@ -30,5 +30,11 @@ public class ProductServiceImpl extends BaseService<Product, ProductDao> impleme
 	public boolean updatePhoto(Photo photo) {
 		return dao().updatePhoto(photo) > 0;
 	}
-	
+
+	@Override
+	public boolean insert(Product entity, boolean ignoreNullValue, String... excluded) {
+		Date date=DateUtil.getDateByWord("now");
+		entity.setCreatedTime(date);;
+		return super.insert(entity, ignoreNullValue, excluded);
+	}
 }

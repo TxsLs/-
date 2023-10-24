@@ -2,7 +2,8 @@ package com.example.demo.entity;
 
 import java.util.Date;
 
-import org.quincy.rock.core.dao.annotation.IgnoreInsert;
+import org.quincy.rock.core.dao.annotation.Column;
+import org.quincy.rock.core.dao.annotation.IgnoreInsertUpdate;
 import org.quincy.rock.core.dao.annotation.Table;
 import com.example.demo.Entity;
 
@@ -19,32 +20,36 @@ public class Merchant extends Entity {
 	
 	private static final long serialVersionUID = 6839230938734074806L;
 
-	@ApiModelProperty(value = "名称", required = true, position = 1)
+	@ApiModelProperty(value = "用户名", required = true, position = 1)
 	private String name;
 	
-	@IgnoreInsert
 	@ApiModelProperty(value = "地址", required = false,position = 2)
-	private String merchant_address;
+	private String merchantAddress;
 
-	@IgnoreInsert
 	@ApiModelProperty(value = "创建时间", required = true,position = 3)
-	private Date created_time;
+	private Date createdTime;
 
-	@IgnoreInsert
 	@ApiModelProperty(value = "商家描述", required = true,position = 4)
-	private String introduction;
+	private String merchantIntroduction;
 
-	@IgnoreInsert
 	@ApiModelProperty(value = "是否违规", required = true, position = 5)
+	@IgnoreInsertUpdate
 	private int isviolate;
 
-	@IgnoreInsert
 	@ApiModelProperty(value = "密码", required = false,position = 6)
-	private String password;
+	private String merchantPassword;
 
-	@IgnoreInsert
 	@ApiModelProperty(value = "账号", required = false,position = 7)
 	private String code;
 
+	@ApiModelProperty(value = "手机号", required = false,position = 8)
+	private long phone;
 
+	@ApiModelProperty(value = "邮箱", required = false,position = 9)
+	private String email;
+	
+	@ApiModelProperty(value = "返回是否有照片", position = 10)
+	@Column(value = "f_photo_file is not null", calculated = true)
+	private Boolean hasPhoto;
+	
 }

@@ -8,6 +8,7 @@ import org.quincy.rock.core.util.MapUtil;
 
 import com.example.demo.Dao;
 import com.example.demo.entity.Merchant;
+import com.example.demo.entity.Photo;
 import com.github.pagehelper.Page;
 @Mapper
 public interface MerchantDao extends Dao<Merchant>{
@@ -40,7 +41,7 @@ public interface MerchantDao extends Dao<Merchant>{
 	 * @param id 主键id
 	 * @return Photo
 	 */
-	public com.example.demo.entity.Photo getPhoto(long id);
+	public Photo getPhoto(long id);
 
 	/**
 	 * <b>更新照片。</b>
@@ -50,7 +51,7 @@ public interface MerchantDao extends Dao<Merchant>{
 	 * @param photo 照片实体对象
 	 * @return 更新数据条数
 	 */
-	public int updatePhoto(com.example.demo.entity.Photo photo);
+	public int updatePhoto(Photo photo);
 
 	/**
 	 * <b>修改密码。</b>
@@ -62,7 +63,7 @@ public interface MerchantDao extends Dao<Merchant>{
 	 * @return 更新数据条数
 	 */
 	default int changePassword(String code, String newPassword) {
-		return updateMap(MapUtil.asMap("password", newPassword), DaoUtil.and().equal("code", code));
+		return updateMap(MapUtil.asMap("merchantPassword", newPassword), DaoUtil.and().equal("code", code));
 	}
 
 	/**updateMap
@@ -72,6 +73,7 @@ public interface MerchantDao extends Dao<Merchant>{
 	 * 返回信息包含加密的密码。
 	 * @param code 工号
 	 * @return User
+	 * 
 	 */
 	default Merchant findByCode(String code) {
 		return findByName("code", code);

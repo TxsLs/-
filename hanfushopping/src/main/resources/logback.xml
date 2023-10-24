@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="60000" debug="false">
 	<!-- 变量 -->
 	<property name="app_name" value="spring-boot" />
-	<property name="package_name" value="org.teach.study.boot" />
+	<property name="package_name" value="com.example.demo" />
 	<property name="log_dir" value="${user.home}/logs/${app_name}" />
 	
 	<contextName>${app_name}</contextName>

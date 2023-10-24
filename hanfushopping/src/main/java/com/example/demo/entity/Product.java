@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.Date;
+
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.Table;
 
@@ -16,35 +18,30 @@ import lombok.Setter;
 @Table(name = "t_product", alias = "pr")
 public class Product extends Entity{
 	
-	private static final long serialVersionUID=456846541851654L;
+	private static final long serialVersionUID=4568465418516512564L;
 
-	@IgnoreInsert
-	@ApiModelProperty(value = "账号", required = false,position = 1)
+	@ApiModelProperty(value = "代码", required = false,position = 1)
 	private String code;
 	
-	@IgnoreInsert
 	@ApiModelProperty(value = "商品名称", required = true, position = 2)
 	private String name;
 	
-	@IgnoreInsert
 	@ApiModelProperty(value = "商品描述", required = false,position = 3)
 	private String description;
 	
-	@IgnoreInsert
 	@ApiModelProperty(value = "商品价格", required = true, position = 4)
 	private float price;
 	
-	@IgnoreInsert
 	@ApiModelProperty(value = "商品库存", required = true, position = 5)
 	private int stock;
 	
-	@IgnoreInsert
 	@ApiModelProperty(value = "商品分类编号", required = true, position = 6)
-	private Long category_id;
+	private Long categoryId;
 
-	@IgnoreInsert
 	@ApiModelProperty(value = "商家编号", required = false,position = 7)
-	private Long merchant_id;
-
+	private Long merchantId;
+	
+	@ApiModelProperty(value = "创建时间", required = false,position = 8)
+	private Date createdTime;
 	
 }

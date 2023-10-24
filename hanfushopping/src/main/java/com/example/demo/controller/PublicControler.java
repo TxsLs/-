@@ -16,6 +16,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5500", "http://localhost:5500" })
 @Slf4j
 @Api(tags = "公用模块")
 @Controller
@@ -60,14 +61,32 @@ public class PublicControler {
 				return Result.toResult("1003", "验证码不正确!");
 			}
 		}
-		Merchant merchant = service.checkPassword(username, password);
+		Merchant user = service.findByCode(username);
+		if (user == null) {
+			return Result.toResult("1020", "该账号不存在，请注册！");
+		} else if (service.checkPassword(username, password) == null) {
+			return Result.toResult("1001", "用户或密码不正确!");
+
+		} else if (user.getIsviolate() == 0) {
+			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
+		} 
+
+		else {
+			User loginUser = new User(//spring安全的uer
+					user.getCode(), user.getMerchantPassword(), Arrays.asList());
+			session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+			return Result.of(true);
+		}
+
+	
+		/*Merchant merchant = service.checkPassword(username, password);
 		if (merchant == null) {
 			return Result.toResult("1001", "用户或密码不正确!");
 		}
 		org.springframework.security.core.userdetails.User loginUser = new org.springframework.security.core.userdetails.User(
-				merchant.getCode(), merchant.getPassword(), Arrays.asList());
+				merchant.getCode(), merchant.getMerchantPassword(), Arrays.asList());
 		session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
-		return Result.of(true);
+		return Result.of(true);*/
 	}
 
 	@ApiOperation(value = "注销登录", notes = "")
