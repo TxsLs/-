@@ -77,9 +77,8 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <span class="input-group-text bg-white"><i class="bi bi-currency-yen"></i></span>
-                <input type="number" class="form-control" id="price" name="price"
-                  maxlength="20" tabindex="2" aria-label="name" autocomplete="on" placeholder="请输入商品单价"
-                  data-bv-container="#err_username" pattern="^\d{0,20}$">
+                <input type="text" class="form-control" id="price" name="price" maxlength="20" tabindex="2"
+                  aria-label="name" autocomplete="on" placeholder="请输入商品单价" data-bv-container="#err_username">
               </div>
             </div>
           </div>
@@ -89,30 +88,43 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <span class="input-group-text bg-white"><i class="bi bi-currency-yen"></i></span>
-                <input type="number" class="form-control" id="stock" name="stock"
-                  maxlength="20" tabindex="2" aria-label="name" autocomplete="on" placeholder="请输入商品库存"
-                  data-bv-container="#err_username" pattern="^\d{0,20}$">
+                <input type="number" class="form-control" id="stock" name="stock" maxlength="20" tabindex="2"
+                  aria-label="name" autocomplete="on" placeholder="请输入商品库存" data-bv-container="#err_username"
+                  pattern="^\d{0,20}$">
               </div>
             </div>
           </div>
 
           <div class="row mb-3">
-            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">商品分类</label>
+            <label for="categoryId" class="col-sm-3 col-form-label text-sm-end">商品分类</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <span class="input-group-text bg-white"><i class="bi bi-gender-ambiguous"></i></span>
-                <select class="form-select" id="categoryName" name="categoryName" tabindex="6">
+                <select class="form-select" id="categoryId" name="categoryId" tabindex="6">
                   <option value="">请选择分类</option>
-                  <option value="1">上衣</option>
-                  <option value="2">长衫</option>
+
                 </select>
               </div>
             </div>
           </div>
 
+          <div class="row mb-3">
+            <label for="stock" class="col-sm-3 col-form-label text-sm-end">没有找到想要的分类？</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-currency-yen"></i></span>
+                <input type="text" class="form-control" id="categoryName" name="categoryName" maxlength="20"
+                  tabindex="2" aria-label="name" autocomplete="on" placeholder="自定义一个分类"
+                  data-bv-container="#err_username" pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
+                <button type="submit" class="btn btn-primary" id="addCategoryButton">添加分类</button>
+              </div>
+
+            </div>
+
+          </div>
 
           <div class="row mb-3">
-            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">商品图片</label>
+            <label for="profileImage" class="col-sm-3 col-form-label text-sm-end">商品图片</label>
             <div class="col-sm-9">
               <div class="input-group ">
                 <input type="file" class="form-control" id="profileImage" name="profileImage">
@@ -127,8 +139,8 @@
               商品图片
             </div>
             <div class="card-body text-center">
-              <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-0  img-fluid"style="max-width: 100%;max-height:100%;"
-                data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-0  img-fluid"
+                style="max-width: 100%;max-height:100%;" data-bs-toggle="modal" data-bs-target="#exampleModal">
             </div>
           </div>
 
@@ -171,169 +183,324 @@
   <script src="../pagejs/common.js"></script>
   <script>
     const priceInput = document.getElementById('price');
-    priceInput.addEventListener('input', function () {
-      const inputValue = parseFloat(priceInput.value);
-      const formattedValue = inputValue.toFixed(2);
-      priceInput.value = formattedValue;
-    })
+    priceInput.addEventListener('blur', function () {
+      const value = this.value.trim();
+      if (value !== '') {
+        const floatValue = parseFloat(value);
+        if (!isNaN(floatValue)) {
+          const formattedValue = floatValue.toFixed(2);
+          this.value = formattedValue;
+        }
+      }
+    });
 
-    $(function ($) {
-    $("#hide_id").hide();
-   
-            //照片上传字段设置
-            $("#profileImage").change((evt) => {
-                var ele = evt.target, url;
-                if (rock.isMsie()) {
-                    url = ele.value;
-                } else {
-                    var file = ele.files[0];
-                    if (file) {
-                        url = window.URL.createObjectURL(file);
-                    }
-                }
-                $("#imgEditPhoto").attr("src", url);
-            });
+    var mvc = rock.initSvr(["category"]);
+    var categoryService = mvc.findService("category");
+    rock.initBasicMethod([categoryService]);
+    function loadCategory() {
+      var $search = $("#categoryId");
+      var defaultOption = $search.find('option:first'); // 保存 "请选择分类" 选项
 
+      $search.empty(); // 清空除了 "请选择分类" 选项之外的其他选项
+      $search.append(defaultOption); // 重新添加 "请选择分类" 选项
+
+      categoryService.queryAll({ sort: "id" }, function (rtn, status) {
+        if (rtn.hasError) {
+          alert(rock.errorText(rtn, "查询列表失败!"));
+        } else if (rtn.notEmpty) {
+          var list = rtn.result, option = '<option value="%s">[%s] － %s</option>';
+          var $search = $("#categoryId");
+          $.each(list, function (i, vo) {
+            $search.append(rock.format(option, [vo.id, vo.id, vo.name]));
             // 从 sessionStorage 中获取数据并解析为对象
             var selectedUserData = JSON.parse(sessionStorage.getItem('selectedUserData'));
-
-            $("#description").val(selectedUserData.description);
-            $("#id").attr("value", selectedUserData.id);
-            $("#price").attr("value", selectedUserData.price);
-            $("#name").attr("value", selectedUserData.name);
-            //$("#gender").val(selectedUserData.gender);
-            $("#stock").attr("value", selectedUserData.stock);
-            if (selectedUserData.hasPhoto) {
-                var mvc = rock.initSvr(["product"]);
-                var Service = mvc.findService("product");
-                $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + selectedUserData.id);
+            if (vo.id == selectedUserData.categoryId) {
+              $search.children(":last-child").prop("selected", true);
             }
+            // $edit.append(rock.format(option, [vo.id, vo.code, vo.name]));
+          });
+        } else {
+          alert("未查询到部门列表!");
+        }
+      });
+    }
 
+    // 获取按钮和输入框元素
+    let addButton = document.getElementById('addCategoryButton');
+    let categoryNameInput = document.getElementById('categoryName');
+    let errorElement = null; // 错误提示元素
 
+    // 添加点击事件监听器
+    addButton.addEventListener('click', function (event) {
+      event.preventDefault(); // 阻止表单的默认提交行为
 
+      // 获取输入框的值
+      let categoryName = categoryNameInput.value;
 
-            $("#form").formValidation({
-                //验证字段
+      // 校验输入框不为空
+      if (categoryName.trim() === '') {
+        // 输入框为空，显示错误提示
+        showErrorMessage('输入框不能为空');
+        return; // 停止执行后续逻辑
+      }
 
-                fields: {
-                    code: {
-                        validators: {
-                            notEmpty: {
-                                message: '账号不能为空'
-                            },
-                            stringLength: {
-                                min: 1,
-                                max: 20,
-                                message: '用户名长度必须在1到20个字符之间'
-                            }
-                        }
-                    },
-                    name: {
-                        validators: {
-                            notEmpty: {
-                                message: '姓名不能为空'
-                            },
-                            stringLength: {
-                                min: 1,
-                                max: 20,
-                                message: '用户名长度必须在1到20个字符之间'
-                            }
-                        }
-                    },
-                   
-                    gender: {
-                        validators: {
-                            notEmpty: {
-                                message: '请选择性别'
-                            }
-                        }
-                    },
-                    phone: {
-                        validators: {
-                            notEmpty: {
-                                message: '电话号码不能为空'
-                            },
-                            regexp: {
-                                regexp: /^\d{11}/,
-                                message: '请输入有效的11位电话号码!'
-                            }
-                        }
-                    },
-                    profileImage: {
-                        validators: {
-                            file: {
-                                extension: 'jpeg,jpg,png',
-                                type: 'image/jpeg,image/png',
-                                maxSize: 5242880, // 5MB
-                                message: '请选择小于5MB的JPEG或PNG格式图片文件'
-                            }
-                        }
-                    }
-                    //...
-                }
-            }).on('success.form.fv', function (e) {
-
-                //阻止表单提交
-                e.preventDefault();
-
-
-                //得到表单对象
-                let $form = $(e.target);
-                //获取数据
-                let data = new FormData($form[0]); // 使用FormData对象
-
-                // 获取照片文件
-                let photoInput = document.getElementById('profileImage');
-                if (photoInput.files.length > 0) {
-                    let photo = photoInput.files[0];
-                    data.append('photo', photo); // 添加照片数据到FormData对象
-                }
-
-                //得到序列化数据
-                $.ajax({
-                     //跨域
-                     xhrFields: {
-                        withCredentials: true
-                    },
-                    url: "http://127.0.0.1:8082/hanfushopping/product/updateProduct",
-                    method: 'post',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                }).then(response => {
-                    if (response.result) {
-                        $.toasts({
-                            type: 'success',
-                            content: '修改用户信息成功！',
-                            delay: 1000,
-                            autohide: true,
-                            onHidden: function () {
-                                parent.modalInstance.setData(true);
-                                parent.modalInstance.close();
-                            }
-                        });
-                    } else if (response.hasError) {
-                        var errorMessage = rock.errorText(response, "修改信息错误!");
-                        $.toasts({
-                            type: 'danger',
-                            content: errorMessage,
-                            delay: 3050, // 将显示时间设置
-                            onShown: function () {
-                                if (response.errorCode === "1067") {
-                                    $("#code").focus();
-                                }
-                            }
-                        });
-
-                    }
-
-                });
-
+      // 创建一个对象，包含要发送到后端的数据
+      let data = {
+        name: categoryName
+      };
+      console.log(data)
+      // 使用 AJAX 发送数据到后端
+      $.ajax({
+        url: 'http://127.0.0.1:8082/hanfushopping/category/addCategory',
+        type: 'POST',
+        //跨域
+        xhrFields: {
+          withCredentials: true
+        },
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+          if (response.result) {
+            $.toasts({
+              type: 'info',
+              content: '添加分类成功',
+              delay: 1000,
+              onHidden: function () {
+                loadCategory();
+              }
             });
+          } else {
+            var errorMessage = rock.errorText(response, "添加分类失败!");
+            $.toasts({
+              type: 'danger',
+              content: errorMessage,
+              delay: 3000,
+              onHidden: function () {
+                if (response.errorCode === "1076") {
+                  $("#code").focus();
+                }
+                categoryNameInput.value = '';
+              }
+            });
+          }
 
-        
-   
-});
+        }
+
+      });
+    });
+
+    // 监听输入框的输入变化
+    categoryNameInput.addEventListener('input', function () {
+      hideErrorMessage(); // 隐藏错误提示
+      categoryNameInput.classList.remove('error'); // 移除输入框的错误样式
+    });
+
+    // 显示错误提示
+    function showErrorMessage(message) {
+      // 如果已经存在错误提示元素，则更新其内容
+      if (errorElement) {
+        errorElement.textContent = message;
+        return;
+      }
+
+      // 创建新的错误提示元素
+      errorElement = document.createElement('div');
+      errorElement.classList.add('error-message');
+      errorElement.textContent = message;
+
+      // 插入到输入框的下方
+      categoryNameInput.parentNode.appendChild(errorElement);
+      categoryNameInput.classList.add('error'); // 添加输入框的错误样式
+    }
+
+    // 隐藏错误提示
+    function hideErrorMessage() {
+      if (errorElement) {
+        errorElement.parentNode.removeChild(errorElement);
+        errorElement = null; // 重置错误提示元素
+      }
+      categoryNameInput.classList.remove('error'); // 移除输入框的错误样式
+    }
+
+
+
+    $(function ($) {
+      $("#hide_id").hide();
+      loadCategory();
+      //照片上传字段设置
+      $("#profileImage").change((evt) => {
+        var ele = evt.target, url;
+        if (rock.isMsie()) {
+          url = ele.value;
+        } else {
+          var file = ele.files[0];
+          if (file) {
+            url = window.URL.createObjectURL(file);
+          }
+        }
+        $("#imgEditPhoto").attr("src", url);
+      });
+
+      // 从 sessionStorage 中获取数据并解析为对象
+      var selectedUserData = JSON.parse(sessionStorage.getItem('selectedUserData'));
+
+      $("#description").val(selectedUserData.description);
+
+      $("#id").attr("value", selectedUserData.id);
+      $("#price").attr("value", selectedUserData.price);
+      $("#name").attr("value", selectedUserData.name);
+      //$("#gender").val(selectedUserData.gender);
+      $("#stock").attr("value", selectedUserData.stock);
+      if (selectedUserData.hasPhoto) {
+        var mvc = rock.initSvr(["product"]);
+        var Service = mvc.findService("product");
+        $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + selectedUserData.id);
+      }
+
+
+
+
+      $("#form").formValidation({
+        //验证字段
+
+        fields: {
+          name: {
+            validators: {
+              notEmpty: {
+                message: '商品名称不能为空！'
+              },
+              stringLength: {
+                min: 1,
+                max: 20,
+                message: '用户名长度必须在1到20个字符之间'
+              }
+            }
+          },
+          description: {
+            validators: {
+
+              stringLength: {
+                min: 0,
+                max: 200,
+                message: '简介不要超过200字'
+              }
+            }
+          },
+          price: {
+            validators: {
+              notEmpty: {
+                message: '单价不能为空'
+              },
+
+            }
+          },
+
+          stock: {
+            validators: {
+              notEmpty: {
+                message: '库存不能为空'
+              },
+              greaterThan: {
+                value: 1,
+                inclusive: true,
+                message: '库存数量最小为1'
+              }
+            }
+          },
+
+          categoryId: {
+            validators: {
+              notEmpty: {
+                message: '请选择分类'
+              }
+            }
+          },
+          // phone: {
+          //     validators: {
+          //         notEmpty: {
+          //             message: '电话号码不能为空'
+          //         },
+          //         regexp: {
+          //             regexp: /^\d{11}/,
+          //             message: '请输入有效的11位电话号码!'
+          //         }
+          //     }
+          // },
+          profileImage: {
+            validators: {
+              file: {
+                extension: 'jpeg,jpg,png,webp',
+                type: 'image/jpeg,image/png,webp',
+                maxSize: 5242880, // 5MB
+                message: '请选择小于5MB的JPEG或PNG格式图片文件'
+              }
+            }
+          }
+          //...
+        }
+      }).on('success.form.fv', function (e) {
+
+        //阻止表单提交
+        e.preventDefault();
+
+
+        //得到表单对象
+        let $form = $(e.target);
+        //获取数据
+        let data = new FormData($form[0]); // 使用FormData对象
+
+        // 获取照片文件
+        let photoInput = document.getElementById('profileImage');
+        if (photoInput.files.length > 0) {
+          let photo = photoInput.files[0];
+          data.append('photo', photo); // 添加照片数据到FormData对象
+        }
+        // 忽略不想获取的输入字段
+        let ignoredInput = document.getElementById('categoryName');
+        data.delete(ignoredInput.name); // 从FormData对象中删除指定字段
+        //得到序列化数据
+        $.ajax({
+          //跨域
+          xhrFields: {
+            withCredentials: true
+          },
+          url: "http://127.0.0.1:8082/hanfushopping/product/updateProduct",
+          method: 'post',
+          data: data,
+          processData: false,
+          contentType: false,
+        }).then(response => {
+          if (response.result) {
+            $.toasts({
+              type: 'success',
+              content: '修改用户信息成功！',
+              delay: 1000,
+              autohide: true,
+              onHidden: function () {
+                parent.modalInstance.setData(true);
+                parent.modalInstance.close();
+              }
+            });
+          } else if (response.hasError) {
+            $.toasts({
+              type: 'danger',
+              content: '添加商品失败！',
+              delay: 3050, // 将显示时间设置
+              // onShown: function () {
+              //     if (response.errorCode === "1067") {
+              //         $("#code").focus();
+              //     }
+              // }
+            });
+          }
+
+        });
+
+      });
+
+
+
+    });
 
 
   </script>

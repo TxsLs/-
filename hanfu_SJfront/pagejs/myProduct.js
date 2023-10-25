@@ -166,7 +166,7 @@ function loadTableData() {
             var $imgPhoto = $('#table').find("tr[data-uniqueid='" + row.id + "'] img.img-photo");
             if (hasPhoto) {
               $imgPhoto.attr("src", productService.url("photo") + "?id=" + row.id);
-            }else {
+            } else {
               $imgPhoto.attr("src", "../dist/img/nophoto.png");
             }
           }
@@ -333,20 +333,27 @@ function loadTableData() {
                 });
 
               },
-              'click .del-btn': function (event, value, row, index) {
+              'click .up-btn': function (event, value, row, index) {
                 event.stopPropagation();
-                $.modal({
-                  body: '确定要删除管理员' + row.name + '?',
+                window.modalInstance = $.modal({
+                  body: '确定要上架此商品：' + row.name + '?',
+                  cancelBtn: true,
                   ok: function () {
 
                     $.ajax({
-                      url: '/user/10',
-                      method: 'delete',
+                      //跨域
+                      xhrFields: {
+                        withCredentials: true
+                      },
+                      url: 'http://127.0.0.1:8082/hanfushopping/product/updateProduct',
+                      method: 'post',
+                      data: { status: 1, id: row.id },
                     }).then(response => {
-                      if (response.code === 200) {
+                      if (response.result) {
                         $.toasts({
                           type: 'success',
-                          content: '删除成功',
+                          content: '上架商品成功！',
+                          delay: 1500,
                           onHidden: function () {
                             //刷新当前数据表格
                             $('#table').bootstrapTable('refresh');
@@ -356,16 +363,106 @@ function loadTableData() {
                       }
                     });
 
+                  }, cancel: function () {
+                    //刷新当前数据表格
+                    $('#table').bootstrapTable('refresh');
+                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+
                   }
                 })
 
               },
-              'click .role-btn': function (event, value, row, index) {
+
+              'click .dw-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  body: '确定要下架此商品：' + row.name + '?',
+                  cancelBtn: true,
+                  ok: function () {
+
+                    $.ajax({
+                      //跨域
+                      xhrFields: {
+                        withCredentials: true
+                      },
+                      url: 'http://127.0.0.1:8082/hanfushopping/product/updateProduct',
+                      method: 'post',
+                      data: { status: 0, id: row.id },
+                    }).then(response => {
+                      if (response.result) {
+                        $.toasts({
+                          type: 'success',
+                          content: '下架商品成功！',
+                          delay: 1500,
+                          onHidden: function () {
+                            //刷新当前数据表格
+                            $('#table').bootstrapTable('refresh');
+                            $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+                          }
+                        })
+                      }
+                    });
+
+                  }, cancel: function () {
+                    //刷新当前数据表格
+                    $('#table').bootstrapTable('refresh');
+                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+
+                  }
+                })
+
+              },
+
+              'click .del-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  body: '确定要删除此商品：' + row.name + '?',
+                  cancelBtn: true,
+                  ok: function () {
+
+                    $.ajax({
+                      //跨域
+                      xhrFields: {
+                        withCredentials: true
+                      },
+                      url: 'http://127.0.0.1:8082/hanfushopping/product/remove',
+                      method: 'get',
+                      data: { id: row.id },
+                    }).then(response => {
+                      if (response.result) {
+                        $.toasts({
+                          type: 'success',
+                          content: '删除商品成功！',
+                          delay: 1500,
+                          onHidden: function () {
+                            //刷新当前数据表格
+                            $('#table').bootstrapTable('refresh');
+                            $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+                          }
+                        })
+                      }
+                    });
+
+                  }, cancel: function () {
+                    //刷新当前数据表格
+                    $('#table').bootstrapTable('refresh');
+                    $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+
+                  }
+                })
+
+              },
+
+              'click .unlock-btn': function (event, value, row, index) {
                 event.stopPropagation();
 
-                window.rolemodal = $.modal({
-                  url: 'user-role.html',
-                  title: '分配角色',
+                window.modalInstance = $.modal({
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('selectedUserData', JSON.stringify(row));
+                  },
+                  url: 'unlock.html',
+                  title: '商品解封申请',
                   //禁用掉底部的按钮区域
                   buttons: [],
                   modalDialogClass: 'modal-dialog-centered modal-lg',
@@ -375,8 +472,10 @@ function loadTableData() {
                       $('#table').bootstrapTable('refresh');
                       $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
                     }
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('selectedUserData');
                   }
-                })
+                });
 
               }
             }
@@ -486,11 +585,11 @@ function loadTableData() {
       }
 
       function formatContent(val, rows) {
-        if (val == null) {
-          return null;
+        if (val == null || val == '') {
+          return '这个商家很懒，都没写简介＞︿＜';
         }
 
-        return `<a class="text-decoration-none text-body" href="product_detail.html?reason=${rows.description}"title="点击查看详情"data-bs-toggle="tooltip">${val}</a>`;
+        return `<a class="text-decoration-none text-body" data-bs-toggle="tooltip">${val}</a>`;
       }
 
       //格式化列数据演示 val:当前数据 rows:当前整行数据

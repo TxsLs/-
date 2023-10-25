@@ -20,28 +20,28 @@ $(function ($) {
       $("#merchantIntroduction").val(ssoUser.merchantIntroduction);
       $("#phone").attr("value", ssoUser.phone);
       $("#email").attr("value", ssoUser.email);
-    var mvc = rock.initSvr(["merchant"]);
-    var Service = mvc.findService("merchant");
-    if (ssoUser.hasPhoto) {
+      var mvc = rock.initSvr(["merchant"]);
+      var Service = mvc.findService("merchant");
+      if (ssoUser.hasPhoto) {
 
-      $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + ssoUser.id);
-    }
-       //照片上传字段设置
-       $("#profileImage").change((evt) => {
-            var ele = evt.target, url;
-            if (rock.isMsie()) {
-                url = ele.value;
-            } else {
-                var file = ele.files[0];
-                if (file) {
-                    url = window.URL.createObjectURL(file);
-                }
+        $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + ssoUser.id);
+      }
+      //照片上传字段设置
+      $("#profileImage").change((evt) => {
+        var ele = evt.target, url;
+        if (rock.isMsie()) {
+          url = ele.value;
+        } else {
+          var file = ele.files[0];
+          if (file) {
+            url = window.URL.createObjectURL(file);
+          }
 
-            }
+        }
 
 
-            $("#imgEditPhoto").attr("src", url);
-        });
+        $("#imgEditPhoto").attr("src", url);
+      });
 
 
       //前端表单验证
@@ -137,42 +137,42 @@ $(function ($) {
           processData: false,
           contentType: false,
         }).then(res => {
-                
-                if (res||data.get("code")==ssoUser.code) {
-                    $.toasts({
-                        type: 'success',
-                        content: '修改个人信息成功！',
-                        onHidden: function () {
-                           
-                            top.location.replace('../index.html');
-                        }
-                    });
-                }else{
-                            _root.logout({}, (rtn) => {
-                                if (rtn.hasError || !rtn.result) {
-                                  $.toasts({
-                                    type: 'danger',
-                                    content: '注销登录出错!',
-                      
-                                  })
-                      
-                                } else {
-                      
-                                  $.toasts({
-                                    type: 'success',
-                                    content: '修改个人信息成功！（修改账号将会退出登录！）',
-                                    onHidden: function () {
-                                      top.location.replace('login.html');
-                                    }
-                                  });
 
-                         
-                        }
-                      });
+          if (res || data.get("code") == ssoUser.code) {
+            $.toasts({
+              type: 'success',
+              content: '修改个人信息成功！',
+              onHidden: function () {
 
-                }
-
+                top.location.replace('../index.html');
+              }
             });
+          } else {
+            _root.logout({}, (rtn) => {
+              if (rtn.hasError || !rtn.result) {
+                $.toasts({
+                  type: 'danger',
+                  content: '注销登录出错!',
+
+                })
+
+              } else {
+
+                $.toasts({
+                  type: 'success',
+                  content: '修改个人信息成功！（修改账号将会退出登录！）',
+                  onHidden: function () {
+                    top.location.replace('login.html');
+                  }
+                });
+
+
+              }
+            });
+
+          }
+
+        });
       });
 
     }
