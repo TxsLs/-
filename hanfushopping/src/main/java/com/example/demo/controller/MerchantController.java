@@ -4,8 +4,11 @@ package com.example.demo.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.io.FilenameUtils;
+
 import org.quincy.rock.core.util.IOUtil;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.http.MediaType;
@@ -173,6 +176,52 @@ public class MerchantController extends BaseController<Merchant, MerchantService
 		log.debug("call deletePhoto");
 		boolean result = this.updatePhoto(id, null);
 		return Result.of(result);
+	}
+	
+	
+	@ApiOperation(value = "checkpwd", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "用户代码", required = true),
+			@ApiImplicitParam(name = "merchantPassword", value = "密码", required = true) })
+	@RequestMapping(value = "/checkpwd", method = { RequestMethod.POST })
+	//@Secured({ "ROLE_ADMIN" })
+	public @ResponseBody Result<Boolean> checkpwd(@NotBlank @RequestParam String code,
+			@NotBlank @RequestParam String merchantPassword) {
+		log.debug("call checkpwd");
+		boolean ok = false;
+		Merchant result = this.service().checkPassword(code, merchantPassword);
+		if (result != null) {
+			ok = true;
+		}
+		return Result.of(ok);
+	}
+	
+	
+	@ApiOperation(value = "员工找回自己的密码", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "newPassword", value = "新密码", required = true),
+			@ApiImplicitParam(name = "code", value = "账号", required = true),
+			@ApiImplicitParam(name = "name", value = "姓名", required = true),
+			@ApiImplicitParam(name = "phone", value = "电话号", required = true, dataType = "long"), })
+	@RequestMapping(value = "/findSelfPassword", method = { RequestMethod.POST })
+	public @ResponseBody Result<Boolean> findSelfPassword(@NotBlank @RequestParam String code,
+			@NotBlank @RequestParam String name, @NotNull @RequestParam Long phone,
+			@NotBlank @RequestParam String newPassword) {
+		log.debug("call changeSelfPassword");
+		boolean ok = false;
+		//if (AppUtils.isLogin()) {
+		//String code = AppUtils.getLoginUser().getUsername();
+		Merchant employee = this.service().findByCode(code);
+		if (employee != null && employee.getCode().equals(code) && employee.getName().equals(name)
+				&& employee.getPhone().equals(phone)) {
+			ok = this.service().changePassword(code, newPassword);
+		} else if (employee.getIsviolate().equals(0)) {
+			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
+
+		} else {
+			return Result.toResult("1069", "用户信息不匹配，请重试！");
+		}
+
+		//}
+		return Result.of(ok);
 	}
 
 }

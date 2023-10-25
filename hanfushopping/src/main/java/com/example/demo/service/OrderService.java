@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.Service;
-import com.example.demo.entity.Order_table;
+import com.example.demo.entity.Order;
 
-public interface OrderService extends Service<Order_table>{
-	public Order_table findByCode(String code);
+public interface OrderService extends Service<Order>{
+
 }
