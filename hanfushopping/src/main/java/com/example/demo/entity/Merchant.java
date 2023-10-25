@@ -34,7 +34,7 @@ public class Merchant extends Entity {
 
 	@ApiModelProperty(value = "是否违规", required = true, position = 5)
 	@IgnoreInsertUpdate
-	private int isviolate;
+	private Integer isviolate;
 
 	@ApiModelProperty(value = "密码", required = false,position = 6)
 	private String merchantPassword;
@@ -43,7 +43,7 @@ public class Merchant extends Entity {
 	private String code;
 
 	@ApiModelProperty(value = "手机号", required = false,position = 8)
-	private long phone;
+	private Long phone;
 
 	@ApiModelProperty(value = "邮箱", required = false,position = 9)
 	private String email;

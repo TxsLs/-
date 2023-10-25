@@ -1,14 +1,16 @@
 package com.example.demo;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.security.auth.login.LoginException;
 import javax.validation.Valid;
 
+
+import org.quincy.rock.core.dao.sql.Sort;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -142,5 +144,15 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 		log.debug("call existsByName");
 		boolean result = this.service().existByName(propName, propValue, ignoreId);
 		return Result.of(result);
+	}
+
+	@ApiOperation(value = "查询所有实体", notes = "该接口继承自SimpleController")
+	@ApiImplicitParam(name = "sort", value = "排序规则字符串")
+	@RequestMapping(value = "/queryAll", method = { RequestMethod.GET })
+	//@PreAuthorize("hasPermission('/spring-boot','/job','/queryAll')")
+	public @ResponseBody Result<List<? extends Entity>> queryAll(String sort) {
+		log.debug("call queryAll");
+		List<? extends Entity> list = this.service().findAll(null, Sort.parse(sort));
+		return Result.toResult(list);
 	}
 }
