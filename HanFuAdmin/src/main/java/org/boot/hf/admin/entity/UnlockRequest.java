@@ -54,4 +54,7 @@ public class UnlockRequest extends Entity {
 
 	@ApiModelProperty(value = "封禁理由", required = true, position = 8)
 	private Date processingTime;
+	
+	@ApiModelProperty(value = "封禁商品id", required = true, position = 9)
+	private Long productId;
 }
