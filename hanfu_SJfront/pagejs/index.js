@@ -88,4 +88,32 @@ _root.loginUser({}, function (rtn) {
 
 
   });
+
+
+//注销账号
+$(document).on('click', '.bsa-del', function (e) {
+  e.preventDefault();
+  $.modal({
+    body: '确定要注销账号吗？（此操作将删除此账号的所有信息！请谨慎考虑！）',
+    cancelBtn: true,
+
+    ok: function () {
+
+        window.modalInstance = $.modal({
+
+            url: 'pages/user_del.html',
+            title: '注销账号',
+            //禁用掉底部的按钮区域
+            buttons: [],
+            modalDialogClass: 'modal-dialog-centered modal-lg',
+
+          });
+
+    }
+  })
+
+
+});
+
+
   })

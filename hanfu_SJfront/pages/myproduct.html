@@ -38,9 +38,20 @@
 
           <div class="col-12">
             <div class="row">
-              <label for="categoryName" class="col-sm-auto col-form-label">商品分类</label>
+              <label for="categoryId" class="col-sm-auto col-form-label">商品分类</label>
               <div class="col">
-                <input type="text" class="form-control" id="categoryName" name="categoryName"
+                <select class="form-select" id="categoryId" name="categoryId" tabindex="6">
+                  <option value="">请选择分类</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="row">
+              <label for="price" class="col-sm-auto col-form-label">商品价格</label>
+              <div class="col">
+                <input type="text" class="form-control" id="price" name="price"
                   pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
               </div>
             </div>
@@ -51,7 +62,7 @@
               <label for="status" class="col-sm-auto col-form-label">商品状态</label>
               <div class="col">
                 <select class="selectpicker" id="status" name="status">
-                  <option value="">所有</option>
+                  <option value="">全部</option>
                   <option value="1">上架</option>
                   <option value="0">下架</option>
                 </select>
@@ -62,7 +73,7 @@
 
           <div class="col-12 gap-2">
 
-            <button type="button" class="btn btn-light bsa-querySearch-btn">
+            <button type="button" class="btn btn-light bsa-querySearch-btn" onclick="loadTableData();">
               <i class="bi bi-search"></i>搜索
             </button>
             <button type="button" class="btn btn-light bsa-reset-btn">
