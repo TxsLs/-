@@ -110,7 +110,7 @@ public abstract class BaseController<T extends Entity, S extends Service<T>> {
 	@ApiOperation(value = "删除多个实体", notes = "该接口继承自BaseController")
 	@ApiImplicitParam(name = "id", value = "多个主键id", required = true, dataType = "long", allowMultiple = true)
 	@RequestMapping(value = "/removeMore", method = { RequestMethod.GET })
-	public @ResponseBody Result<Boolean> removeMore(@NotEmpty @RequestParam("id") Long[] ids) {
+	public @ResponseBody Result<Boolean> removeMore(@NotEmpty @RequestParam("id[]") Long[] ids) {
 		log.debug("call removeMore");
 		boolean result = this.service().deleteMore(Arrays.asList(ids));
 		return Result.of(result);
