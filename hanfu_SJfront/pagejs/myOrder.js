@@ -745,7 +745,7 @@ function loadTableData() {
 
           //第三个按钮
           html += `<button  type="button" class="btn btn-light btn-sm back-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-data-bs-title="撤回"><i class="bi bi-trash-fill"></i></button>`
+data-bs-title="撤回"><i class="bi bi-backspace"></i></button>`
         }
         //         else if (rows.status == 1 && rows.empStatus == 1) {
         //           //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)

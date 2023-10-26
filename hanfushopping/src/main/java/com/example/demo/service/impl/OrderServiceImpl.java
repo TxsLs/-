@@ -13,5 +13,6 @@ import com.example.demo.service.OrderService;
 @Service
 public class OrderServiceImpl extends BaseService<Order, OrderDao> implements OrderService{
 
+
 		
 }

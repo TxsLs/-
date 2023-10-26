@@ -14,5 +14,7 @@ import com.github.pagehelper.Page;
 @Mapper
 public interface OrderDao extends Dao<Order>{
 
+
+	
 	}
 

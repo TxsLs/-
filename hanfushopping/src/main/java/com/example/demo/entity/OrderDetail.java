@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.math.BigDecimal;
+
 import org.quincy.rock.core.dao.annotation.Column;
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.IgnoreUpdate;
@@ -52,7 +54,7 @@ public class OrderDetail extends Entity {
 	
 	@ApiModelProperty(value = "订单总价", position = 9)
 	@Column(value = "f_total_price", tableAlias = "o", ignoreInsert = true, ignoreUpdate = true)
-	private String totalPrice;
+	private BigDecimal totalPrice;
 	
 	@ApiModelProperty(value = "订单状态", position = 10)
 	@Column(value = "f_order_status", tableAlias = "o", ignoreInsert = true, ignoreUpdate = true)

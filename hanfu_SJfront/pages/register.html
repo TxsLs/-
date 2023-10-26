@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
-  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
-  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
+  <meta name="keywords" content="华裳在线汉服网络商城">
+  <meta name="description" content="bootstrap华裳在线汉服网络商城">
   <meta name="author" content="ajiho">
   <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
@@ -90,6 +90,15 @@
           <div id="profileImageHelp" class="form-text">请上传您的头像（支持webp、png、jpg格式）</div>
         </div>
 
+        <div class="mb-3 ">
+          <div class="card-header bg-body text-center">
+            用户头像
+          </div>
+          <div class="card-body text-center">
+            <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-circle   bsa-wh-100 "
+              data-bs-toggle="modal" data-bs-target="#exampleModal">
+          </div>
+        </div>
 
         <div class="d-grid gap-2">
           <button class="btn btn-outline-primary" tabindex="12" type="submit"><i class="bi bi-person-plus-fill"></i>
@@ -119,6 +128,22 @@
   <script>
 
     $(function () {
+
+      $("#profileImage").change((evt) => {
+    var ele = evt.target, url;
+    if (rock.isMsie()) {
+      url = ele.value;
+    } else {
+      var file = ele.files[0];
+      if (file) {
+        url = window.URL.createObjectURL(file);
+      }
+    }
+    $("#imgEditPhoto").attr("src", url);
+  });
+
+
+
       //前端表单验证
       $('#form').formValidation({
         fields: {

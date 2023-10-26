@@ -41,7 +41,7 @@ public class OrderDetailController extends BaseController<OrderDetail, OrderDeta
 			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
 	public @ResponseBody Result<PageSet<? extends Entity>> queryPage(Long merchantId, String productName,
-			String totalPrice, String orderStatus, Long orderId, String searchCode, String searchName, String sort,
+			String totalPrice, String orderStatus, Long orderId, String searchName, String sort,
 			@RequestParam("pageNum") long pageNum, @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
@@ -84,6 +84,7 @@ public class OrderDetailController extends BaseController<OrderDetail, OrderDeta
 		log.debug("call queryAllByName");
 
 		List<OrderDetail> vo = this.service().findAllByName(propName, propValue, Sort.parse(sort));
+		
 		return Result.toResult(vo);
 
 	}
