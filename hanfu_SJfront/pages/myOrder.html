@@ -28,15 +28,15 @@
         <form class="row row-cols-sm-auto g-3 py-2 align-items-center" id="searchForm" name="searchForm">
           <div class="col-12">
             <div class="row">
-              <label for="name" class="col-sm-auto col-form-label">商品名称</label>
+              <label for="productName" class="col-sm-auto col-form-label">商品名称</label>
               <div class="col">
-                <input type="text" class="form-control" id="name" name="name"
+                <input type="text" class="form-control" id="productName" name="productName"
                   pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
               </div>
             </div>
           </div>
 
-          <div class="col-12">
+          <!-- <div class="col-12">
             <div class="row">
               <label for="categoryId" class="col-sm-auto col-form-label">商品分类</label>
               <div class="col">
@@ -45,13 +45,13 @@
                 </select>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-12">
             <div class="row">
-              <label for="price" class="col-sm-auto col-form-label">商品价格</label>
+              <label for="totalPrice" class="col-sm-auto col-form-label">订单总价</label>
               <div class="col">
-                <input type="text" class="form-control" id="price" name="price"
+                <input type="text" class="form-control" id="totalPrice" name="totalPrice"
                   pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
               </div>
             </div>
@@ -59,12 +59,12 @@
 
           <div class="col-12">
             <div class="row">
-              <label for="status" class="col-sm-auto col-form-label">商品状态</label>
+              <label for="orderStatus" class="col-sm-auto col-form-label">订单状态</label>
               <div class="col">
-                <select class="selectpicker" id="status" name="status">
+                <select class="selectpicker" id="orderStatus" name="orderStatus">
                   <option value="">全部</option>
-                  <option value="1">上架</option>
-                  <option value="0">下架</option>
+                  <option value="1">已发货</option>
+                  <option value="0">未处理</option>
                 </select>
               </div>
             </div>
@@ -86,12 +86,12 @@
       </div>
       <div class="card-body">
         <!--  表格上方左侧的工具条区域    -->
-        <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
+        <!-- <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
           <button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增商品
           </button>
           <button class="btn btn-light batch-btn" disabled><i class="bi bi-trash"></i> 批量删除</button>
 
-        </div>
+        </div> -->
         <!--  数据表格    -->
         <table id="table"></table>
       </div>
