@@ -1,8 +1,5 @@
 package org.study.spring.entity;
 
-import java.sql.Date;
-
-import org.apache.ibatis.annotations.Result;
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.IgnoreUpdate;
 import org.quincy.rock.core.dao.annotation.Table;
@@ -53,7 +50,7 @@ public class Order extends Entity {
 
 	@ApiModelProperty(value = "手机号", position = 6)
 	private String phone;
-	
+
 	@ApiModelProperty(value = "创建时间", position = 7)
 	@IgnoreInsert
 	@IgnoreUpdate

@@ -4,13 +4,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
 import org.quincy.rock.core.dao.sql.Sort;
+import org.quincy.rock.core.exception.LoginException;
+import org.quincy.rock.core.lang.DataType;
 import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.study.spring.AppUtils;
 import org.study.spring.BaseController;
 import org.study.spring.Entity;
 import org.study.spring.entity.ChatRecord;
@@ -22,6 +26,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+
+@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5501", "http://localhost:5501" })
 @Slf4j
 @Api(tags = "聊天记录模块")
 @Controller
@@ -39,6 +45,9 @@ public class ChatRecordController extends BaseController<ChatRecord, ChatRecordS
 			@RequestParam("pageNum") long pageNum, @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
+		if (AppUtils.isLogin()) {
+			String code = AppUtils.getLoginUser().getUsername();
+			searchCode="-"+code+"-";
 		if (StringUtils.isNotEmpty(searchCode)) {
 			where.like("code", searchCode);
 		}
@@ -47,6 +56,9 @@ public class ChatRecordController extends BaseController<ChatRecord, ChatRecordS
 		}
 		PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 		return Result.toResult(ps);
+		} else {
+			throw new LoginException("未登录!");
+		}
 	}
 	
 

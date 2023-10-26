@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
 import org.quincy.rock.core.dao.sql.Sort;
+import org.quincy.rock.core.lang.DataType;
 import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
 import org.springframework.http.MediaType;
@@ -54,6 +55,8 @@ public class ProductController extends BaseController<Product, ProductService> {
 			@RequestParam("pageNum") long pageNum, @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
+		where.like("status", "1");
+		where.like("empStatus", "1");
 		if (StringUtils.isNotEmpty(searchCode)) {
 			where.like("code", searchCode);
 		}

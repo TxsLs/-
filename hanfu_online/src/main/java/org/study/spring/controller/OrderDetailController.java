@@ -1,9 +1,12 @@
 package org.study.spring.controller;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.quincy.rock.core.dao.DaoUtil;
 import org.quincy.rock.core.dao.sql.Predicate;
 import org.quincy.rock.core.dao.sql.Sort;
+import org.quincy.rock.core.exception.LoginException;
 import org.quincy.rock.core.lang.DataType;
 import org.quincy.rock.core.vo.PageSet;
 import org.quincy.rock.core.vo.Result;
@@ -12,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.study.spring.AppUtils;
 import org.study.spring.BaseController;
 import org.study.spring.Entity;
+import org.study.spring.entity.Address;
 import org.study.spring.entity.OrderDetail;
 import org.study.spring.service.OrderDetailService;
 
@@ -54,6 +59,32 @@ public class OrderDetailController extends BaseController<OrderDetail, OrderDeta
 		return Result.toResult(ps);
 	}
 
+	
+	@ApiOperation(value = "根据指定的属性名和值返回所有数据", notes = "该接口继承自SimpleController")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "propName", value = "属性名", required = true),
+		@ApiImplicitParam(name = "propValue", value = "属性值", required = true) })
+	@RequestMapping(value = "/queryAllByName", method = { RequestMethod.GET })
+	public @ResponseBody Result<List<OrderDetail>> queryAllByName(@RequestParam String propName, @RequestParam Object propValue,String sort) {
+		log.debug("call queryAllByName");
+
+			List<OrderDetail> vo = this.service().findAllByName(propName, propValue, Sort.parse(sort), "password");
+			return Result.toResult(vo);
+
+	}
+	
+	@ApiOperation(value = "根据指定的属性名和值删除所有数据", notes = "该接口继承自SimpleController")
+	@RequestMapping(value = "/delAllByName", method = { RequestMethod.GET })
+	public @ResponseBody Result<Boolean> delAllByName(Long orderId,String sort) {
+		log.debug("call delAllByName");
+		Predicate where = DaoUtil.and();
+		if (orderId != null)
+			where.equal(DataType.LONG, "orderId", orderId.toString());
+		boolean vo = this.service().deleteAll(where);
+			return Result.toResult(vo);
+
+	}
+	
+	
 	
 	
 }

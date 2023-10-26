@@ -42,10 +42,14 @@ public class ShopCart extends Entity {
 	@ApiModelProperty(value = "商品编号", position = 2)
     private Long productId;	
 	
-	@ApiModelProperty(value = "商品数量", position = 3)
+    @ApiModelProperty(value = "商品名称", position = 3)
+	@Column(value = "f_name", tableAlias = "p", ignoreInsert = true, ignoreUpdate = true)
+	private String productName;
+	
+	@ApiModelProperty(value = "商品数量", position = 4)
     private Integer quantity;	
 
-    @ApiModelProperty(value = "商品单价", position = 4)
+    @ApiModelProperty(value = "商品单价", position = 5)
 	@Column(value = "f_price", tableAlias = "p", ignoreInsert = true, ignoreUpdate = true)
 	private String price;
 

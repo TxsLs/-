@@ -51,6 +51,9 @@ public class ChatRecord extends Entity {
     
     @ApiModelProperty(value = "接收者类型", position = 6)
 	private String receiverType;
+    
+    @ApiModelProperty(value = "是否已读", position = 7)
+	private String status;
 
 
 }
