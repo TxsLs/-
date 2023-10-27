@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+    <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+    <meta name="author" content="ajiho">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+    <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+
+<body class="bg-body-tertiary py-3">
+    <div class="container-fluid">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <form id="form">
+
+                    <div class="row mb-3" id="hide_id">
+                        <label for="username" class="col-sm-3 col-form-label text-sm-end">用户Id</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-file-earmark-person"></i></span>
+                                <input type="text" class="form-control" id="id" name="id" tabindex="1" autocomplete="on"
+                                    placeholder="" required data-bv-container="#err_username" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="username" class="col-sm-3 col-form-label text-sm-end">用户账号</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
+                            <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2" autocomplete="on"
+                              placeholder="请输入账号" data-bv-container="#err_username" pattern="^[A-Za-z0-9]{0,20}$" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                    <div class="row mb-3" id="hide_status">
+                        <label for="role" class="col-sm-3 col-form-label text-sm-end">员工状态</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-person-gear"></i></span>
+                                <select class="form-select" name="status" aria-label="status" id="status">
+                                    <option value="1">正常</option>
+                                    <option value="0" selected>离职</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="row mb-3">
+                        <label for="username" class="col-sm-3 col-form-label text-sm-end">封禁理由</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-clipboard2-data"></i></span>
+                                <textarea class="form-control" id="reason" rows="6" name="reason" maxlength="200"
+                                    tabindex="2" autocomplete="on" placeholder="请输入封禁理由" data-bv-container="#err_username"
+                                    pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,200}$"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row mb-3">
+            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
+                <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2"
+                  aria-label="name" autocomplete placeholder="请输入姓名" data-bv-container="#err_username"
+                  pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
+              </div>
+            </div>
+          </div> -->
+
+
+
+                    <!-- <div class="row mb-3">
+            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-gender-ambiguous"></i></span>
+                <select class="form-select" id="gender" name="gender" tabindex="6">
+                  <option value="">请选择性别</option>
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select>
+              </div>
+            </div>
+          </div> -->
+
+
+                    <!-- <div class="row mb-3">
+            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
+            <div class="col-sm-9">
+              <div class="input-group ">
+                <input type="file" class="form-control" id="profileImage" name="profileImage">
+                <label class="input-group-text" for="avatar"><i class="bi bi-cloud-upload"></i>
+                  修改图片</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 ">
+            <div class="card-header bg-body text-center">
+              用户头像
+            </div>
+            <div class="card-body text-center">
+              <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-circle   bsa-wh-100 "
+                data-bs-toggle="modal" data-bs-target="#exampleModal">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="phone" class="col-sm-3 col-form-label text-sm-end">手机</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
+                <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" autocomplete
+                  placeholder="请输入电话号码" required data-bv-container="#err_phone" maxlength="11">
+              </div>
+            </div>
+          </div> -->
+
+
+                    <div class="row mb-3">
+                        <div class="col-sm-9 offset-sm-3 text-center">
+                            <button type="submit" class="btn btn-primary" id="btn">封禁该用户</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <!--回到顶部开始-->
+    <a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+    <!--回到顶部结束-->
+
+
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/formvalidation/js/formValidation.js"></script>
+    <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+    <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+    <script src="../dist/js/bootstrap-admin.min.js"></script>
+    <script src="../dist/js/app.js"></script>
+    <script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
+    <script type="text/javascript" src="../pagejs/common.js"></script>
+    <script>
+
+$(function ($) {
+    $("#hide_status").hide();
+    // 从 sessionStorage 中获取数据并解析为对象
+    var selectedUserData = JSON.parse(sessionStorage.getItem('selectedUserData'));
+
+    $("#id").attr("value", selectedUserData.id);
+    //$("#status").val(selectedUserData.status);
+    $("#code").attr("value", selectedUserData.code);
+    
+
+    $("#form").formValidation({
+        //验证字段
+
+        fields: {
+            reason: {
+                validators: {
+                    notEmpty: {
+                        message: '理由不能为空！'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 200,
+                        message: '封禁理由长度必须在1到200个字之间'
+                    }
+                }
+            },
+
+        }
+    }).on('success.form.fv', function (e) {
+        //阻止表单提交
+        e.preventDefault();
+
+        // let $form = $(e.target);
+        // // 获取表单数据
+        // let formData = $form.serializeArray();
+        // // 将序列化数据转换为字符串
+        // let data = $.param(formData);
+
+        // 获取 status 的值
+        // var status = $('#status').val();
+        // var id=$('#id').val();
+
+        $.modal({
+            body: '确定要封禁吗？',
+            cancelBtn: true,
+            ok: function () {
+      
+                $.ajax({
+                    //跨域
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    url: "http://127.0.0.1:8082/hanfushopping/merchant/updateMerchant",
+                    method: 'post',
+                    data: { status: 0, id: selectedUserData.id },
+        
+                }).then(response => {
+                    if (response.result) {
+                        $.toasts({
+                            type: 'success',
+                            content: '封禁用户成功！',
+                            delay: 1000,
+                            autohide: true,
+                            // onHidden: function () {
+                            //     console.log(parent.modalInstance)
+                            //     parent.modalInstance.setData(true);
+                            //     parent.modalInstance.close();
+                            // }
+                        });
+                    } else if (response.hasError) {
+        
+                        $.toasts({
+                            type: 'danger',
+                            content: '封禁失败',
+                            delay: 3050, // 将显示时间设置
+        
+                        });
+                    }
+                });
+        
+                var reason = $('#reason').val();
+                var dataToSend = {
+                    reason: reason,
+                    userId: selectedUserData.id,
+                    type: 1
+                };
+                $.ajax({
+                    //跨域
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    url: "http://127.0.0.1:8080/hanfu/ban/add",
+                    method: 'post',
+                    contentType: 'application/json',
+                    //data: { reason: reason, userId: selectedUserData.id,type:1 },
+                    data: JSON.stringify(dataToSend),
+                }).then(response => {
+                    if (response.result) {
+                        $.toasts({
+                            type: 'success',
+                            content: '添加封禁信息成功！',
+                            delay: 1050,
+                            autohide: true,
+                            onHidden: function () {
+                                parent.modalInstance.setData(true);
+                                parent.modalInstance.close();
+                            }
+                        });
+                    } else if (response.hasError) {
+        
+                        $.toasts({
+                            type: 'danger',
+                            content: '添加封禁信息失败',
+                            delay: 3050, // 将显示时间设置
+        
+                        });
+        
+                    }
+        
+                });          
+      
+            
+            },
+
+   cancel:function(){
+    location.reload();
+   }         
+
+          });
+
+
+
+       
+
+
+
+    });
+
+
+
+});
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
