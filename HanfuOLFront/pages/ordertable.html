@@ -95,6 +95,23 @@
             console.error(error);
           }
         });
+        $.ajax({
+          url: 'http://127.0.0.1:8080/spring-boot/orderdetail/delAllByName',
+          method: 'GET',
+          data: { orderId: index },
+          xhrFields: {
+            withCredentials: true
+          },
+          success: function (response) {
+          
+          },
+          error: function (xhr, status, error) {
+            // 请求失败，处理错误
+            console.error(error);
+          }
+        });
+
+
         // 执行操作
         console.log("操作已执行");
       } else {

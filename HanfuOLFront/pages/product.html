@@ -345,7 +345,8 @@
             // 列的宽度
             width: 8,
             // 宽度单位
-            widthUnit: 'rem'
+            widthUnit: 'rem',
+            visible: false
           },
           {
             title: '商品编号',
@@ -371,7 +372,10 @@
             field: 'price',
             align: 'center',
             sortable: true,
-
+            formatter: function (value, row, index) {
+              const formattedPrice = Number(value).toFixed(2);
+              return `￥${formattedPrice}`;
+            }
           },
           {
             title: '库存',

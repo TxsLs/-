@@ -250,7 +250,7 @@
 										"quantity": quantities[i]//商品数量
 									};
 									$.ajax({
-									url: 'http://127.0.0.1:8080/spring-boot/orderdetail/add',
+									url: 'http://127.0.0.1:8080/spring-boot//orderdetail/add',
 									method: 'POST',
 									data: JSON.stringify(orderDetailData),
 									contentType: "application/json",
@@ -339,7 +339,7 @@
 							// 遍历每个数据项，在每行元素上添加类名
 							res.result.content.forEach(function (item, index) {
 								const tr = table.rows[index + 1]; // 从第二行开始，因为第一行是表头
-								tr.cells[2].classList.add('productid'); // 为商品id列添加类名
+								tr.cells[1].classList.add('productid'); // 为商品id列添加类名
 								tr.cells[5].classList.add('oneprice'); // 为商品总价列添加类名
 								tr.cells[6].classList.add('price'); // 为商品总价列添加类名
 							});
