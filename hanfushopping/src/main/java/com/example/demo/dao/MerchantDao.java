@@ -8,7 +8,7 @@ import org.quincy.rock.core.util.MapUtil;
 
 import com.example.demo.Dao;
 import com.example.demo.entity.Merchant;
-import com.example.demo.entity.Photo;
+import com.example.demo.entity.PhotoMerchant;
 import com.github.pagehelper.Page;
 @Mapper
 public interface MerchantDao extends Dao<Merchant>{
@@ -41,7 +41,7 @@ public interface MerchantDao extends Dao<Merchant>{
 	 * @param id 主键id
 	 * @return Photo
 	 */
-	public Photo getPhoto(long id);
+	public PhotoMerchant getPhoto(long id);
 
 	/**
 	 * <b>更新照片。</b>
@@ -51,7 +51,7 @@ public interface MerchantDao extends Dao<Merchant>{
 	 * @param photo 照片实体对象
 	 * @return 更新数据条数
 	 */
-	public int updatePhoto(Photo photo);
+	public int updatePhoto(PhotoMerchant photo);
 
 	/**
 	 * <b>修改密码。</b>

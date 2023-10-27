@@ -61,18 +61,27 @@ public class UnlockRequestController extends BaseController<UnlockRequest, Unloc
 		//String code = AppUtils.getLoginUser().getUsername();
 		Merchant employee = employeeService.findByCode(vo.getCode());
 		boolean exist = this.service().existByName("code", vo.getCode(), null);
-		if (!exist) {
-			if (employee != null && employee.getCode().equals(vo.getCode()) && employee.getName().equals(vo.getName())
-					&& employee.getPhone().equals(vo.getPhone())) {
-				ok = this.service().insert(vo, true);
-			} else {
-				return Result.toResult("1069", "用户信息不匹配，请重试！");
-			}
-		} else if (employee.getIsviolate() == 1) {
-			return Result.toResult("1071", "你的账户未被封禁！");
+		if (employee == null) {
+			return Result.toResult("1072", "此账号不存在！");
 		} else {
-			return Result.toResult("1070", "你已提交过申请！请勿重复提交！");
+
+			if (employee.getIsviolate() == 1) {
+				return Result.toResult("1071", "你的账户未被封禁！");
+			} else {
+				if (exist) {
+					return Result.toResult("1070", "你已提交过申请！请勿重复提交！");
+				} else {
+					if (employee != null && employee.getCode().equals(vo.getCode())
+							&& employee.getName().equals(vo.getName()) && employee.getPhone().equals(vo.getPhone())) {
+						ok = this.service().insert(vo, true);
+					} else {
+						return Result.toResult("1069", "用户信息不匹配，请重试！");
+					}	
+				}
+			}
+
 		}
+
 		//}
 		return Result.of(ok);
 	}
@@ -90,7 +99,7 @@ public class UnlockRequestController extends BaseController<UnlockRequest, Unloc
 		boolean exist = this.service().existByName("name", vo.getName(), null);
 		if (!exist) {
 			ok = this.service().insert(vo, true);
-		}else {
+		} else {
 			return Result.toResult("1070", "你已提交过申请！请勿重复提交！");
 		}
 		//}

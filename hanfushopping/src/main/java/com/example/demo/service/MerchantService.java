@@ -3,7 +3,7 @@ package com.example.demo.service;
 
 import com.example.demo.Service;
 import com.example.demo.entity.Merchant;
-import com.example.demo.entity.Photo;
+import com.example.demo.entity.PhotoMerchant;
 
 public interface MerchantService extends Service<Merchant> {
 
@@ -62,7 +62,7 @@ public interface MerchantService extends Service<Merchant> {
 	 * @param id 主键id
 	 * @return Photo
 	 */
-	public Photo getPhoto(long id);
+	public PhotoMerchant getPhoto(long id);
 
 	/**
 	 * <b>更新照片。</b>
@@ -72,6 +72,6 @@ public interface MerchantService extends Service<Merchant> {
 	 * @param photo 照片实体对象
 	 * @return 是否成功
 	 */
-	public boolean updatePhoto(Photo photo);
+	public boolean updatePhoto(PhotoMerchant photo);
 
 }

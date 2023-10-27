@@ -9,14 +9,14 @@
 		<id property="id" column="id" javaType="long" />
 	</resultMap>
 
-	<select id="getPhoto" resultType="Photo">
+	<select id="getPhoto" resultType="PhotoMerchant">
 		select f_id id, f_photo
 		photo,f_photo_file photoFile
 		from t_merchant
 		where f_id=#{id}
 	</select>
 
-	<update id="updatePhoto" parameterType="Photo">
+	<update id="updatePhoto" parameterType="PhotoMerchant">
 		update t_merchant set
 		f_photo=#{photo},f_photo_file=#{photoFile}
 		where f_id=#{id}

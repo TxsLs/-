@@ -1,11 +1,9 @@
 package com.example.demo.entity;
 
-import org.quincy.rock.core.dao.annotation.Table;
 import org.quincy.rock.core.util.StringUtil;
 
 import com.example.demo.Entity;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 

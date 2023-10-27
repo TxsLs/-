@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.BaseService;
 import com.example.demo.dao.MerchantDao;
 import com.example.demo.entity.Merchant;
-import com.example.demo.entity.Photo;
+import com.example.demo.entity.PhotoMerchant;
 import com.example.demo.service.MerchantService;
 
 @Service
@@ -54,13 +54,13 @@ public class MerchantServiceImpl extends BaseService<Merchant, MerchantDao> impl
 	}
 
 	@Override
-	public Photo getPhoto(long id) {
+	public PhotoMerchant getPhoto(long id) {
 		return this.dao().getPhoto(id);
 	}
 
 	@Override
 	@Transactional
-	public boolean updatePhoto(Photo photo) {
+	public boolean updatePhoto(PhotoMerchant photo) {
 		return dao().updatePhoto(photo) > 0;
 	}
 
