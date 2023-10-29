@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5501", "http://localhost:5501" })
+//@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5501", "http://localhost:5501" })
 @Slf4j
 @Api(tags = "购物车管理模块")
 @Controller

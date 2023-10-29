@@ -1,4 +1,4 @@
-package com.example.demo.security;
+/*package com.example.demo.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,28 +14,29 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.service.MerchantService;
 
-/**
- * <b>LoginUserDetailsService。</b>
- * <p><b>详细说明：</b></p>
- * <!-- 在此添加详细说明 -->
- * 无。
- * 
- * @version 1.0
- * @author mex2000
- * @since 1.0
- */
+*//**
+	* <b>LoginUserDetailsService。</b>
+	* <p><b>详细说明：</b></p>
+	* <!-- 在此添加详细说明 -->
+	* 无。
+	* 
+	* @version 1.0
+	* @author mex2000
+	* @since 1.0
+	*/
+/*
 @Service
 public class LoginUserDetailsService implements UserDetailsService {
 
-	@Autowired
-	private MerchantService userService;
+@Autowired
+private MerchantService userService;
 
-	/** 
-	 * loadUserByUsername。
-	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String code) throws UsernameNotFoundException {
+*//** 
+	* loadUserByUsername。
+	* @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+	*//*
+		@Override
+		public UserDetails loadUserByUsername(String code) throws UsernameNotFoundException {
 		com.example.demo.entity.Merchant user = userService.findByCode(code);
 		if (user == null)
 			throw new UsernameNotFoundException("用户名不存在!");
@@ -44,6 +45,7 @@ public class LoginUserDetailsService implements UserDetailsService {
 		authList.add(new SimpleGrantedAuthority("ROLE_USER"));
 		User su = new User(code, user.getMerchantPassword(), authList);
 		return su;
-	}
-
-}
+		}
+		
+		}
+		*/

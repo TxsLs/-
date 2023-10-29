@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.annotations.ApiIgnore;
 
-@CrossOrigin(allowCredentials = "true",origins = {"http://127.0.0.1:5501","http://locolhost:5501"})
+@CrossOrigin(allowCredentials = "true", origins = { "http://127.0.0.1:5500", "http://locolhost:5500" })
 @Slf4j
 @Api(tags = "公用模块")
 @Controller
@@ -50,7 +50,7 @@ public class PublicControler {
 			@ApiImplicitParam(name = "password", value = "密码", required = true),
 			@ApiImplicitParam(name = "captcha", value = "验证码") })
 	@RequestMapping(value = "/login", method = { RequestMethod.POST })
-	public @ResponseBody Result<Boolean> login(@NotBlank @RequestParam String username,
+	public @ResponseBody Result<Boolean> login(@NotBlank @RequestParam String username, Integer sessionTimeoutInMinutes,
 			@NotBlank @RequestParam String password, String captcha, @ApiIgnore HttpSession session) {
 		session.removeAttribute(AppUtils.CURRENT_LOGIN_USER_KEY);
 		log.debug("call customerLogin");
@@ -68,12 +68,18 @@ public class PublicControler {
 		if (user == null) {
 			return Result.toResult("1001", "用户或密码不正确!");
 		}
-		if(user.getIsviolate()==0) {
+		if (user.getIsviolate() == 0) {
 			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱1034710773@qq.com!");
 		}
 		User loginUser = new User(//spring安全的uer
 				user.getCode(), user.getPassword(), Arrays.asList());
 		session.setAttribute(AppUtils.CURRENT_LOGIN_USER_KEY, loginUser);
+		// 设置Session的有效期
+		if (sessionTimeoutInMinutes != null && sessionTimeoutInMinutes > 0) {
+			int sessionTimeoutInDays = sessionTimeoutInMinutes * 60 * 24 * 60;
+			session.setMaxInactiveInterval(sessionTimeoutInDays);
+		}
+		log.debug("Session的超时时间设置为：{}秒", session.getMaxInactiveInterval());
 		return Result.of(true);
 	}
 

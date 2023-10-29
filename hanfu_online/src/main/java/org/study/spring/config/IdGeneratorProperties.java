@@ -27,3 +27,4 @@ public class IdGeneratorProperties {
 	private String KeyFieldName; //主键key字段名
 	private String valueFieldName; //主键值字段名
 }
+

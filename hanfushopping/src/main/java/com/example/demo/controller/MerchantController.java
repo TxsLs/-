@@ -238,7 +238,7 @@ public class MerchantController extends BaseController<Merchant, MerchantService
 			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
 	public @ResponseBody Result<PageSet<Merchant>> queryPage(String phone, String name, String sort, String joinTime,
-			String endTime, String admin, String status, @Min(1) @RequestParam long pageNum,
+			String endTime,  String isviolate, @Min(1) @RequestParam long pageNum,
 			@Min(1) @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
@@ -247,18 +247,30 @@ public class MerchantController extends BaseController<Merchant, MerchantService
 			where.like("phone", phone);
 		if (StringUtils.isNotEmpty(name))
 			where.like("name", name);
-		if (StringUtils.isNotEmpty(admin))
-			where.like("admin", admin);
-		if (StringUtils.isNotEmpty(status))
-			where.like("status", status);
+//		if (StringUtils.isNotEmpty(admin))
+//			where.like("admin", admin);
+		if (StringUtils.isNotEmpty(isviolate))
+			where.like("isviolate", isviolate);
 		if (StringUtils.isNotEmpty(joinTime) && StringUtils.isNotEmpty(endTime)) {
-			where.between("joinTime", joinTime, endTime); // created_time为时间字段名
+			where.between("createdTime", joinTime, endTime); // created_time为时间字段名
 		}
 
 		PageSet<Merchant> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize, "password");
 		return Result.toResult(ps);
 	}
 	
+	
+	@ApiOperation(value = "重设员工密码", notes = "")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "code", value = "用户代码", required = true),
+			@ApiImplicitParam(name = "merchantPassword", value = "新密码", required = true) })
+	@RequestMapping(value = "/resetPwd", method = { RequestMethod.POST })
+	//@Secured({ "ROLE_ADMIN" })
+	public @ResponseBody Result<Boolean> resetPwd(@NotBlank @RequestParam String code,
+			@NotBlank @RequestParam String merchantPassword) {
+		log.debug("call resetPwd");
+		boolean result = this.service().changePassword(code, merchantPassword);
+		return Result.of(result);
+	}
 	
 
 }

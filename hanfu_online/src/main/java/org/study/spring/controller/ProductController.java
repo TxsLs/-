@@ -51,21 +51,29 @@ public class ProductController extends BaseController<Product, ProductService> {
 			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
 			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
-	public @ResponseBody Result<PageSet<? extends Entity>> queryPage(String searchCode, String searchName, String sort,
-			@RequestParam("pageNum") long pageNum, @RequestParam int pageSize) {
+	public @ResponseBody Result<PageSet<? extends Entity>> queryPage( String name, String sort,
+			String categoryId, String price, String status, String empStatus, @RequestParam("pageNum") long pageNum,
+			@RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
 		where.like("status", "1");
 		where.like("empStatus", "1");
-		if (StringUtils.isNotEmpty(searchCode)) {
-			where.like("code", searchCode);
-		}
-		if (StringUtils.isNotEmpty(searchName)) {
-			where.like("name", searchName);
-		}
+		if (StringUtils.isNotEmpty(name))
+			where.like("name", name);
+		if (StringUtils.isNotEmpty(categoryId))
+			where.like("categoryId", categoryId);
+		if (StringUtils.isNotEmpty(price))
+			where.like("price", price);
+		if (StringUtils.isNotEmpty(status))
+			where.like("status", status);
+		if (StringUtils.isNotEmpty(empStatus))
+			where.like("empStatus", empStatus);
+		
+		
 		PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 		return Result.toResult(ps);
 	}
+
 	@ApiOperation(value = "下载商品照片")
 	@ApiImplicitParam(name = "id", value = "主键id", required = true, dataType = "long")
 	@RequestMapping(value = "/photo", method = { RequestMethod.GET })

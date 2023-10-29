@@ -94,14 +94,15 @@ public class ProductControllrer extends BaseController<Product, ProductService> 
 			@ApiImplicitParam(name = "name", value = "名称(支持like)，允许null"),
 			@ApiImplicitParam(name = "sort", value = "排序规则字符串"),
 			@ApiImplicitParam(name = "categoryId", value = "排序规则字符串"),
-			@ApiImplicitParam(name = "price", value = "排序规则字符串"), @ApiImplicitParam(name = "status", value = "排序规则字符串"),
+			@ApiImplicitParam(name = "price", value = "排序规则字符串"), 
+			@ApiImplicitParam(name = "status", value = "status"),
 			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
-			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int")
-
-	})
+			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int"),
+			@ApiImplicitParam(name = "empStatus", value = "empStatus") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
 	public @ResponseBody Result<PageSet<Product>> queryPage(String name, String sort, Long merchantId,
-			String categoryId, String price, String status, @RequestParam long pageNum, @RequestParam int pageSize) {
+			String categoryId, String price, String status, String empStatus, @RequestParam long pageNum,
+			@RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
 		if (StringUtils.isNotEmpty(name))
@@ -112,13 +113,15 @@ public class ProductControllrer extends BaseController<Product, ProductService> 
 			where.like("price", price);
 		if (StringUtils.isNotEmpty(status))
 			where.like("status", status);
+		if (StringUtils.isNotEmpty(empStatus))
+			where.like("empStatus", empStatus);
 		if (merchantId != null)
 			where.equal(DataType.LONG, "merchantId", merchantId.toString());
 		//	if (jobId != null)
 		//		where.equal(DataType.LONG, "jobId", jobId.toString());
 		//	if (workstateId != null)
 		//		where.equal(DataType.LONG, "workstateId", workstateId.toString());
-		PageSet<Product> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize, "password");
+		PageSet<Product> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 		return Result.toResult(ps);
 	}
 

@@ -43,7 +43,7 @@ public class Customer extends Entity {
     private String email;
 
     @ApiModelProperty(value = "电话", position = 5)
-    private String phone;
+    private Long phone;
 
     @ApiModelProperty(value = "性别", position = 6)
     private Integer gender;
@@ -61,7 +61,6 @@ public class Customer extends Entity {
 	private Boolean hasPhoto;
 	
     @ApiModelProperty(value = "是否被封禁", position = 9)
-    @IgnoreInsertUpdate
-    private byte isviolate;
+    private Integer isviolate;
 
 }
