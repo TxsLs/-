@@ -9,7 +9,7 @@ function loadTableData() {
   _root.loginUser(null, function (rtn, status) {
     if (rtn.hasError) {
       alert(rock.errorText(rtn, "连接到服务器失败！"));
-    } else if (rtn.notNull) {
+    } else if (rtn.notNull && rtn.result.admin == 1) {
 
 
 
@@ -38,7 +38,7 @@ function loadTableData() {
         //设置高度，就可以固定表头
         // height: 380,
         //请求地址
-        url: 'http://127.0.0.1:8080/hanfu/unlock/queryPage',
+        url: 'http://127.0.0.1:8081/hanfu/unlock/queryPage',
         queryParamsType: "page",
         responseHandler: function (res) {
           var data = {};
@@ -131,6 +131,9 @@ function loadTableData() {
 
           var param = rock.formData($("#searchForm"));
           //var param = {};
+          // param.type=1;
+          // param.type=2;
+          // param.type=3;
           param.pageSize = options.pageSize;
           param.pageNum = options.pageNumber;
           param.sort = options.sortName + " " + options.sortOrder;
@@ -175,17 +178,27 @@ function loadTableData() {
             title: '用户账号',
             field: 'code',
             align: 'left',
+            sortable: true,
             // formatter: formatContent
           },
+          // {
+          //   title: '商品id',
+          //   field: 'productId',
+          //   align: 'left',
+          //   sortable: true,
+          //   // formatter: formatContent
+          // },
           {
             title: '名称',
             field: 'name',
             align: 'center',
+            sortable: true,
           },
           {
             title: '电话号',
             field: 'phone',
             align: 'center',
+            sortable: true,
           },
           {
             title: '申请提交时间',
@@ -249,11 +262,9 @@ function loadTableData() {
                 case 1:
                   return "商城员工";
                 case 2:
-                  return "顾客";
-                case 3:
                   return "商家";
-                default:
-                  return "违规商品";
+                case 3:
+                  return "顾客";
               }
 
             },
@@ -293,7 +304,7 @@ function loadTableData() {
                       xhrFields: {
                         withCredentials: true
                       },
-                      url: 'http://127.0.0.1:8080/hanfu/unlock/updateMap',
+                      url: 'http://127.0.0.1:8081/hanfu/unlock/updateMap',
                       method: 'post',
                       data: JSON.stringify(dataToSend),
                       contentType: "application/json",
@@ -537,8 +548,8 @@ data-bs-title="点击已读"><i class="bi bi-book-half"></i></button>`;
 
       $.toasts({
         type: 'danger',
-        content: '未登录！',
-        delay: 1500,
+        content: '未登录,或没有权限！',
+        delay: 3300,
         onHidden: function () {
           top.location.replace('login.html');
         }

@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
   <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
-  <meta name="keywords" content="响应式后台模板,开源免费后台模板,bootstrap5后台管理系统模板">
-  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="keywords" content="华裳在线汉服网络商城">
+  <meta name="description" content="bootstrap华裳在线汉服网络商城">
   <meta name="author" content="ajiho">
   <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
@@ -31,14 +31,14 @@
     <li>
       <div class="bsa-header-item bsa-cursor-default">
         <!--    搜索表单包裹区域        -->
-        <div class="bsa-search-form-wrapper" data-bsa-toggle="navbar-search" data-close-reset="false"
+        <!-- <div class="bsa-search-form-wrapper" data-bsa-toggle="navbar-search" data-close-reset="false"
           data-action="pages/product.html" data-params='{"type":"article","user":"admin2"}'>
           <div class="bsa-search-form">
             <input type="text" class="form-control bsa-input-search" aria-label="搜索关键词" placeholder="搜索关键词">
             <button class="bsa-search-submit-btn" type="submit"><i class="bi bi-search"></i></button>
             <button class="bsa-search-close-btn" type="button"><i class="bi bi-x-lg"></i></button>
           </div>
-        </div>
+        </div> -->
         <!--    移动端搜索表单触发器(移动端会显示)        -->
         <i class="bi bi-search bsa-search-form-toggler bsa-cursor-pointer"></i>
       </div>
@@ -192,6 +192,11 @@
         <li class="bsa-logout"><a class="dropdown-item" id="btnLogout" href="javascript:"><i
               class="bi bi-box-arrow-right me-2"></i>退出登录</a>
         </li>
+        <li>
+          <div class="dropdown-divider"></div>
+        </li>
+        <li class="bsa-del"><a class="dropdown-item" href="javascript:"><i class="bi bi-person-fill-x"></i>注销账号</a>
+        </li>
       </ul>
     </div>
   </ul>
@@ -307,7 +312,7 @@
 
       loadUser();
 
-   
+
       //头部搜索框处理(不需要可以删除,不明白的可以看bootstrap-admin官方文档)
       $(document).on('search.bsa.navbar-search', function (e, inputValue, data) {
         //先得到请求地址,组合后大概是这样pages/search.html?keyword=dsadsa&type=article&user=admin2
@@ -341,6 +346,33 @@
 
 
       });
+
+      //注销账号
+      $(document).on('click', '.bsa-del', function (e) {
+        e.preventDefault();
+        $.modal({
+          body: '确定要注销账号吗？（此操作将删除此账号的所有信息！请谨慎考虑！）',
+          cancelBtn: true,
+
+          ok: function () {
+
+            window.modalInstance = $.modal({
+
+              url: 'pages/user_del.html',
+              title: '注销账号',
+              //禁用掉底部的按钮区域
+              buttons: [],
+              modalDialogClass: 'modal-dialog-centered modal-lg',
+
+            });
+
+          }
+        })
+
+
+      });
+
+
     });
 
     function checkLogin(event) {//检查是否登录的函数

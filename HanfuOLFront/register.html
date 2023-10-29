@@ -65,7 +65,7 @@
             <span class="input-group-text bg-white"><i class="bi bi-person-lock"></i></span>
             <input type="password" class="form-control" id="password" name="password" maxlength="20" tabindex="4"
               placeholder="请输入密码" required data-bv-container="#err_password" pattern="^[A-Za-z0-9]{0,20}$"
-              onblur="checkPassword()">
+              >
             <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
           </div>
         </div>
@@ -75,7 +75,7 @@
             <span class="input-group-text bg-white"><i class="bi bi-shield-check"></i></span>
             <input type="password" class="form-control" id="confirm-password" name="confirmpassword" maxlength="20"
               autocomplete="off" aria-label="confirm-password" tabindex="5" placeholder="请再次输入密码" required
-              oninput="checkPassword()">
+              >
             <span class="input-group-text bg-white bsa-cursor-pointer"><i class="bi bi-eye-slash"></i></span>
           </div>
           <div id="err_password" style="text-align: left; color: red"></div>
@@ -232,7 +232,7 @@
             $.toasts({
               type: 'success',
               content: '注册成功',
-              delay:10000,
+              delay:3000,
               onHidden: function () {
                 top.location.replace('login.html');
               }
@@ -260,7 +260,7 @@
     });
     window.addEventListener("load", function () {
       // 在这里编写您的 JavaScript 代码
-      checkPassword();
+     // checkPassword();
     });
 
   </script>

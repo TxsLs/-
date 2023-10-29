@@ -13,7 +13,7 @@ function loadTableData() {
   _root.loginUser(null, function (rtn, status) {
     if (rtn.hasError) {
       alert(rock.errorText(rtn, "连接到服务器失败！"));
-    } else if (rtn.notNull) {
+    } else if (rtn.notNull&&rtn.result.admin==1) {
 
       // 销毁第一个表格实例
       $('#table').bootstrapTable('destroy');
@@ -227,7 +227,7 @@ function loadTableData() {
             sortable: true,
           },
           {
-            title: '姓名',
+            title: '名称',
             field: 'name',
             align: 'center',
             sortable: true,
@@ -367,7 +367,7 @@ function loadTableData() {
                     // 将所选行的数据存储到 sessionStorage
                     sessionStorage.setItem('selectedUserData', JSON.stringify(row));
                   },
-                  url: 'ban.html',
+                  url: 'ban_merchant.html',
                   title: '封禁用户',
                   //禁用掉底部的按钮区域
                   buttons: [],
@@ -395,11 +395,11 @@ function loadTableData() {
                     withCredentials: true
                   },
                   //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
-                  url: 'http://127.0.0.1:8080/hanfu/ban/queryByBanId',
+                  url: 'http://127.0.0.1:8081/hanfu/ban/queryByBanId',
                   method: 'get',
                   data: {
                     userId: row.id,
-                    type: 1
+                    type: 2
                   },
                 }).then(response => {
 
@@ -457,9 +457,9 @@ function loadTableData() {
                         xhrFields: {
                           withCredentials: true
                         },
-                        url: 'http://127.0.0.1:8080/hanfu/employee/updateEmployee',
+                        url: 'http://127.0.0.1:8082/hanfushopping/merchant/updateMerchant',
                         method: 'post',
-                        data: { status: 1, id: row.id },
+                        data: { isviolate: 1, id: row.id },
                       }).then(response => {
                         if (response.result) {
                           $.toasts({
@@ -500,7 +500,7 @@ function loadTableData() {
                     // 将所选行的数据存储到 sessionStorage
                     sessionStorage.setItem('selectedUserData', JSON.stringify(row));
                   },
-                  url: 'user-resetPwd.html',
+                  url: 'merchant_resetPwd.html',
                   title: '重置用户密码',
                   //禁用掉底部的按钮区域
                   buttons: [],
@@ -581,29 +581,9 @@ function loadTableData() {
       }
 
 
-      function formatRole(val, rows) {
-        switch (val) {
-          case 1:
-            return '经理'
-          case 2:
-            return '组长'
-          case 3:
-            return '研发组长'
-          case 4:
-            return '客服'
-          case 5:
-            return '文章审核员'
-          case 6:
-            return '销售'
-          default:
-            return '<span class="badge text-bg-danger">未分配</span>'
-        }
+    
 
-      }
-
-      function formatGender(val, rows) {
-        return val === true ? '男' : '女';
-      }
+ 
 
       // 格式化列数据演示 val:当前数据 rows:当前整行数据
       function formatStatus(val, rows) {
@@ -679,8 +659,8 @@ function loadTableData() {
         $('#phone').val('');
         $('#joinTime').val('');
         $('#endTime').val('');
-        $('#status').selectpicker('val', ['']).trigger("change");
-        $('#admin').selectpicker('val', ['']).trigger("change");
+        $('#isviolate').selectpicker('val', ['']).trigger("change");
+       // $('#admin').selectpicker('val', ['']).trigger("change");
         //刷新回到第一页
         $('#table').bootstrapTable('refresh');
         $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
@@ -844,8 +824,8 @@ function loadTableData() {
     } else {
       $.toasts({
         type: 'danger',
-        content: '未登录！',
-        delay: 1500,
+        content: '未登录,或没有权限！',
+        delay: 3300,
         onHidden: function () {
           top.location.replace('login.html');
         }

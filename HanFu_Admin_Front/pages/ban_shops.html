@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-    <title>商家封禁页</title>
+    <title>商品封禁页</title>
 </head>
 
 <body class="bg-body-tertiary py-3">
@@ -22,7 +22,7 @@
                 <form id="form">
 
                     <div class="row mb-3" id="hide_id">
-                        <label for="username" class="col-sm-3 col-form-label text-sm-end">用户Id</label>
+                        <label for="username" class="col-sm-3 col-form-label text-sm-end">商品Id</label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="bi bi-file-earmark-person"></i></span>
@@ -33,13 +33,13 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="username" class="col-sm-3 col-form-label text-sm-end">用户账号</label>
+                        <label for="name" class="col-sm-3 col-form-label text-sm-end">商品名称</label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
-                                <input type="text" class="form-control" id="code" name="code" maxlength="20"
+                                <input type="text" class="form-control" id="name" name="name" maxlength="20"
                                     tabindex="2" autocomplete="on" placeholder="请输入账号" data-bv-container="#err_username"
-                                    pattern="^[A-Za-z0-9]{0,20}$" disabled>
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -74,71 +74,12 @@
                         </div>
                     </div>
 
-                    <!-- <div class="row mb-3">
-            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">昵称</label>
-            <div class="col-sm-9">
-              <div class="input-group">
-                <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
-                <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2"
-                  aria-label="name" autocomplete placeholder="请输入姓名" data-bv-container="#err_username"
-                  pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
-              </div>
-            </div>
-          </div> -->
 
-
-
-                    <!-- <div class="row mb-3">
-            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
-            <div class="col-sm-9">
-              <div class="input-group">
-                <span class="input-group-text bg-white"><i class="bi bi-gender-ambiguous"></i></span>
-                <select class="form-select" id="gender" name="gender" tabindex="6">
-                  <option value="">请选择性别</option>
-                  <option value="1">男</option>
-                  <option value="2">女</option>
-                </select>
-              </div>
-            </div>
-          </div> -->
-
-
-                    <!-- <div class="row mb-3">
-            <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
-            <div class="col-sm-9">
-              <div class="input-group ">
-                <input type="file" class="form-control" id="profileImage" name="profileImage">
-                <label class="input-group-text" for="avatar"><i class="bi bi-cloud-upload"></i>
-                  修改图片</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3 ">
-            <div class="card-header bg-body text-center">
-              用户头像
-            </div>
-            <div class="card-body text-center">
-              <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-circle   bsa-wh-100 "
-                data-bs-toggle="modal" data-bs-target="#exampleModal">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label for="phone" class="col-sm-3 col-form-label text-sm-end">手机</label>
-            <div class="col-sm-9">
-              <div class="input-group">
-                <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
-                <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" autocomplete
-                  placeholder="请输入电话号码" required data-bv-container="#err_phone" maxlength="11">
-              </div>
-            </div>
-          </div> -->
 
 
                     <div class="row mb-3">
                         <div class="col-sm-9 offset-sm-3 text-center">
-                            <button type="submit" class="btn btn-primary" id="btn">封禁该用户</button>
+                            <button type="submit" class="btn btn-primary" id="btn">封禁该商品</button>
                         </div>
                     </div>
                 </form>
@@ -170,7 +111,7 @@
 
             $("#id").attr("value", selectedUserData.id);
             //$("#status").val(selectedUserData.status);
-            $("#code").attr("value", selectedUserData.code);
+            $("#name").attr("value", selectedUserData.name);
 
 
             $("#form").formValidation({
@@ -215,9 +156,9 @@
                             xhrFields: {
                                 withCredentials: true
                             },
-                            url: "http://127.0.0.1:8082/hanfushopping/merchant/updateMerchant",
+                            url: "http://127.0.0.1:8081/hanfu/product/updateProduct",
                             method: 'post',
-                            data: { isviolate: 0, id: selectedUserData.id },
+                            data: { empStatus: 0, id: selectedUserData.id },
 
                         }).then(response => {
                             if (response.result) {
@@ -247,7 +188,7 @@
                         var dataToSend = {
                             reason: reason,
                             userId: selectedUserData.id,
-                            type: 2
+                            type: 4
                         };
                         $.ajax({
                             //跨域

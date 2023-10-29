@@ -136,7 +136,7 @@ $(function ($) {
                     xhrFields: {
                         withCredentials: true
                     },
-                    url: "http://127.0.0.1:8080/hanfu/employee/updateSelfInfo",
+                    url: "http://127.0.0.1:8081/hanfu/employee/updateSelfInfo",
                     method: 'Post',
                     data: data,
                     processData: false,

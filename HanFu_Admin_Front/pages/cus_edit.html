@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-  <title>商家个人信息修改</title>
+  <title>顾客个人信息修改</title>
 </head>
 
 <body class="bg-body-tertiary py-3">
@@ -27,7 +27,7 @@
               <div class="input-group">
                 <span class="input-group-text bg-white"><i class="bi bi-person-hearts"></i></span>
                 <select class="form-select" name="role" aria-label="role" id="admin" disabled>
-                  <option value="1" selected>华裳商家</option>
+                  <option value="1" selected>华裳顾客</option>
                   <option value="0">商城员工</option>
                 </select>
               </div>
@@ -142,7 +142,7 @@
   <script src="../dist/js/bootstrap-admin.min.js"></script>
   <script src="../dist/js/app.js"></script>
   <script type="text/javascript" src="../dist/js/rockjs-1.0.js"></script>
-  <script type="text/javascript" src="../../hanfu_SJfront/pagejs/common.js"></script>
+  <script type="text/javascript" src="../../HanfuOLFront/pagejs/common.js"></script>
   <script>
 
 $(function ($) {
@@ -172,8 +172,8 @@ $(function ($) {
             //$("#gender").val(selectedUserData.gender);
             $("#phone").attr("value", selectedUserData.phone);
             if (selectedUserData.hasPhoto) {
-                var mvc = rock.initSvr(["merchant"]);
-                var Service = mvc.findService("merchant");
+                var mvc = rock.initSvr(["customer"]);
+                var Service = mvc.findService("customer");
                 $("#imgEditPhoto").attr("src", Service.url("photo") + "?id=" + selectedUserData.id);
             }
 
@@ -263,7 +263,7 @@ $(function ($) {
                      xhrFields: {
                         withCredentials: true
                     },
-                    url: "http://127.0.0.1:8082/hanfushopping/merchant/updateMerchant",
+                    url: "http://127.0.0.1:8080/spring-boot/customer/updateCustomer",
                     method: 'post',
                     data: data,
                     processData: false,

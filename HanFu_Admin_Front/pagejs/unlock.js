@@ -80,7 +80,7 @@ $(function () {
         //发起ajax请求
         $.ajax({
             method: 'Post',
-            url: 'http://127.0.0.1:8080/hanfu/unlock/addRequest',
+            url: 'http://127.0.0.1:8081/hanfu/unlock/addRequest',
             //表单数据
             contentType: 'application/json',
 

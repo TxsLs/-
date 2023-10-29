@@ -1,5 +1,5 @@
 $(function ($) {
-    $("#hide_status").hide();
+   // $("#hide_status").hide();
     // 从 sessionStorage 中获取数据并解析为对象
     var selectedUserData = JSON.parse(sessionStorage.getItem('selectedUserData'));
 
@@ -50,7 +50,7 @@ $(function ($) {
                     xhrFields: {
                         withCredentials: true
                     },
-                    url: "http://127.0.0.1:8080/hanfu/employee/updateEmployee",
+                    url: "http://127.0.0.1:8081/hanfu/employee/updateEmployee",
                     method: 'post',
                     data: { status: 0, id: selectedUserData.id },
         
@@ -89,7 +89,7 @@ $(function ($) {
                     xhrFields: {
                         withCredentials: true
                     },
-                    url: "http://127.0.0.1:8080/hanfu/ban/add",
+                    url: "http://127.0.0.1:8081/hanfu/ban/add",
                     method: 'post',
                     contentType: 'application/json',
                     //data: { reason: reason, userId: selectedUserData.id,type:1 },

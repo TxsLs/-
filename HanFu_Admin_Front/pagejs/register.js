@@ -156,7 +156,7 @@ $(function () {
     //发起ajax请求
     $.ajax({
       method: 'Post',
-      url: 'http://127.0.0.1:8080/hanfu/employee/addEmployee',
+      url: 'http://127.0.0.1:8081/hanfu/employee/addEmployee',
       //表单数据
       data: data,
       processData: false,

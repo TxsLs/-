@@ -13,7 +13,7 @@ function loadTableData() {
   _root.loginUser(null, function (rtn, status) {
     if (rtn.hasError) {
       alert(rock.errorText(rtn, "连接到服务器失败！"));
-    } else if (rtn.notNull) {
+    } else if (rtn.notNull&&rtn.result.admin==1) {
 
       // 销毁第一个表格实例
       $('#table').bootstrapTable('destroy');
@@ -23,7 +23,7 @@ function loadTableData() {
         //设置高度就可以固定表头
         // height: 500,
         //请求地址
-        url: 'http://127.0.0.1:8080/hanfu/employee/queryPage',
+        url: 'http://127.0.0.1:8081/hanfu/employee/queryPage',
 
         queryParamsType: "page",
 
@@ -227,7 +227,7 @@ function loadTableData() {
             sortable: true,
           },
           {
-            title: '姓名',
+            title: '名称',
             field: 'name',
             align: 'center',
             sortable: true,
@@ -395,7 +395,7 @@ function loadTableData() {
                     withCredentials: true
                   },
                   //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
-                  url: 'http://127.0.0.1:8080/hanfu/ban/queryByBanId',
+                  url: 'http://127.0.0.1:8081/hanfu/ban/queryByBanId',
                   method: 'get',
                   data: { userId: row.id,
                   type:1
@@ -456,7 +456,7 @@ function loadTableData() {
                         xhrFields: {
                           withCredentials: true
                         },
-                        url: 'http://127.0.0.1:8080/hanfu/employee/updateEmployee',
+                        url: 'http://127.0.0.1:8081/hanfu/employee/updateEmployee',
                         method: 'post',
                         data: { status: 1, id: row.id },
                       }).then(response => {
@@ -842,8 +842,8 @@ function loadTableData() {
     } else {
       $.toasts({
         type: 'danger',
-        content: '未登录！',
-        delay: 1500,
+        content: '未登录,或没有权限！',
+        delay: 3300,
         onHidden: function () {
           top.location.replace('login.html');
         }

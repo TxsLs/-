@@ -1,5 +1,5 @@
 var ssoUser = null;  //获取当前用户
-_root.loginUser({}, function (rtn) {
+_root.loginCustomer({}, function (rtn) {
     if (rtn.hasError) {
         alert(rock.errorText(rtn, "获得当前用户失败！"));
     } else {
@@ -11,7 +11,7 @@ _root.loginUser({}, function (rtn) {
             content: '未登录！请返回登录',
             delay: 3500,
             onHidden: function () {
-                top.location.replace('login.html');
+                top.location.replace('../login.html');
             }
         });
     } else {
@@ -38,11 +38,11 @@ _root.loginUser({}, function (rtn) {
                         notEmpty: {
                             message: '密码不能为空'
                         },
-                        stringLength: {
-                            min: 6,
-                            max: 20,
-                            message: '密码长度必须在6到20个字符之间'
-                        }
+                        // stringLength: {
+                        //     min: 6,
+                        //     max: 20,
+                        //     message: '密码长度必须在6到20个字符之间'
+                        // }
                     }
                 }
             }
@@ -68,7 +68,7 @@ _root.loginUser({}, function (rtn) {
                         xhrFields: {
                             withCredentials: true
                         },
-                        url: "http://127.0.0.1:8081/hanfu/employee/checkpwd",
+                        url: "http://127.0.0.1:8080/spring-boot/customer/checkpwd",
                         method: 'POST',
                         data: data
                     }).then(response => {
@@ -94,7 +94,7 @@ _root.loginUser({}, function (rtn) {
                                                 xhrFields: {
                                                     withCredentials: true
                                                 },
-                                                url: "http://127.0.0.1:8081/hanfu/employee/remove",
+                                                url: "http://127.0.0.1:8080/spring-boot/customer/remove",
                                                 method: 'get',
                                                 data: { id: ssoUser.id }
                                             }).then(response => {
@@ -104,7 +104,7 @@ _root.loginUser({}, function (rtn) {
                                                         type: 'success',
                                                         content: '删除账号信息成功！',
                                                         onHidden: function () {
-                                                            top.location.replace('../employee.html');
+                                                            top.location.replace('../index.html');
                                                         }
                                                     });
 

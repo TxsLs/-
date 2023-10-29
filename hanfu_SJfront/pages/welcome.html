@@ -39,7 +39,8 @@
                 <h6 class="mb-2 bsa-ellipsis-1">我的商品数量</h6>
                 <h4 class="mb-1 bsa-ellipsis-1" id="shops">1546</h4>
               </div>
-              <i class="bi bi-people fs-1 text-info"></i>
+              <i class="bi bi-bag-heart fs-1 text-info"></i>
+              <!-- <i class="bi bi-bag-heart"></i> -->
             </div>
           </div>
         </div>
@@ -84,11 +85,11 @@
                 <tbody>
                   <tr>
                     <th>当前版本</th>
-                    <td>v1.0.0</td>
+                    <td>v1.0.1</td>
                   </tr>
                   <tr>
                     <th>基于框架</th>
-                    <td>bootstrap 5.3.0</td>
+                    <td>Bootstrap-V5.3.0、Rock-V1.0.1、SpringBoot-V2.7.15</td>
                   </tr>
                   <!-- <tr>
                 <th>主要特色</th>
@@ -110,7 +111,7 @@
         </div>
       </div>
 
-<!-- 
+      <!-- 
       <div class="col-lg-6">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
@@ -149,6 +150,17 @@
           </div>
           <div class="card-body">
             <canvas id="chart4"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-body">
+            商家商品情况
+          </div>
+          <div class="card-body">
+            <canvas id="chart5"></canvas>
           </div>
         </div>
       </div>
@@ -326,7 +338,7 @@
           }).then(response => {
             if (response.result) {
               var shop = response.result.totalCount;
-            
+
               $('#shops').html(shop)
               //数字老虎机效果
               new countUp.CountUp(document.querySelector('#shops'), shop, {
@@ -357,7 +369,7 @@
               const totalPriceSum = response.result.reduce((sum, obj) => sum + obj.totalPrice, 0);
               const totalPriceFormatted = totalPriceSum.toFixed(2)
               const totalorder = response.result.length;
-     
+
               $('#money').html(totalPriceFormatted)
               $('#order').html(totalorder)
               //数字老虎机效果
@@ -424,16 +436,16 @@
               }).then(response => {
                 const unstatus = totalorder - response.result.totalCount;
                 const status = response.result.totalCount;
-          
+
                 new Chart(document.getElementById('chart4').getContext('2d'), {
                   type: 'doughnut',
                   data: {
                     labels: [
-                      '已处理',
+                      '已发货',
                       '未处理'
                     ],
                     datasets: [{
-                      label: 'Dataset 1',
+                      //label: 'Dataset 1',
                       data: [status, unstatus],
                       backgroundColor: [
                         '#0abfbc',
@@ -464,7 +476,88 @@
           });
 
 
+          //发起ajax请求
+          $.ajax({
+            xhrFields: {
+              withCredentials: true
+            },
+            method: 'get',
+            url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
+            //表单数据
+            data: {
+              merchantId: rtn.result.id, pageNum: 1, pageSize: 10, status: 0, empStatus: 1
+            },
+          }).then(response => {
+            if (response.result) {
+              const unup = response.result.totalCount;
+              $.ajax({
+                xhrFields: {
+                  withCredentials: true
+                },
+                method: 'get',
+                url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
+                //表单数据
+                data: {
+                  merchantId: rtn.result.id, pageNum: 1, pageSize: 10, status: 1, empStatus: 1
+                },
+              }).then(response => {
+                const up = response.result.totalCount;
 
+                $.ajax({
+                  xhrFields: {
+                    withCredentials: true
+                  },
+                  method: 'get',
+                  url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
+                  //表单数据
+                  data: {
+                    merchantId: rtn.result.id, pageNum: 1, pageSize: 10, empStatus: 0
+                  },
+                }).then(response => {
+                  //const unstatus = totalshops - response.result.totalCount;
+                  const ban = response.result.totalCount;
+
+                  new Chart(document.getElementById('chart5').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                      labels: [
+                        '已上架',
+                        '未上架',
+                        '违规'
+                      ],
+                      datasets: [{
+                        //label: 'Dataset 1',
+                        data: [up, unup, ban],
+                        backgroundColor: [
+                          '#0abfbc',
+                          '#348f50',
+                          '#ff9eb8'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    },
+                    options: {
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'top',
+                        },
+                        title: {
+                          display: true,
+                          text: '商品状态占比图'
+                        }
+                      }
+                    }
+                  });
+
+                });
+
+              });
+
+
+            }
+
+          });
 
 
 
@@ -472,7 +565,7 @@
           $.toasts({
             type: 'danger',
             content: '未登录！',
-            delay: 1500,
+            delay: 3000,
             onHidden: function () {
               top.location.replace('login.html');
             }

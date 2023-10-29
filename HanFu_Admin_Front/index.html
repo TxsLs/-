@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
   <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
-  <meta name="keywords" content="响应式后台模板,开源免费后台模板,bootstrap5后台管理系统模板">
-  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="keywords" content="华裳在线汉服网络商城">
+  <meta name="description" content="bootstrap华裳在线汉服网络商城">
   <meta name="author" content="ajiho">
   <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
@@ -46,7 +46,7 @@
     <li class="flex-grow-1"></li>
     <!--  通知(如果有新消息则添加类名.bsa-has-msg)  -->
     <li>
-      <div class="bsa-header-item" data-qt-tab='{"title":"消息中心","url":"pages/message.html"}' data-qt-target=".qtab">
+      <div class="bsa-header-item" data-qt-tab='{"title":"用户解封申请列表","url":"pages/message.html"}' data-qt-target=".qtab">
         <i class="bi bi-bell bsa-has-msg"></i>
       </div>
     </li>
@@ -298,16 +298,22 @@
               </li> -->
             </ul>
           </li>
-          <li>
+          <!-- <li>
             <a href="javascript:" class="has-children">
-              <i class="bi bi-filetype-html"></i>示例页面
+              <i class="bi bi-filetype-html"></i>商品/订单管理
             </a>
             <ul>
               <li>
+                <a href="pages/shops.html">商品列表</a>
+              </li>
+              <li>
+                <a href="pages/order.html">订单列表</a>
+              </li> -->
+              <!-- <li>
                 <a href="pages/blank.html">新页面</a>
               </li>
               <li>
-                <!-- target="_self":添加该属性可以让该页面不从tab页面里打开  -->
+                target="_self":添加该属性可以让该页面不从tab页面里打开 
                 <a href="pages/lockscreen.html" target="_self">锁屏页</a>
               </li>
               <li>
@@ -330,10 +336,10 @@
               </li>
               <li>
                 <a href="pages/layout3.html">布局示例3</a>
-              </li>
-            </ul>
-          </li>
-          <li>
+              </li> -->
+            <!-- </ul>
+          </li> -->
+          <!-- <li>
             <a href="javascript:" class="has-children">
               <i class="bi bi-filetype-js"></i>插件
             </a>
@@ -388,8 +394,8 @@
               <li><a href="pages/plugin-bootstrap-select.html">bootstrap-select</a></li>
               <li><a href="pages/plugin-fonticonpicker.html">图标选择器</a></li>
             </ul>
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <a href="javascript:" class="has-children">
               <i class="bi bi-gear"></i>设置
             </a>
@@ -397,8 +403,8 @@
               <li><a href="pages/sys_website.html">网站设置</a></li>
               <li><a href="pages/sys_email.html">邮件服务</a></li>
             </ul>
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <a href="docs/index.html" target="_blank">
               <i class="bi bi-filetype-doc"></i>文档
             </a>
@@ -441,19 +447,19 @@
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div>
       <!--  侧边栏底部(用于演示,不需要可删除)  -->
       <div class="card-footer bg-body">
-        Version: Txs 1.0.0
+        Version:admin panel V1.0.1
       </div>
     </div>
   </div>
 
   <!--内容区域(.bsa-content-fixed类删除后即可变成单页版本)-->
   <div class="bsa-content bsa-content-fixed">
-    <div class="qtab" data-qt-tabs='[{"title":"首页","url":"pages/welcome.html","close":false}]'></div>
+    <div class="qtab" data-qt-tabs='[{"title":"首页","url":"pages/welcome.html","close":true}]'></div>
   </div>
 
   <!--版权信息-->

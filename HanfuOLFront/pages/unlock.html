@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="../dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+    <link rel="icon" href="../dist/img/hualogo.gif" sizes="16x16" type="image/gif">
+    <meta name="keywords" content="华裳在线汉服网络商城">
+    <meta name="description" content="bootstrap华裳在线汉服网络商城">
+    <meta name="author" content="ajiho">
+    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+    <title>账号申诉</title>
+</head>
+
+<body class="bg-body-tertiary">
+
+    <div class="d-flex align-items-center justify-content-center">
+        <div style="width: 400px; max-width: 100%; margin-top: 12vh;" class="p-2">
+            <h2 class="text-center">账号申诉</h2>
+            <p class="text-secondary text-center">填写个人信息</p>
+
+            <form id="form" class="form">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
+                        <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2"
+                            autocomplete="on" placeholder="请输入账号" required data-bv-container="#err_username"
+                            pattern="^[A-Za-z0-9]{0,20}$">
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2"
+                            aria-label="name" autocomplete placeholder="请输入姓名" required
+                            data-bv-container="#err_username" pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
+                        <input type="tel" class="form-control" id="phone" name="phone" tabindex="8" autocomplete
+                            placeholder="请输入电话号码" required data-bv-container="#err_phone" maxlength="11">
+                    </div>
+                    <!-- <div id="err_phone" style="text-align: left;"></div> -->
+                </div>
+
+                <div class="row mb-3">
+                    <!-- <label for="username" class="col-sm-3 col-form-label text-sm-end">申诉理由</label> -->
+                    <!-- <div class="col-sm-9"> -->
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-clipboard2-data"></i></span>
+                        <textarea class="form-control" id="reason" rows="6" name="reason" maxlength="200" tabindex="2"
+                            autocomplete="on" placeholder="请输入申诉理由" data-bv-container="#err_username"
+                            pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,200}$"></textarea>
+
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+                <!-- 
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-file-image"></i></span>
+            <input type="file" class="form-control" id="profileImage" name="profileImage" tabindex="10"
+              accept="image/*">
+          </div>
+        </div>
+
+        <div class="mb-3 ">
+          <div class="card-header bg-body text-center">
+            用户头像
+          </div>
+          <div class="card-body text-center">
+            <img id="imgEditPhoto" src="../dist/img/nophoto.png" alt="头像" class="rounded-circle   bsa-wh-100 "
+              data-bs-toggle="modal" data-bs-target="#exampleModal">
+          </div>
+        </div> -->
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary" tabindex="12" type="submit"><i class="bi bi-unlock"></i>
+                        提交解封申请</button>
+                </div>
+
+
+            </form>
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary" tabindex="12" onclick="redirectToLogin()"><i
+                        class="bi bi-back"></i>
+                    返回</button>
+            </div>
+            <!-- <div class="mt-3 text-center">
+        <p>已有账号？<a href="login.html" class="link-success text-decoration-none">立即登录</a></p>
+      </div> -->
+
+        </div>
+    </div>
+
+
+
+
+
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/formvalidation/js/formValidation.js"></script>
+    <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+    <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+    <script src="../dist/js/bootstrap-admin.min.js"></script>
+    <script src="../dist/js/app.js"></script>
+
+
+    <!-- <script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script> -->
+    <script type="text/javascript" src="../pagejs/rockjs-1.0.js"></script>
+    <script type="text/javascript" src="../pagejs/common.js"></script>
+
+
+    <script>
+
+        function redirectToLogin() {
+            window.location.href = "../login.html";
+        }
+
+        $(function () {
+            //前端表单验证
+
+            $('#form').formValidation({
+
+                fields: {
+                    code: {
+                        validators: {
+                            notEmpty: {
+                                message: '账号不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 20,
+                                message: '用户名长度必须在1到20个字符之间'
+                            }
+                        }
+                    },
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: '姓名不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 20,
+                                message: '用户名长度必须在1到20个字符之间'
+                            }
+                        }
+                    },
+                    phone: {
+                        validators: {
+                            notEmpty: {
+                                message: '电话号码不能为空'
+                            },
+                            regexp: {
+                                regexp: /^\d{11}/,
+                                message: '请输入有效的11位电话号码!'
+                            }
+                        }
+                    },
+                    reason: {
+                        validators: {
+                            notEmpty: {
+                                message: '理由不能为空！'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 200,
+                                message: '封禁理由长度必须在1到200个字之间'
+                            }
+                        }
+                    }
+
+
+
+                }
+            }).on('success.form.fv', function (e) {
+
+                //阻止表单提交
+                e.preventDefault();
+
+                var reason = $('#reason').val();
+                var code = $('#code').val();
+                var name = $('#name').val();
+                var phone = $('#phone').val();
+                var dataToSend = {
+                    reason: reason,
+                    code: code,
+                    type: 3,
+                    status: 0,
+                    name: name,
+                    phone: phone
+                };
+
+                //发起ajax请求
+                $.ajax({
+                    method: 'Post',
+                    url: 'http://127.0.0.1:8080/spring-boot/unlock/addRequest',
+                    //表单数据
+                    contentType: 'application/json',
+
+                    data: JSON.stringify(dataToSend),
+                }).then(response => {
+                    if (response.result) {
+                        $.toasts({
+                            type: 'success',
+                            content: '申请提交成功！你的申请将在七个工作日类受理，请耐心等待！',
+                            delay: 3500,
+                            onHidden: function () {
+                                location.href = '../login.html';
+                            }
+                        });
+                    } else if (response.hasError) {
+                        var errorMessage = rock.errorText(response, "提交申请失败!");
+                        $.toasts({
+                            type: 'danger',
+                            content: errorMessage,
+                            delay: 3100, // 将显示时间设置
+                        });
+
+
+                    }
+
+
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

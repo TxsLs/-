@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-    <title>商家封禁页</title>
+    <title>顾客封禁页</title>
 </head>
 
 <body class="bg-body-tertiary py-3">
@@ -215,7 +215,7 @@
                             xhrFields: {
                                 withCredentials: true
                             },
-                            url: "http://127.0.0.1:8082/hanfushopping/merchant/updateMerchant",
+                            url: "http://127.0.0.1:8080/spring-boot/customer/updateCustomer",
                             method: 'post',
                             data: { isviolate: 0, id: selectedUserData.id },
 
@@ -247,7 +247,7 @@
                         var dataToSend = {
                             reason: reason,
                             userId: selectedUserData.id,
-                            type: 2
+                            type: 3
                         };
                         $.ajax({
                             //跨域

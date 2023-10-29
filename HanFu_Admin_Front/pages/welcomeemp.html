@@ -12,63 +12,21 @@
   <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-  <title>华裳汉服商城管理员界面</title>
+  <title>华裳在线汉服商城</title>
 </head>
 
 <body class="bg-body-tertiary py-3">
   <div class="container-fluid">
     <div class="row g-3">
-      <!-- <div class="col-lg-3">
-      <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="me-1">
-              <h6 class="mb-2 bsa-ellipsis-1 ">今日收入</h6>
-              <h4 class="mb-1 bsa-ellipsis-1" id="money">13145.20</h4>
-            </div>
-            <i class="bi bi-currency-yen fs-1 text-danger"></i>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
       <div class="col-lg-3">
         <div class="card shadow-sm border-0">
           <div class="card-body p-4">
             <div class="d-flex align-items-center justify-content-between">
               <div class="me-1">
-                <h6 class="mb-2 bsa-ellipsis-1">用户总数</h6>
-                <h4 class="mb-1 bsa-ellipsis-1" id="user"></h4>
+                <h6 class="mb-2 bsa-ellipsis-1 ">商城总交易额</h6>
+                <h4 class="mb-1 bsa-ellipsis-1" id="money"></h4>
               </div>
-              <i class="bi bi-people fs-1 text-info"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3">
-        <div class="card shadow-sm border-0">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="me-1">
-                <h6 class="mb-2 bsa-ellipsis-1">后台员工管理员总数</h6>
-                <h4 class="mb-1 bsa-ellipsis-1" id="emp"></h4>
-              </div>
-              <i class="bi bi-people fs-1 text-info"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3">
-        <div class="card shadow-sm border-0">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="me-1">
-                <h6 class="mb-2 bsa-ellipsis-1">商城商家总数</h6>
-                <h4 class="mb-1 bsa-ellipsis-1" id="merchant"></h4>
-              </div>
-              <i class="bi bi-people fs-1 text-info"></i>
+              <i class="bi bi-currency-yen fs-1 text-danger"></i>
             </div>
           </div>
         </div>
@@ -78,28 +36,27 @@
           <div class="card-body p-4">
             <div class="d-flex align-items-center justify-content-between">
               <div class="me-1">
-                <h6 class="mb-2 bsa-ellipsis-1">商城顾客总数</h6>
-                <h4 class="mb-1 bsa-ellipsis-1" id="cus"></h4>
+                <h6 class="mb-2 bsa-ellipsis-1">所有商品数量</h6>
+                <h4 class="mb-1 bsa-ellipsis-1" id="shops">1546</h4>
               </div>
-              <i class="bi bi-people fs-1 text-info"></i>
+              <i class="bi bi-bag-heart fs-1 text-info"></i>
             </div>
           </div>
         </div>
       </div>
-      <!-- <div class="col-lg-3">
-      <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="me-1">
-              <h6 class="mb-2 bsa-ellipsis-1">订单总数</h6>
-              <h4 class="mb-1 bsa-ellipsis-1" id="order">2000</h4>
+      <div class="col-lg-3">
+        <div class="card shadow-sm border-0">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="me-1">
+                <h6 class="mb-2 bsa-ellipsis-1">所有订单总数</h6>
+                <h4 class="mb-1 bsa-ellipsis-1" id="order">2000</h4>
+              </div>
+              <i class="bi bi-cart fs-1 text-primary"></i>
             </div>
-            <i class="bi bi-cart fs-1 text-primary"></i>
           </div>
         </div>
       </div>
-    </div> -->
-
       <!-- <div class="col-lg-3">
       <div class="card shadow-sm border-0">
         <div class="card-body p-4">
@@ -131,7 +88,7 @@
                   </tr>
                   <tr>
                     <th>基于框架</th>
-                    <td>bootstrap-V5.3.0、Rock-V1.0.1、SpringBoot-V2.7.15</td>
+                    <td>Bootstrap-V5.3.0、Rock-V1.0.1、SpringBoot-V2.7.15</td>
                   </tr>
                   <!-- <tr>
                 <th>主要特色</th>
@@ -173,9 +130,9 @@
             <canvas id="chart-line"></canvas>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="col-lg-8">
+      <!-- <div class="col-lg-8">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
             媒体数据
@@ -185,11 +142,10 @@
           </div>
         </div>
       </div> -->
-
       <div class="col-lg-4">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
-            申请处理概况
+            申请处理情况
           </div>
           <div class="card-body">
             <canvas id="chart4"></canvas>
@@ -200,7 +156,7 @@
       <div class="col-lg-4">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
-            员工账号概况
+            商城商品情况
           </div>
           <div class="card-body">
             <canvas id="chart5"></canvas>
@@ -211,7 +167,7 @@
       <div class="col-lg-4">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
-            商家账号概况
+            商城订单情况
           </div>
           <div class="card-body">
             <canvas id="chart6"></canvas>
@@ -219,16 +175,7 @@
         </div>
       </div>
 
-      <div class="col-lg-4">
-        <div class="card border-0 shadow-sm">
-          <div class="card-header bg-body">
-            顾客账号概况
-          </div>
-          <div class="card-body">
-            <canvas id="chart7"></canvas>
-          </div>
-        </div>
-      </div>
+
       <!-- <div class="col-12">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
@@ -384,103 +331,38 @@
 
     $(document).ready(function () {
 
-
       _root.loginUser(null, function (rtn, status) {
         if (rtn.hasError) {
           alert(rock.errorText(rtn, "连接到服务器失败！"));
-        } else if (rtn.notNull && rtn.result.admin == 1) {
+        } else if (rtn.notNull && rtn.result.admin == 0) {
+
 
           $.ajax({
             xhrFields: {
               withCredentials: true
             },
             method: 'get',
-            url: 'http://127.0.0.1:8081/hanfu/employee/queryPage',
+            url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
             //表单数据
             data: {
               pageNum: 1, pageSize: 10
             },
           }).then(response => {
             if (response.result) {
-              var emps = response.result.totalCount;
-              $('#emp').html(emps)
+              var shop = response.result.totalCount;
+
+              $('#shops').html(shop)
               //数字老虎机效果
-              new countUp.CountUp(document.querySelector('#emp'), emps, {
+              new countUp.CountUp(document.querySelector('#shops'), shop, {
                 //小数点后面的位数
                 decimalPlaces: 0,
                 //持续时间
                 duration: 2
               }).start();
 
-              $.ajax({
-                xhrFields: {
-                  withCredentials: true
-                },
-                method: 'get',
-                url: 'http://127.0.0.1:8082/hanfushopping/merchant/queryPage',
-                //表单数据
-                data: {
-                  pageNum: 1, pageSize: 10
-                },
-              }).then(response => {
-                if (response.result) {
-                  var merchants = response.result.totalCount;
-
-                  $('#merchant').html(merchants)
-                  //数字老虎机效果
-                  new countUp.CountUp(document.querySelector('#merchant'), merchants, {
-                    //小数点后面的位数
-                    decimalPlaces: 0,
-                    //持续时间
-                    duration: 2
-                  }).start();
-
-                  $.ajax({
-                    xhrFields: {
-                      withCredentials: true
-                    },
-                    method: 'get',
-                    url: 'http://127.0.0.1:8080/spring-boot/customer/queryPage',
-                    //表单数据
-                    data: {
-                      pageNum: 1, pageSize: 10
-                    },
-                  }).then(response => {
-                    if (response.result) {
-                      var cus = response.result.totalCount;
-
-                      $('#cus').html(cus)
-                      //数字老虎机效果
-                      new countUp.CountUp(document.querySelector('#cus'), cus, {
-                        //小数点后面的位数
-                        decimalPlaces: 0,
-                        //持续时间
-                        duration: 2
-                      }).start();
-
-                      $('#user').html(emps + merchants + cus)
-                      //数字老虎机效果
-                      new countUp.CountUp(document.querySelector('#user'), emps + merchants + cus, {
-                        //小数点后面的位数
-                        decimalPlaces: 0,
-                        //持续时间
-                        duration: 2
-                      }).start();
-
-
-
-                    }
-                  });
-
-
-                }
-              });
-
 
             }
           });
-
-
 
           //发起ajax请求
           $.ajax({
@@ -488,27 +370,83 @@
               withCredentials: true
             },
             method: 'get',
-            url: 'http://127.0.0.1:8081/hanfu/unlock/queryPage',
+            url: 'http://127.0.0.1:8082/hanfushopping/orderdetail/queryPage',
             //表单数据
             data: {
               pageNum: 1, pageSize: 10
             },
           }).then(response => {
             if (response.result) {
-              const totalreq = response.result.totalCount;
+              const totalPriceSum = response.result.content.reduce((acc, curr) => acc + curr.totalPrice, 0);
+              // const totalPriceSum = response.result.reduce((sum, obj) => sum + obj.totalPrice, 0);
+              const totalPriceFormatted = totalPriceSum.toFixed(2)
+              const totalorder = response.result.totalCount;
+
+              $('#money').html(totalPriceFormatted)
+              $('#order').html(totalorder)
+              //数字老虎机效果
+              new countUp.CountUp(document.querySelector('#money'), totalPriceFormatted, {
+                //小数点后面的位数
+                decimalPlaces: 2,
+                //持续时间
+                duration: 2
+              }).start();
+
+              new countUp.CountUp(document.querySelector('#order'), totalorder, {
+                //小数点后面的位数
+                decimalPlaces: 0,
+                //持续时间
+                duration: 2
+              }).start();
+
+
+
+
+            } else if (response.hasError) {
+              var errorMessage = rock.errorText(response, "失败!");
+              $.toasts({
+                type: 'danger',
+                content: errorMessage,
+                delay: 3050, // 将显示时间设置
+                onShown: function () {
+                  if (response.errorCode === "1069") {
+                    $("#code").focus();
+                  }
+                }
+              });
+
+
+            }
+
+          });
+
+          //发起ajax请求
+          $.ajax({
+            xhrFields: {
+              withCredentials: true
+            },
+            method: 'get',
+            url: 'http://127.0.0.1:8081/hanfu/unlock/queryPageEmp',
+            //表单数据
+            data: {
+              pageNum: 1, pageSize: 10
+            },
+          }).then(response => {
+            if (response.result) {
+              const totalorder = response.result.totalCount;
 
               $.ajax({
                 xhrFields: {
                   withCredentials: true
                 },
                 method: 'get',
-                url: 'http://127.0.0.1:8081/hanfu/unlock/queryPage',
+                url: 'http://127.0.0.1:8081/hanfu/unlock/queryPageEmp',
                 //表单数据
                 data: {
                   pageNum: 1, pageSize: 10, status: 1
                 },
               }).then(response => {
-                const unstatus = totalreq - response.result.totalCount;
+                const unstatus = totalorder - response.result.totalCount;
                 const status = response.result.totalCount;
 
                 new Chart(document.getElementById('chart4').getContext('2d'), {
@@ -549,64 +487,152 @@
 
           });
 
+
+          //发起ajax请求
           $.ajax({
             xhrFields: {
               withCredentials: true
             },
             method: 'get',
-            url: 'http://127.0.0.1:8081/hanfu/employee/queryPage',
+            url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
             //表单数据
             data: {
-              pageNum: 1, pageSize: 10
+              pageNum: 1, pageSize: 10, status: 0, empStatus: 1
             },
           }).then(response => {
             if (response.result) {
-              const totalreq = response.result.totalCount;
-
+              const unup = response.result.totalCount;
               $.ajax({
                 xhrFields: {
                   withCredentials: true
                 },
                 method: 'get',
-                url: 'http://127.0.0.1:8081/hanfu/employee/queryPage',
+                url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
                 //表单数据
                 data: {
-                  pageNum: 1, pageSize: 10, status: 1
+                  pageNum: 1, pageSize: 10, status: 1, empStatus: 1
                 },
               }).then(response => {
-                const unstatus = totalreq - response.result.totalCount;
-                const status = response.result.totalCount;
+                const up = response.result.totalCount;
 
-                new Chart(document.getElementById('chart5').getContext('2d'), {
-                  type: 'doughnut',
-                  data: {
-                    labels: [
-                      '在职',
-                      '离职'
-                    ],
-                    datasets: [{
-                      //label: 'Dataset 1',
-                      data: [status, unstatus],
-                      backgroundColor: [
-                        '#0abfbc',
-                        '#348f50'
-                      ],
-                      hoverOffset: 4
-                    }]
+                $.ajax({
+                  xhrFields: {
+                    withCredentials: true
                   },
-                  options: {
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: true,
-                        text: '员工账号状态占比图'
+                  method: 'get',
+                  url: 'http://127.0.0.1:8082/hanfushopping/product/queryPage',
+                  //表单数据
+                  data: {
+                    pageNum: 1, pageSize: 10, empStatus: 0
+                  },
+                }).then(response => {
+                  //const unstatus = totalshops - response.result.totalCount;
+                  const ban = response.result.totalCount;
+
+                  new Chart(document.getElementById('chart5').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                      labels: [
+                        '已上架',
+                        '未上架',
+                        '违规'
+                      ],
+                      datasets: [{
+                        //label: 'Dataset 1',
+                        data: [up, unup, ban],
+                        backgroundColor: [
+                          '#0abfbc',
+                          '#348f50',
+                          '#ff9eb8'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    },
+                    options: {
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'top',
+                        },
+                        title: {
+                          display: true,
+                          text: '商品状态占比图'
+                        }
                       }
                     }
-                  }
+                  });
+
                 });
+
+
+                //发起ajax请求
+                $.ajax({
+                  xhrFields: {
+                    withCredentials: true
+                  },
+                  method: 'get',
+                  url: 'http://127.0.0.1:8082/hanfushopping/orderdetail/queryPage',
+                  //表单数据
+                  data: {
+                    pageNum: 1, pageSize: 10
+                  },
+                }).then(response => {
+                  if (response.result) {
+                    const totalorder = response.result.totalCount;
+
+                    $.ajax({
+                      xhrFields: {
+                        withCredentials: true
+                      },
+                      method: 'get',
+                      url: 'http://127.0.0.1:8082/hanfushopping/orderdetail/queryPage',
+                      //表单数据
+                      data: {
+                        pageNum: 1, pageSize: 10, orderStatus: 1
+                      },
+                    }).then(response => {
+                      const unstatus = totalorder - response.result.totalCount;
+                      const status = response.result.totalCount;
+
+                      new Chart(document.getElementById('chart6').getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                          labels: [
+                            '已发货',
+                            '未处理'
+                          ],
+                          datasets: [{
+                            //label: 'Dataset 1',
+                            data: [status, unstatus],
+                            backgroundColor: [
+                              '#0abfbc',
+                              '#348f50'
+                            ],
+                            hoverOffset: 4
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          plugins: {
+                            legend: {
+                              position: 'top',
+                            },
+                            title: {
+                              display: true,
+                              text: '订单处理占比图'
+                            }
+                          }
+                        }
+                      });
+
+                    });
+
+
+                  }
+
+                });
+
+
 
               });
 
@@ -614,152 +640,19 @@
             }
 
           });
-
-
-          $.ajax({
-            xhrFields: {
-              withCredentials: true
-            },
-            method: 'get',
-            url: 'http://127.0.0.1:8080/spring-boot/customer/queryPage',
-            //表单数据
-            data: {
-              pageNum: 1, pageSize: 10
-            },
-          }).then(response => {
-            if (response.result) {
-              const totalreq = response.result.totalCount;
-
-              $.ajax({
-                xhrFields: {
-                  withCredentials: true
-                },
-                method: 'get',
-                url: 'http://127.0.0.1:8080/spring-boot/customer/queryPage',
-                //表单数据
-                data: {
-                  pageNum: 1, pageSize: 10, isviolate: 1
-                },
-              }).then(response => {
-                const unstatus = totalreq - response.result.totalCount;
-                const status = response.result.totalCount;
-
-                new Chart(document.getElementById('chart7').getContext('2d'), {
-                  type: 'doughnut',
-                  data: {
-                    labels: [
-                      '正常',
-                      '违规'
-                    ],
-                    datasets: [{
-                      //label: 'Dataset 1',
-                      data: [status, unstatus],
-                      backgroundColor: [
-                        '#0abfbc',
-                        '#348f50'
-                      ],
-                      hoverOffset: 4
-                    }]
-                  },
-                  options: {
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: true,
-                        text: '顾客账号状态占比图'
-                      }
-                    }
-                  }
-                });
-
-              });
-
-            }
-
-          });
-
-
-          $.ajax({
-            xhrFields: {
-              withCredentials: true
-            },
-            method: 'get',
-            url: 'http://127.0.0.1:8082/hanfushopping/merchant/queryPage',
-            //表单数据
-            data: {
-              pageNum: 1, pageSize: 10
-            },
-          }).then(response => {
-            if (response.result) {
-              const totalreq = response.result.totalCount;
-
-              $.ajax({
-                xhrFields: {
-                  withCredentials: true
-                },
-                method: 'get',
-                url: 'http://127.0.0.1:8082/hanfushopping/merchant/queryPage',
-                //表单数据
-                data: {
-                  pageNum: 1, pageSize: 10, isviolate: 1
-                },
-              }).then(response => {
-                const unstatus = totalreq - response.result.totalCount;
-                const status = response.result.totalCount;
-
-                new Chart(document.getElementById('chart6').getContext('2d'), {
-                  type: 'doughnut',
-                  data: {
-                    labels: [
-                      '正常',
-                      '违规'
-                    ],
-                    datasets: [{
-                      //label: 'Dataset 1',
-                      data: [status, unstatus],
-                      backgroundColor: [
-                        '#0abfbc',
-                        '#348f50'
-                      ],
-                      hoverOffset: 4
-                    }]
-                  },
-                  options: {
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: true,
-                        text: '商家账号状态占比图'
-                      }
-                    }
-                  }
-                });
-
-              });
-
-            }
-
-          });
-
 
 
 
         }
-        //  else {
-        //   $.toasts({
-        //     type: 'danger',
-        //     content: '未登录,或没有权限！',
-        //     delay: 3000,
-        //     onHidden: function () {
-        //       top.location.replace('login.html');
-        //     }
-        //   })
+        // else {
+        //     $.toasts({
+        //         type: 'danger',
+        //         content: '未登录,或没有权限！',
+        //         delay: 3000,
+        //         onHidden: function () {
+        //             top.location.replace('login.html');
+        //         }
+        //     })
         // }
 
       })
@@ -768,26 +661,13 @@
 
 
 
-
-      // //数字老虎机效果
-      // new countUp.CountUp(document.querySelector('#money'), 1314520, {
-      //   //小数点后面的位数
-      //   decimalPlaces: 2,
-      //   //持续时间
-      //   duration: 2
-      // }).start();
       // new countUp.CountUp(document.querySelector('#user'), 1546, {
       //   //小数点后面的位数
       //   decimalPlaces: 0,
       //   //持续时间
       //   duration: 2
       // }).start();
-      // new countUp.CountUp(document.querySelector('#order'), 2000, {
-      //   //小数点后面的位数
-      //   decimalPlaces: 0,
-      //   //持续时间
-      //   duration: 2
-      // }).start();
+
       // new countUp.CountUp(document.querySelector('#message'), 1000, {
       //   //小数点后面的位数
       //   decimalPlaces: 0,
@@ -893,36 +773,11 @@
       //     }
       //   }
       // });
-      // new Chart(document.getElementById('chart4').getContext('2d'), {
-      //   type: 'doughnut',
-      //   data: {
-      //     labels: [
-      //       '已租',
-      //       '未租'
-      //     ],
-      //     datasets: [{
-      //       label: 'Dataset 1',
-      //       data: [300, 50],
-      //       backgroundColor: [
-      //         '#0abfbc',
-      //         '#348f50'
-      //       ],
-      //       hoverOffset: 4
-      //     }]
-      //   },
-      //   options: {
-      //     responsive: true,
-      //     plugins: {
-      //       legend: {
-      //         position: 'top',
-      //       },
-      //       title: {
-      //         display: true,
-      //         text: '已租未租房源占比图'
-      //       }
-      //     }
-      //   }
-      // });
+
+
+
+
+
 
       //图表响应式处理
       window.onresize = function () {

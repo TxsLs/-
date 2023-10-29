@@ -13,7 +13,7 @@ function loadTableData() {
     _root.loginUser(null, function (rtn, status) {
       if (rtn.hasError) {
         alert(rock.errorText(rtn, "连接到服务器失败！"));
-      } else if (rtn.notNull) {
+      } else if (rtn.notNull&&rtn.result.admin==1) {
   
         // 销毁第一个表格实例
         $('#table').bootstrapTable('destroy');
@@ -23,7 +23,7 @@ function loadTableData() {
           //设置高度就可以固定表头
           // height: 500,
           //请求地址
-          url: 'http://127.0.0.1:8080/hanfu/employee/queryPage',
+          url: 'http://127.0.0.1:8080/spring-boot/customer/queryPage',
   
           queryParamsType: "page",
   
@@ -227,34 +227,34 @@ function loadTableData() {
               sortable: true,
             },
             {
-              title: '姓名',
+              title: '名称',
               field: 'name',
               align: 'center',
               sortable: true,
             },
   
-            {
-              title: '用户角色',
-              field: 'admin',
-              align: 'center',
-              sortable: true,
-              formatter: function (value) {
-                return value == 1 ? "超级管理员" : "商城员工";
-              },
-            },
-            {
-              title: '性别',
-              field: 'gender',
-              align: 'center',
-              sortable: true,
-              formatter: function (value) {
-                return value == 1 ? "男" : "女";
-              },
-            },
+            // {
+            //   title: '用户角色',
+            //   field: 'admin',
+            //   align: 'center',
+            //   sortable: true,
+            //   formatter: function (value) {
+            //     return value == 1 ? "超级管理员" : "商城员工";
+            //   },
+            // },
+            // {
+            //   title: '性别',
+            //   field: 'gender',
+            //   align: 'center',
+            //   sortable: true,
+            //   formatter: function (value) {
+            //     return value == 1 ? "男" : "女";
+            //   },
+            // },
   
             {
               title: '注册时间',
-              field: 'joinTime',
+              field: 'createTime',
               align: 'center',
               sortable: true,
               formatter: function (value) {
@@ -283,7 +283,7 @@ function loadTableData() {
   
             {
               title: '用户状态',
-              field: 'status',
+              field: 'isviolate',
               align: 'center',
               sortable: true,
               formatter: formatStatus,
@@ -342,7 +342,7 @@ function loadTableData() {
                       // 将所选行的数据存储到 sessionStorage
                       sessionStorage.setItem('selectedUserData', JSON.stringify(row));
                     },
-                    url: 'user-edit.html',
+                    url: 'cus_edit.html',
                     title: '编辑用户信息',
                     //禁用掉底部的按钮区域
                     buttons: [],
@@ -367,7 +367,7 @@ function loadTableData() {
                       // 将所选行的数据存储到 sessionStorage
                       sessionStorage.setItem('selectedUserData', JSON.stringify(row));
                     },
-                    url: 'ban.html',
+                    url: 'ban_cus.html',
                     title: '封禁用户',
                     //禁用掉底部的按钮区域
                     buttons: [],
@@ -395,10 +395,10 @@ function loadTableData() {
                       withCredentials: true
                     },
                     //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
-                    url: 'http://127.0.0.1:8080/hanfu/ban/queryByBanId',
+                    url: 'http://127.0.0.1:8081/hanfu/ban/queryByBanId',
                     method: 'get',
                     data: { userId: row.id,
-                    type:1
+                    type:3
                     },
                   }).then(response => {
   
@@ -456,9 +456,9 @@ function loadTableData() {
                           xhrFields: {
                             withCredentials: true
                           },
-                          url: 'http://127.0.0.1:8080/hanfu/employee/updateEmployee',
+                          url: 'http://127.0.0.1:8080/spring-boot/customer/updateCustomer',
                           method: 'post',
-                          data: { status: 1, id: row.id },
+                          data: { isviolate: 1, id: row.id },
                         }).then(response => {
                           if (response.result) {
                             $.toasts({
@@ -499,7 +499,7 @@ function loadTableData() {
                       // 将所选行的数据存储到 sessionStorage
                       sessionStorage.setItem('selectedUserData', JSON.stringify(row));
                     },
-                    url: 'user-resetPwd.html',
+                    url: 'cus_resetPwd.html',
                     title: '重置用户密码',
                     //禁用掉底部的按钮区域
                     buttons: [],
@@ -606,7 +606,7 @@ function loadTableData() {
   
        // 格式化列数据演示 val:当前数据 rows:当前整行数据
         function formatStatus(val, rows) {
-          return rows.status === 1 ? '<span class="badge text-bg-success">正常</span>' : '<span class="badge text-bg-danger">离职</span>';
+          return rows.isviolate === 1 ? '<span class="badge text-bg-success">正常</span>' : '<span class="badge text-bg-danger">被封禁</span>';
   
           //         let uncheck = `<div class="form-check form-switch">
           // <input class="form-check-input bsa-cursor-pointer" type="checkbox" disabled>离职</div>`;
@@ -624,14 +624,15 @@ function loadTableData() {
         function formatAction(val, rows) {
   
           let html = '';
-          if (rows.admin == 1) {
-            html += `<button disabled type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-    data-bs-title="编辑用户信息"><i class="bi bi-pencil"></i></button>`;
-            html += `<button disabled type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-    data-bs-title="封禁？"><i class="bi bi-lock-fill"></i></button>`
-            html += `<button disabled type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-    data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
-          } else if (rows.status == 1) {
+    //       if (rows.admin == 1) {
+    //         html += `<button disabled type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+    // data-bs-title="编辑用户信息"><i class="bi bi-pencil"></i></button>`;
+    //         html += `<button disabled type="button" class="btn btn-light mx-1 btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+    // data-bs-title="封禁？"><i class="bi bi-lock-fill"></i></button>`
+    //         html += `<button disabled type="button" class="btn btn-light btn-sm role-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+    // data-bs-title="重置密码"><i class="bi bi-key-fill"></i></button>`
+    //       } else 
+          if (rows.isviolate == 1) {
   
             //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
             html += `<button type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -677,8 +678,8 @@ function loadTableData() {
           $('#phone').val('');
           $('#joinTime').val('');
           $('#endTime').val('');
-          $('#status').selectpicker('val', ['']).trigger("change");
-          $('#admin').selectpicker('val', ['']).trigger("change");
+          $('#isviolate').selectpicker('val', ['']).trigger("change");
+         // $('#admin').selectpicker('val', ['']).trigger("change");
           //刷新回到第一页
           $('#table').bootstrapTable('refresh');
           $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
@@ -842,8 +843,8 @@ function loadTableData() {
       } else {
         $.toasts({
           type: 'danger',
-          content: '未登录！',
-          delay: 1500,
+          content: '未登录,或没有权限！',
+          delay: 3300,
           onHidden: function () {
             top.location.replace('login.html');
           }

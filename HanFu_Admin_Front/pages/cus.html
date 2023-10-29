@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
-  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
-  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
+  <meta name="keywords" content="华裳在线汉服网络商城">
+  <meta name="description" content="bootstrap华裳在线汉服网络商城">
   <meta name="author" content="ajiho">
   <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="../lib/@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css" />
   <link rel="stylesheet" href="../lib/bootstrap-select/dist/css/bootstrap-select.min.css">
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-  <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+  <title>顾客列表</title>
 </head>
 
 <body class="bg-body-tertiary py-3">
@@ -28,7 +28,7 @@
         <form id="searchForm" name="searchForm" class="row row-cols-sm-auto g-3 py-2 align-items-center">
           <div class="col-12">
             <div class="row">
-              <label for="name" class="col-sm-auto col-form-label">性名</label>
+              <label for="name" class="col-sm-auto col-form-label">名称</label>
               <div class="col">
                 <input type="text" class="form-control" id="name" name="name"
                   pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
@@ -60,9 +60,9 @@
 
           <div class="col-12">
             <div class="row">
-              <label for="status" class="col-sm-auto col-form-label">用户状态</label>
+              <label for="isviolate" class="col-sm-auto col-form-label">用户状态</label>
               <div class="col">
-                <select class="selectpicker" id="status" name="status">
+                <select class="selectpicker" id="isviolate" name="isviolate">
                   <option value="">所有</option>
                   <option value="0">停用</option>
                   <option value="1">正常</option>
@@ -71,7 +71,7 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <!-- <div class="col-12">
             <div class="row">
               <label for="admin" class="col-sm-auto col-form-label">用户角色</label>
               <div class="col">
@@ -82,7 +82,7 @@
                 </select>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
 
@@ -91,8 +91,8 @@
       <div class="card-body">
         <!--  表格上方左侧的工具条区域    -->
         <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
-          <button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增员工
-          </button>
+          <!-- <button class="btn btn-light add-btn"><i class="bi bi-plus"></i> 新增员工
+          </button> -->
           <!-- <button class="btn btn-light batch-btn" ><i class="bi bi-trash"></i> 批量删除</button> -->
           <!-- <button class="btn btn-light"><i class="bi bi-box-arrow-down"></i> 导入</button>
           <button class="btn btn-light"><i class="bi bi-box-arrow-up"></i> 导出</button> -->

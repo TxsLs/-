@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <link rel="icon" href="../dist/img/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="../dist/img/favicon-16x16.png" sizes="16x16" type="image/png">
-  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
-  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+  <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
+  <meta name="keywords" content="华裳在线汉服网络商城">
+  <meta name="description" content="bootstrap华裳在线汉服网络商城">
   <meta name="author" content="ajiho">
   <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../lib/bootstrap-table/dist/bootstrap-table.min.css">
   <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css"> -->
-  <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+  <title>申请处理</title>
 </head>
 
 <body class="bg-body-tertiary py-3">
@@ -31,7 +31,7 @@
         <form id="searchForm" name="searchForm" class="row row-cols-sm-auto g-3 py-2 align-items-center">
           <div class="col-12">
             <div class="row">
-              <label for="name" class="col-sm-auto col-form-label">性名</label>
+              <label for="name" class="col-sm-auto col-form-label">名称</label>
               <div class="col">
                 <input type="text" class="form-control" id="name" name="name"
                   pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$" maxlength="20">
@@ -81,9 +81,9 @@
                 <select class="selectpicker" id="type" name="type">
                   <option value="">所有</option>
                   <option value="1">商城员工</option>
-                  <option value="2">顾客</option>
-                  <option value="3">商家</option>
-                  <option value="4">违规商品</option>
+                  <option value="2">商家</option>
+                  <option value="3">顾客</option>
+                  <!-- <option value="4">违规商品</option> -->
                 </select>
               </div>
             </div>
@@ -96,14 +96,14 @@
         <div id="toolbar" class="d-flex flex-wrap gap-2 mb-2">
 
 
-        <button type="button" class="btn btn-light search-btn" onclick="loadTableData();">
-          <i class="bi bi-search"></i>搜索
-        </button>
-        <button type="button" class="btn btn-light bsa-reset-btn">
-          <i class="bi bi-arrow-clockwise"></i>重置
-        </button>
+          <button type="button" class="btn btn-light search-btn" onclick="loadTableData();">
+            <i class="bi bi-search"></i>搜索
+          </button>
+          <button type="button" class="btn btn-light bsa-reset-btn">
+            <i class="bi bi-arrow-clockwise"></i>重置
+          </button>
 
-</div>
+        </div>
 
 
         <!-- <ul class="nav nav-underline" id="msgType">

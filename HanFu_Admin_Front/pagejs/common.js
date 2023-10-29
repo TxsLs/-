@@ -11,7 +11,7 @@ rock.xhrFields.withCredentials=true;
  * 在这里修改提供mvc rest接口的服务器url地址
  */
 //var mvc_base_url = "/hanfu/";
-var mvc_base_url = "http://127.0.0.1:8080/hanfu/";
+var mvc_base_url = "http://127.0.0.1:8081/hanfu/";
 
 /**
  * 调用该方法初始化业务服务对象

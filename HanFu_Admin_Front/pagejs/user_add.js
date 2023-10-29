@@ -140,7 +140,7 @@ $(function ($) {
 
                 //得到序列化数据
                 $.ajax({
-                    url: "http://127.0.0.1:8080/hanfu/employee/addEmployee",
+                    url: "http://127.0.0.1:8081/hanfu/employee/addEmployee",
                     method: 'post',
                     data: data,
                     processData: false,

@@ -18,24 +18,24 @@ function loadCategory() {
         $search.append(rock.format(option, [vo.id, vo.id, vo.name]));
         // $edit.append(rock.format(option, [vo.id, vo.code, vo.name]));
       });
-      
+
     } else {
       alert("未查询到部门列表!");
     }
   });
 }
 
-const priceInput = document.getElementById('price');
-priceInput.addEventListener('blur', function () {
-  const value = this.value.trim();
-  if (value !== '') {
-    const floatValue = parseFloat(value);
-    if (!isNaN(floatValue)) {
-      const formattedValue = floatValue.toFixed(2);
-      this.value = formattedValue;
-    }
-  }
-});
+// const priceInput = document.getElementById('price');
+// priceInput.addEventListener('blur', function () {
+//   const value = this.value.trim();
+//   if (value !== '') {
+//     const floatValue = parseFloat(value);
+//     if (!isNaN(floatValue)) {
+//       const formattedValue = floatValue.toFixed(2);
+//       this.value = formattedValue;
+//     }
+//   }
+// });
 
 
 function loadTableData() {
@@ -46,7 +46,7 @@ function loadTableData() {
 
 
 
-      
+
       // 销毁第一个表格实例
       $('#table').bootstrapTable('destroy');
       $('#table').bootstrapTable({
@@ -215,7 +215,7 @@ function loadTableData() {
 
           var param = rock.formData($("#searchForm"));
           // var param = {};
-          param.merchantId=rtn.result.id
+          param.merchantId = rtn.result.id
           param.pageSize = options.pageSize;
           param.pageNum = options.pageNumber;
           param.sort = options.sortName + " " + options.sortOrder;
@@ -613,7 +613,7 @@ function loadTableData() {
         //return rows.status === 1 ? '<span class="badge text-bg-success">已上架</span>' : '<span class="badge text-bg-danger">未上架</span>';
         if (rows.status == 1 && rows.empStatus == 1) {
           return '<span class="badge text-bg-success">已上架</span>';
-        } else if (rows.status == 0) {
+        } else if (rows.status == 0 && rows.empStatus == 1) {
           return '<span class="badge text-bg-info">未上架</span>';
         } else if (rows.empStatus == 0) {
           return '<span class="badge text-bg-danger">被封禁</span>';
