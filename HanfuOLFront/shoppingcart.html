@@ -194,22 +194,25 @@
 						alert("手机号不能为空");
 					} else {
 						var productids = [];
+						var productfids = [];
 						var quantities=[];
 						//根据订单总额的计算方法和表单结算信息，购物车中删除对应选中的商品  等待修改
 						const checkboxes = document.querySelectorAll('input[name="btSelectItem"]');
 						for (let i = 0; i < checkboxes.length; i++) {
 							if (checkboxes[i].checked) {
 								const row = checkboxes[i].closest('tr'); // 找到最近的父级 <tr> 元素
+								const productfid = parseInt(row.querySelector('.productfid').textContent, 10); // 获取id单元格
 								const productid = parseInt(row.querySelector('.productid').textContent, 10); // 获取id单元格
 								const quantity=parseInt(row.querySelector('#quantity'+i).value, 10);
 								productids.push(productid); // 将 productid 添加到列表中
-								quantities.push(quantity)
+								quantities.push(quantity);
+								productfids.push(productfid); 
 							}
 						}
 						console.log(productids); // 输出所有选中产品的 ID
 
 						// 将数组转换为逗号分隔的字符串
-						const params = productids.join(',');
+						const params = productfids.join(',');
 						$.ajax({
 							url: 'http://127.0.0.1:8080/spring-boot/shopCart/removeMoreCart',
 							method: 'GET',
@@ -339,7 +342,8 @@
 							// 遍历每个数据项，在每行元素上添加类名
 							res.result.content.forEach(function (item, index) {
 								const tr = table.rows[index + 1]; // 从第二行开始，因为第一行是表头
-								tr.cells[1].classList.add('productid'); // 为商品id列添加类名
+								tr.cells[1].classList.add('productfid'); // 为商品id列添加类名
+								tr.cells[2].classList.add('productid'); // 为商品id列添加类名
 								tr.cells[5].classList.add('oneprice'); // 为商品总价列添加类名
 								tr.cells[6].classList.add('price'); // 为商品总价列添加类名
 							});

@@ -61,8 +61,11 @@ public class ProductControllrer extends BaseController<Product, ProductService> 
 			@ApiImplicitParam(name = "price", value = "商品价格", required = false, paramType = "form", dataType = "decimal"),
 			@ApiImplicitParam(name = "stock", value = "商品库存", required = false, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "categoryId", value = "商品分类id", required = false, paramType = "form", dataType = "long"),
-			@ApiImplicitParam(name = "categoryName", value = "商品分类名称", required = false, paramType = "form", dataType = "long"), })
-
+			@ApiImplicitParam(name = "categoryName", value = "商品分类名称", required = false, paramType = "form", dataType = "long"), 
+			@ApiImplicitParam(name = "id", value = "商品id", required = true, paramType = "form", dataType = "long"),
+	@ApiImplicitParam(name = "status", value = "shangjia", required = false, paramType = "form", dataType = "long")
+	})
+	
 	@RequestMapping(value = "/updateProduct", method = { RequestMethod.POST })
 	public @ResponseBody Result<Boolean> updateProduct(// 添加注解
 			@ApiIgnore Product vo, @RequestPart(value = "photo", required = false) MultipartFile file)

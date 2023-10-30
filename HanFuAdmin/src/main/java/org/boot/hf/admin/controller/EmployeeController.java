@@ -205,14 +205,18 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 		//if (AppUtils.isLogin()) {
 		//String code = AppUtils.getLoginUser().getUsername();
 		Employee employee = this.service().findByCode(code);
-		if (employee != null && employee.getCode().equals(code) && employee.getName().equals(name)
-				&& employee.getPhone().equals(phone)) {
-			ok = this.service().changePassword(code, newPassword);
-		} else if (employee.getStatus().equals(0)) {
-			return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
-
+		if (employee == null) {
+			return Result.toResult("1072", "该账号不存在！");
 		} else {
-			return Result.toResult("1069", "用户信息不匹配，请重试！");
+			if (employee.getCode().equals(code) && employee.getName().equals(name) && employee.getPhone().equals(phone)
+					&& employee.getStatus().equals(1)) {
+				ok = this.service().changePassword(code, newPassword);
+			} else if (employee.getStatus().equals(0)) {
+				return Result.toResult("1066", "您的账户已被封禁，请联系管理员邮箱:1034710773@qq.com!");
+
+			} else {
+				return Result.toResult("1069", "用户信息不匹配，请重试！");
+			}
 		}
 
 		//}

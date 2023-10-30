@@ -17,6 +17,7 @@ $(function ($) {
             $.toasts({
                 type: 'danger',
                 content: '未登录！请返回登录',
+                delay: 3000,
                 onHidden: function () {
                     top.location.replace('login.html');
 
@@ -143,7 +144,10 @@ $(function ($) {
                     contentType: false,
                 }).then(res => {
 
-                    if (res && data.get("code") == ssoUser.code) {
+
+
+
+                    if (res.result && data.get("code") == ssoUser.code) {
                         $.toasts({
                             type: 'success',
                             content: '修改个人信息成功！',
@@ -152,7 +156,20 @@ $(function ($) {
                                 top.location.replace('../index.html');
                             }
                         });
-                    } else {
+                    }
+                    else if (res.errorCode == "1067") {
+                        var errorMessage = rock.errorText(res, "修改失败!")
+                        $.toasts({
+                            type: 'danger',
+                            content: errorMessage,
+                            onHidden: function () {
+
+                                top.location.replace('../index.html');
+                            }
+                        });
+                    }
+
+                    else {
                         _root.logout({}, (rtn) => {
                             if (rtn.hasError || !rtn.result) {
                                 $.toasts({

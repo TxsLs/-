@@ -3,6 +3,8 @@ package com.example.demo.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.Null;
+
 import org.quincy.rock.core.dao.annotation.Column;
 import org.quincy.rock.core.dao.annotation.IgnoreInsert;
 import org.quincy.rock.core.dao.annotation.JoinTable;
@@ -24,6 +26,8 @@ import lombok.Setter;
 		@JoinTable(name = "t_merchant", alias = "m", onExpr = "m.f_id=p.f_merchant_id") })
 public class Product extends Entity {
 
+	
+
 	private static final long serialVersionUID = 4568465418516512564L;
 
 	@ApiModelProperty(value = "代码", required = false, position = 1)
@@ -39,7 +43,7 @@ public class Product extends Entity {
 	private BigDecimal price;
 
 	@ApiModelProperty(value = "商品库存", required = true, position = 5)
-	private int stock;
+	private Integer stock;
 
 	@ApiModelProperty(value = "商品分类编号", required = true, position = 6)
 	private Long categoryId;
@@ -63,4 +67,5 @@ public class Product extends Entity {
 	
 	@ApiModelProperty(value = "商品状态", required = true, position = 11)
 	private Integer empStatus;
+	
 }
