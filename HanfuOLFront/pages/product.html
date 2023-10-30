@@ -374,12 +374,12 @@
             widthUnit: 'rem',
             visible: false
           },
-          {
-            title: '商品编号',
-            field: 'code',
-            align: 'center',
-            sortable: true,
-          },
+          // {
+          //   title: '商品编号',
+          //   field: 'code',
+          //   align: 'center',
+          //   sortable: true,
+          // },
           {
             title: '商品名称',
             field: 'name',
@@ -392,6 +392,7 @@
             field: 'description',
             align: 'center',
             sortable: true,
+            formatter: formatContent,
           },
           {
             title: '价格',
@@ -456,7 +457,13 @@
       });
 
 
+      function formatContent(val, rows) {
+        if (val == null || val == '') {
+          return '这个商家很懒，都没写简介＞︿＜';
+        }
 
+        return `<a class="text-decoration-none text-body" data-bs-toggle="tooltip">${val}</a>`;
+      }
 
 
       function ignoreClickToSelectOn(e) {

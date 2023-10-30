@@ -103,7 +103,7 @@
             withCredentials: true
           },
           success: function (response) {
-          
+
           },
           error: function (xhr, status, error) {
             // 请求失败，处理错误
@@ -275,7 +275,8 @@
             title: '订单状态',
             field: 'orderStatus',
             align: 'center',
-            sortable: true
+            sortable: true,
+            formatter: formatStatus,
           },
           {
             title: '地址',
@@ -305,7 +306,7 @@
             formatter: function (value, row) {
               return '<div style="display: flex; justify-content: space-evenly">' +
                 '<button class="btn btn-primary show-btn">查看详情</button>' +
-                '<button class="btn btn-info comment-btn">评论商品</button>'+
+                '<button class="btn btn-info comment-btn">评论商品</button>' +
                 '<button class="btn btn-success edit-btn">修改地址和手机号</button>' +
                 '<button class="btn btn-danger" onclick=deleteOrder(\'' + row.id + '\')>删除</button>' +
                 '</div>';
@@ -383,7 +384,26 @@
 
 
 
+      function formatStatus(val, rows) {
+        //return rows.status === 1 ? '<span class="badge text-bg-success">已上架</span>' : '<span class="badge text-bg-danger">未上架</span>';
+        if (rows.orderStatus == 0) {
+          return '<span class="badge text-bg-warning">未处理</span>';
+        } else if (rows.orderStatus == 1) {
+          return '<span class="badge text-bg-success">已发货</span>';
+        }
 
+        //         let uncheck = `<div class="form-check form-switch">
+        //   <input class="form-check-input bsa-cursor-pointer" type="checkbox">
+        // </div>`;
+
+        //         let checked = `<div class="form-check form-switch">
+        //   <input class="form-check-input bsa-cursor-pointer" type="checkbox" checked>
+        // </div>`
+
+        //         return val === 1 ? checked : uncheck;
+
+
+      }
 
 
 
