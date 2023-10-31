@@ -33,23 +33,20 @@ public class Review extends Entity {
 	 */
 	private static final long serialVersionUID = -443057957024622999L;
 
-
-	@ApiModelProperty(value = "评价编号", position = 1)
-    private String code;
 	
-	@ApiModelProperty(value = "顾客编号", position = 2)
-    private String customerId;
+	@ApiModelProperty(value = "顾客编号", position = 1)
+    private String customerCode;
 	
-	@ApiModelProperty(value = "商品编号", position = 3)
+	@ApiModelProperty(value = "商品编号", position = 2)
     private String productId;
 	
-	@ApiModelProperty(value = "评价内容", position = 4)
+	@ApiModelProperty(value = "评价内容", position = 3)
     private String reviewContent;
 	
-	@ApiModelProperty(value = "评分", position = 5)
+	@ApiModelProperty(value = "评分", position =4 )
     private String rating;
 	
-	@ApiModelProperty(value = "评价时间", position = 6)
+	@ApiModelProperty(value = "评价时间", position = 5)
     @IgnoreInsert
 	@IgnoreUpdate
     private Date createdTime;

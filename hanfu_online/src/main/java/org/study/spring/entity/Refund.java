@@ -1,6 +1,8 @@
 package org.study.spring.entity;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
@@ -23,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(description = "退货实体")
-@Table(name = "t_refund", alias = "a")
+@Table(name = "t_refund_request", alias = "rr")
 public class Refund  extends Entity {
 
 	/**
@@ -43,8 +45,8 @@ public class Refund  extends Entity {
 	@ApiModelProperty(value = "退货状态", position = 4)
     private String refundStatus;
 	
-	@ApiModelProperty(value = "退款编号", position = 5)
-    private String code;
+	@ApiModelProperty(value = "用户编号", position = 5)
+    private String customerCode;
 	
 	
 	

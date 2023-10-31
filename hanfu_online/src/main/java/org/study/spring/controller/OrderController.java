@@ -1,6 +1,7 @@
 package org.study.spring.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -81,5 +82,20 @@ public class OrderController extends BaseController<Order, OrderService> {
 			throw new LoginException("未登录!");
 		}
 	}
-
+	@ApiOperation(value = "查询所有实体", notes = "")
+	@ApiImplicitParam(name = "sort", value = "排序规则字符串")
+	@RequestMapping(value = "/queryAll", method = { RequestMethod.GET })
+	public @ResponseBody Result<List<? extends Entity>> queryAll(String sort) {
+		log.debug("call queryAll");
+		Predicate where = DaoUtil.and();
+		if (AppUtils.isLogin()) {
+			String code = AppUtils.getLoginUser().getUsername();
+			where.equal(DataType.STRING, "customerCode", code.toString());
+		List<? extends Entity> list = this.service().findAll(where, Sort.parse(sort));
+		return Result.toResult(list);
+		
+	} else {
+		throw new LoginException("未登录!");
+	}
+	}
 }

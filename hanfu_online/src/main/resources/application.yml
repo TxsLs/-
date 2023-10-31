@@ -23,9 +23,9 @@ spring:
       
   datasource:
     name: oyhDataSourse
-    url: jdbc:mysql://127.0.0.1:3306/hfstore?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/hanfu?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: 12345666
+    password: 52oyh1314
     driver-class-name: com.mysql.cj.jdbc.Driver
  ## 使用Hikar数据源
     type: com.zaxxer.hikari.HikariDataSource
