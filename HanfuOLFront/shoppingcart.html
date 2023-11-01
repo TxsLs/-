@@ -195,7 +195,7 @@
 					} else {
 						var productids = [];
 						var productfids = [];
-						var quantities=[];
+						var quantities = [];
 						//根据订单总额的计算方法和表单结算信息，购物车中删除对应选中的商品  等待修改
 						const checkboxes = document.querySelectorAll('input[name="btSelectItem"]');
 						for (let i = 0; i < checkboxes.length; i++) {
@@ -203,10 +203,10 @@
 								const row = checkboxes[i].closest('tr'); // 找到最近的父级 <tr> 元素
 								const productfid = parseInt(row.querySelector('.productfid').textContent, 10); // 获取id单元格
 								const productid = parseInt(row.querySelector('.productid').textContent, 10); // 获取id单元格
-								const quantity=parseInt(row.querySelector('#quantity'+i).value, 10);
+								const quantity = parseInt(row.querySelector('#quantity' + i).value, 10);
 								productids.push(productid); // 将 productid 添加到列表中
 								quantities.push(quantity);
-								productfids.push(productfid); 
+								productfids.push(productfid);
 							}
 						}
 						console.log(productids); // 输出所有选中产品的 ID
@@ -247,31 +247,31 @@
 								// 请求成功，处理响应数据
 								//订单详情
 								for (let i = 0; i < productids.length; i++) {//循环加入
-									var orderDetailData={
+									var orderDetailData = {
 										"orderId": response,//订单主键
 										"productId": productids[i],//商品id
 										"quantity": quantities[i]//商品数量
 									};
 									$.ajax({
-									url: 'http://127.0.0.1:8080/spring-boot//orderdetail/add',
-									method: 'POST',
-									data: JSON.stringify(orderDetailData),
-									contentType: "application/json",
-									xhrFields: {
-										withCredentials: true
-									},
-									success: function (response) {
-										// 请求成功，处理响应数据
-										console.log("添加商品详情成功");
-									},
-									error: function (xhr, status, error) {
-										// 请求失败，处理错误
-										console.error(error);
-									}
-								});
+										url: 'http://127.0.0.1:8080/spring-boot//orderdetail/add',
+										method: 'POST',
+										data: JSON.stringify(orderDetailData),
+										contentType: "application/json",
+										xhrFields: {
+											withCredentials: true
+										},
+										success: function (response) {
+											// 请求成功，处理响应数据
+											console.log("添加商品详情成功");
+										},
+										error: function (xhr, status, error) {
+											// 请求失败，处理错误
+											console.error(error);
+										}
+									});
 								}
 
-								
+
 							},
 							error: function (xhr, status, error) {
 								// 请求失败，处理错误
@@ -284,7 +284,7 @@
 							content: '订单发起成功',
 							onHidden: function () {
 								//去订单页
-								location.href="pages/ordertable.html";
+								location.href = "pages/ordertable.html";
 							}
 						});
 
@@ -480,7 +480,7 @@
 						sortable: true,
 						formatter: function (value, row, index) {
 							// 格式化显示商品数量为可编辑的输入框
-							return '<input id="quantity'+index+'" type="number" min="1" value="' + value + '" onchange="updateQuantity1(this, ' + index + ')" />';
+							return '<input id="quantity' + index + '" type="number" min="1" value="' + value + '" onchange="updateQuantity1(this, ' + index + ')" />';
 						}
 					},
 					{
@@ -489,7 +489,6 @@
 						align: 'center',
 						sortable: true
 					},
-					
 					{
 						title: '商品总价',
 						field: 'totalPrice', // 修改field属性
@@ -497,6 +496,40 @@
 						sortable: true,
 						formatter: function (value, row) { // 使用formatter函数计算出总价
 							return row.quantity * row.price;
+						}
+					},
+					{
+						title: '删除',
+						align: 'center',
+						formatter: function (value, row) {
+							return '<button class="btn btn-danger delete-btn" data-id="' + row.id + '">删除</button>';
+						}, events: {
+							'click .delete-btn': function (event, value, row, index) {
+								console.log(row.id);
+								$.ajax({
+									url: "http://127.0.0.1:8080/spring-boot/shopCart/remove?id=" + row.id,
+									type: 'GET', // 请求类型，可以是 GET、POST、PUT 等
+									xhrFields: {
+										withCredentials: true
+									},
+									success: function (response) {
+										$.toasts({
+											type: 'danger',
+											content: '删除商品成功',
+											onHidden:function(){
+												location.reload();
+											}
+										});
+										
+									},
+									error: function (xhr, status, error) {
+										// 请求失败的处理逻辑
+										console.log(row.id);
+										console.log('Error:', error);
+									}
+								});
+
+							},
 						}
 					}
 				]
