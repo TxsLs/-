@@ -446,8 +446,8 @@
             align: 'center',
             formatter: function (value, row, index) {
               return '<button class="btn btn-danger btn-add-to-cart"' +
-                ' onclick="addToCart(' + row.id + ')">加入购物车</button>' +
-                '<button class="btn btn-primary show-btn">查看评论</button>' +
+                ' onclick="addToCart(' + row.id + ')">加入购物车</button>&nbsp&nbsp' +
+                '<button class="btn btn-primary show-btn">查看评论</button>&nbsp&nbsp' +
                 '<button class="btn btn-primary btn-contact-seller" onclick="contactSeller(' + row.merchantId + ')">联系商家</button>';
             },
             events: {
