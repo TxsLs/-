@@ -13,7 +13,7 @@ function loadTableData() {
   _root.loginUser(null, function (rtn, status) {
     if (rtn.hasError) {
       alert(rock.errorText(rtn, "连接到服务器失败！"));
-    } else if (rtn.notNull&&rtn.result.admin==1) {
+    } else if (rtn.notNull && rtn.result.admin == 1) {
 
       // 销毁第一个表格实例
       $('#table').bootstrapTable('destroy');
@@ -397,8 +397,9 @@ function loadTableData() {
                   //url: 'http://127.0.0.1:8080/hanfu/ban/queryByName?propName=userId&propValue=' + encodeURIComponent(row.id),
                   url: 'http://127.0.0.1:8081/hanfu/ban/queryByBanId',
                   method: 'get',
-                  data: { userId: row.id,
-                  type:1
+                  data: {
+                    userId: row.id,
+                    type: 1
                   },
                 }).then(response => {
 
@@ -446,7 +447,7 @@ function loadTableData() {
 
                   window.modalInstance = $.modal({
 
-                    body: '确定要解封此用户:\n' + row.name + '?' + '<br><br>' + '此用户已被封禁\n' + response.result.length + '\n次' + '<br><br>' + bodyContent,
+                    body: '确定要解封此用户:\n' + row.code + '&nbsp??' + '<br><br>' + '此用户已被封禁\n' + response.result.length + '\n次' + '<br><br>' + bodyContent,
 
                     cancelBtn: true,
 
@@ -604,7 +605,7 @@ function loadTableData() {
         return val === true ? '男' : '女';
       }
 
-     // 格式化列数据演示 val:当前数据 rows:当前整行数据
+      // 格式化列数据演示 val:当前数据 rows:当前整行数据
       function formatStatus(val, rows) {
         return rows.status === 1 ? '<span class="badge text-bg-success">正常</span>' : '<span class="badge text-bg-danger">离职</span>';
 

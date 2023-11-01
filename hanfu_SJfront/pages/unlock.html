@@ -2,28 +2,28 @@
 <html lang="zh">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="icon" href="dist/img/hualogo.gif" sizes="32x32" type="image/gif">
-  <link rel="icon" href="dist/img/hualogo.gif" sizes="16x16" type="image/gif">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="../dist/img/hualogo.gif" sizes="32x32" type="image/gif">
+  <link rel="icon" href="../dist/img/hualogo.gif" sizes="16x16" type="image/gif">
   <meta name="keywords" content="华裳在线汉服网络商城">
   <meta name="description" content="bootstrap华裳在线汉服网络商城">
-    <meta name="author" content="ajiho">
-    <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
-    <title>商品解封申请</title>
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
+  <title>商品解封申请</title>
 </head>
 
 <body class="bg-body-tertiary">
 
-    <div class="d-flex align-items-center justify-content-center">
-        <div style="width: 400px; max-width: 100%; margin-top: 12vh;" class="p-2">
-            <h2 class="text-center">商品解封申请</h2>
-            <p class="text-secondary text-center">填写申请信息</p>
+  <div class="d-flex align-items-center justify-content-center">
+    <div style="width: 400px; max-width: 100%; margin-top: 12vh;" class="p-2">
+      <h2 class="text-center">商品解封申请</h2>
+      <p class="text-secondary text-center">填写申请信息</p>
 
-            <form id="form" class="form">
-                <!-- <div class="mb-3">
+      <form id="form" class="form">
+        <!-- <div class="mb-3">
                     <div class="input-group">
                         <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
                         <input type="text" class="form-control" id="code" name="code" maxlength="20" tabindex="2"
@@ -33,31 +33,31 @@
 
                 </div> -->
 
-                <div class="mb-3">   
-                    <div class="input-group">
-                        <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
-                        <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2"
-                            aria-label="name" readonly autocomplete placeholder="请输入姓名" required
-                            data-bv-container="#err_username" pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
-                    </div>
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
+            <input type="text" class="form-control" id="name" name="name" maxlength="20" tabindex="2" aria-label="name"
+              readonly autocomplete placeholder="请输入姓名" required data-bv-container="#err_username"
+              pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,20}$">
+          </div>
 
-                </div>
+        </div>
 
 
-                <div class="row mb-3">
-                    <!-- <label for="username" class="col-sm-3 col-form-label text-sm-end">申诉理由</label> -->
-                    <!-- <div class="col-sm-9"> -->
-                    <div class="input-group">
-                        <span class="input-group-text bg-white"><i class="bi bi-clipboard2-data"></i></span>
-                        <textarea class="form-control" id="reason" rows="6" name="reason" maxlength="200" tabindex="2"
-                            autocomplete="on" placeholder="请输入申诉理由" data-bv-container="#err_username"
-                            pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,200}$"></textarea>
+        <div class="row mb-3">
+          <!-- <label for="username" class="col-sm-3 col-form-label text-sm-end">申诉理由</label> -->
+          <!-- <div class="col-sm-9"> -->
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-clipboard2-data"></i></span>
+            <textarea class="form-control" id="reason" rows="6" name="reason" maxlength="200" tabindex="2"
+              autocomplete="on" placeholder="请输入申诉理由" data-bv-container="#err_username"
+              pattern="^[\u4e00-\u9fa5A-Za-z0-9\uFF01-\uFFEF]{0,200}$"></textarea>
 
-                        <!-- </div> -->
-                    </div>
-                </div>
+            <!-- </div> -->
+          </div>
+        </div>
 
-                <!-- 
+        <!-- 
         <div class="mb-3">
           <div class="input-group">
             <span class="input-group-text bg-white"><i class="bi bi-file-image"></i></span>
@@ -76,32 +76,35 @@
           </div>
         </div> -->
 
-                <div class="d-grid gap-2">
-                    <button class="btn btn-outline-primary" tabindex="12" type="submit"><i class="bi bi-unlock"></i>
-                        提交解封申请</button>
-                </div>
-
-
-            </form>
-            <div class="d-grid gap-2">
-                <button class="btn btn-outline-primary" tabindex="12" onclick="redirectToLogin()"><i
-                        class="bi bi-back"></i>
-                    返回</button>
-            </div>
-            <!-- <div class="mt-3 text-center">
+        <div class="d-grid gap-2">
+          <button class="btn btn-outline-primary" tabindex="12" type="submit"><i class="bi bi-unlock"></i>
+            提交解封申请</button>
+        </div>
+      </form>
+      <br>
+      <div class="d-grid gap-2">
+        <button class="btn btn-outline-primary" tabindex="12" onclick="queryBan()"><i class="bi bi-search-heart"></i>
+          查询封禁信息</button>
+      </div>
+      <br>
+      <div class="d-grid gap-2">
+        <button class="btn btn-outline-primary" tabindex="12" onclick="redirectToLogin()"><i class="bi bi-back"></i>
+          返回</button>
+      </div>
+      <!-- <div class="mt-3 text-center">
         <p>已有账号？<a href="login.html" class="link-success text-decoration-none">立即登录</a></p>
       </div> -->
 
-        </div>
     </div>
+  </div>
 
 
 
-    <!-- <div class="d-flex align-items-center justify-content-center">
+  <!-- <div class="d-flex align-items-center justify-content-center">
   <div style="width: 400px;max-width: 100%;margin-top: 12vh;" class="p-2">
     <h2 class="text-center">注册</h2> -->
 
-    <!-- <form id="form" class="form">
+  <!-- <form id="form" class="form">
       <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
@@ -153,21 +156,21 @@
 </div>  -->
 
 
-    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../lib/jquery/dist/jquery.min.js"></script>
-    <script src="../lib/formvalidation/js/formValidation.js"></script>
-    <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
-    <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
-    <script src="../dist/js/bootstrap-admin.min.js"></script>
-    <script src="../dist/js/app.js"></script>
+  <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/formvalidation/js/formValidation.js"></script>
+  <script src="../lib/formvalidation/js/framework/bootstrap.js"></script>
+  <script src="../lib/formvalidation/js/language/zh_CN.js"></script>
+  <script src="../dist/js/bootstrap-admin.min.js"></script>
+  <script src="../dist/js/app.js"></script>
 
 
-    <!-- <script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script> -->
-    <script type="text/javascript" src="../js2/rockjs-1.0.js"></script>
-    <script type="text/javascript" src="../pagejs/common.js"></script>
+  <!-- <script type="text/javascript" src="../dist/js/bootstrapValidator-rock.js"></script> -->
+  <script type="text/javascript" src="../js2/rockjs-1.0.js"></script>
+  <script type="text/javascript" src="../pagejs/common.js"></script>
 
 
-    <script type="text/javascript" src="../pagejs/unlock.js"></script>
+  <script type="text/javascript" src="../pagejs/unlock.js"></script>
 </body>
 
 </html>

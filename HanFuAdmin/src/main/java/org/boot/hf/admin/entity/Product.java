@@ -36,7 +36,7 @@ public class Product extends Entity {
 	private BigDecimal price;
 
 	@ApiModelProperty(value = "商品库存", required = true, position = 5)
-	private int stock;
+	private Integer stock;
 
 	@ApiModelProperty(value = "商品分类编号", required = true, position = 6)
 	private Long categoryId;

@@ -59,6 +59,7 @@ public class UnlockRequestController extends BaseController<UnlockRequest, Unloc
 		//String code = AppUtils.getLoginUser().getUsername();
 		Employee employee = employeeService.findByCode(vo.getCode());
 		boolean exist = this.service().existByName("code", vo.getCode(), null);
+		
 		if (employee == null) {
 			return Result.toResult("1072", "此账号不存在！");
 		} else {

@@ -447,7 +447,7 @@ function loadTableData() {
 
                   window.modalInstance = $.modal({
 
-                    body: '确定要解封此用户:\n' + row.name + '?' + '<br><br>' + '此用户已被封禁\n' + response.result.length + '\n次' + '<br><br>' + bodyContent,
+                    body: '确定要解封此用户:\n' + row.code + '&nbsp??' + '<br><br>' + '此用户已被封禁\n' + response.result.length + '\n次' + '<br><br>' + bodyContent,
 
                     cancelBtn: true,
 
