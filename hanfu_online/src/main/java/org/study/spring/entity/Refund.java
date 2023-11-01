@@ -4,6 +4,9 @@ package org.study.spring.entity;
 
 import java.util.Date;
 
+import org.quincy.rock.core.dao.annotation.Column;
+import org.quincy.rock.core.dao.annotation.JoinTable;
+import org.quincy.rock.core.dao.annotation.JoinTables;
 import org.quincy.rock.core.dao.annotation.Table;
 import org.study.spring.Entity;
 
@@ -26,6 +29,9 @@ import lombok.Setter;
 @Setter
 @ApiModel(description = "退货实体")
 @Table(name = "t_refund_request", alias = "rr")
+@JoinTables({ @JoinTable(name = "t_order_detail", alias = "od", onExpr = "od.f_order_id=rr.f_order_id") ,
+@JoinTable(name = "t_product", alias = "p", onExpr = "od.f_product_id=p.f_id")
+})
 public class Refund  extends Entity {
 
 	/**
@@ -48,6 +54,11 @@ public class Refund  extends Entity {
 	@ApiModelProperty(value = "用户编号", position = 5)
     private String customerCode;
 	
+	@ApiModelProperty(value = "商家id", position = 6)
+	@Column(value = "f_merchant_id", tableAlias = "p", ignoreInsert = true, ignoreUpdate = true)
+	private String merchantId;
 	
+	@ApiModelProperty(value = "申请时间", position = 7)
+    private Date processingTime;
 	
 }
