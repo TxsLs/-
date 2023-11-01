@@ -165,6 +165,18 @@
         </div>
       </div>
 
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-body">
+            退货处理情况
+          </div>
+          <div class="card-body">
+            <canvas id="chart6"></canvas>
+          </div>
+        </div>
+      </div>
+
+
       <!-- <div class="col-12">
         <div class="card border-0 shadow-sm">
           <div class="card-header bg-body">
@@ -558,6 +570,71 @@
             }
 
           });
+
+
+
+          $.ajax({
+            xhrFields: {
+              withCredentials: true
+            },
+            method: 'get',
+            url: 'http://127.0.0.1:8080/spring-boot/refund/queryPage',
+            //表单数据
+            data: {
+              merchantId: rtn.result.id, pageNum: 1, pageSize: 10
+            },
+          }).then(response => {
+            const total = response.result.totalCount;
+
+            $.ajax({
+              xhrFields: {
+                withCredentials: true
+              },
+              method: 'get',
+              url: 'http://127.0.0.1:8080/spring-boot/refund/queryPage',
+              //表单数据
+              data: {
+                merchantId: rtn.result.id, pageNum: 1, pageSize: 10, status: '已退货'
+              },
+            }).then(response => {
+              const tui = response.result.totalCount;
+              const unstatus = total - tui;
+
+              new Chart(document.getElementById('chart6').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                  labels: [
+                    '已退货',
+                    '未处理',
+                  ],
+                  datasets: [{
+                    //label: 'Dataset 1',
+                    data: [tui, unstatus],
+                    backgroundColor: [
+                      '#0abfbc',
+                      '#348f50'
+                    ],
+                    hoverOffset: 4
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: 'top',
+                    },
+                    title: {
+                      display: true,
+                      text: '退货处理占比图'
+                    }
+                  }
+                }
+              });
+
+            });
+
+          });
+
 
 
 

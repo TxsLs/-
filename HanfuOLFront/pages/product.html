@@ -446,8 +446,30 @@
             align: 'center',
             formatter: function (value, row, index) {
               return '<button class="btn btn-danger btn-add-to-cart"' +
-                ' onclick="addToCart(' + row.id + ')">加入购物车</button>' +
+                ' onclick="addToCart(' + row.id + ')">加入购物车</button>&nbsp&nbsp' +
+                '<button class="btn btn-primary show-btn">查看评论</button>&nbsp&nbsp' +
                 '<button class="btn btn-primary btn-contact-seller" onclick="contactSeller(' + row.merchantId + ')">联系商家</button>';
+            },
+            events: {
+              'click .show-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('ProductData', row.id);
+                  },
+                  url: 'product-show.html',
+                  title: '查看评价详情',
+                  //禁用掉底部的按钮区域
+                  buttons: [],
+                  modalDialogClass: 'modal-dialog-centered modal-lg',
+                  onHidden: function (obj, data) {
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('ProductData');
+                  }
+                });
+
+              },
             }
           }
         ]

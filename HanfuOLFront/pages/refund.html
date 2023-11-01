@@ -15,11 +15,16 @@
   <style>
     /* 标题的样式 */
     h2 {
-      color: #333; /* 标题文字颜色 */
-      font-size: 20px; /* 标题文字大小 */
-      font-weight: bold; /* 标题文字粗细 */
-      text-align: left; /* 居中对齐 */
-      margin-bottom: 10px; /* 下边距 */
+      color: #333;
+      /* 标题文字颜色 */
+      font-size: 20px;
+      /* 标题文字大小 */
+      font-weight: bold;
+      /* 标题文字粗细 */
+      text-align: left;
+      /* 居中对齐 */
+      margin-bottom: 10px;
+      /* 下边距 */
     }
   </style>
   <title>商品退货页面</title>
@@ -35,7 +40,7 @@
           <label for="searchOrderId" class="control-label">订单号：</label>
           <select class="form-control" id="searchOrderId" name="orderId" tabindex="1" data-toggle="popover"
             title="请选择订单号">
-            <option value="" selected>全部</option>
+            <option value="" selected>加载订单列表失败</option>
           </select>
         </div>
         <div class="form-group">
@@ -47,16 +52,7 @@
         <a href="../index.html" class="btn btn-primary" style="float: right;">返回首页</a> <!-- 添加返回首页的按钮 -->
       </form>
 
-      <!-- 提交成功提示框 -->
-      <div id="successMessage" class="alert alert-success d-none" role="alert">
-        提交申请成功！将返回主页。
-      </div>
-
-      <!-- 提交失败提示框 -->
-      <div id="errorMessage" class="alert alert-danger d-none" role="alert">
-        提交申请失败！将返回错误页。
-      </div>
-<br>
+      <br>
       <h2>历史退货信息：</h2>
       <!--  数据表格    -->
       <div id="table-container">
@@ -80,53 +76,172 @@
   <script src="../dist/js/bootstrap-admin.min.js"></script>
   <script src="../dist/js/app.js"></script>
   <script>
-    // 提交评论表单的监听事件
-    document.getElementById("commentForm").addEventListener("submit", function (event) {
-      event.preventDefault(); // 阻止表单默认提交行为
-
-      // 执行提交评论的逻辑
-      submitComment();
-    });
+    var orderList;
 
     // 提交评论的函数
     function submitComment() {
+      var selectElement = document.getElementById("searchOrderId");
+      var selectedOrderId = selectElement.value;
+      var replyInput = document.getElementById("reply-input");
+      var replyValue = replyInput.value;
+      var isSuccess = true;
+      var refundData = {//获取申请内容
+        "orderId": selectedOrderId,//订单号
+        "reason": replyValue,//退货理由
+      };
       // 模拟提交过程，此处可以替换为实际的提交逻辑
+      $.ajax({
+        url: 'http://127.0.0.1:8080/spring-boot/refund/addrefund',
+        method: 'POST',
+        xhrFields: {
+          withCredentials: true
+        },
+        data: JSON.stringify(refundData),
+        contentType: "application/json",
+        success: function (response) {
+          // 请求成功，处理响应数据
+        },
+        error: function (xhr, status, error) {
+          // 请求失败，处理错误
+          console.error(error);
+        }
+      }).then(response => {
+        if (response.result) {
+          $.toasts({
+            type: 'success',
+            content: '退货申请成功',
+            delay: 3000,
+            onHidden: function () {
+              location.reload();
+            }
+          })
+        } else if (response.hasError) {
+          $.toasts({
+            type: 'danger',
+            content: '申请失败',
 
-      // 假设提交成功
-      var isSuccess = false;
+          });
+          if (response.errorCode == "1067") {
+            $.toasts({
+              type: 'error',
+              content: '你已经申请过了，请勿重复申请',
 
-      if (isSuccess) {
-        showSuccessMessage();
-      } else {
-        showErrorMessage();
-      }
+            });
+          }
+        }
+      });
+
+
     }
 
-    // 显示提交成功提示框
-    function showSuccessMessage() {
-      document.getElementById("successMessage").classList.remove("d-none");
-      document.getElementById("errorMessage").classList.add("d-none");
 
-      // 2秒后跳转到主页
-      setTimeout(function () {
-        window.location.href = '../index.html';
-      }, 2000);
+    function getCOrder() {
+
+      $.ajax({
+        url: 'http://127.0.0.1:8080/spring-boot/order/queryAll',
+        method: 'GET',
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function (response) {
+          // 请求成功，处理响应数据
+          // 遍历并提取订单号数据
+          orderList = [];
+          response.result.forEach(function (item) {
+            orderList.push(item.id);
+          });
+          var selectElement = document.getElementById("searchOrderId");
+          // 清空下拉框中所有选项
+          while (selectElement.options.length > 0) {
+            selectElement.remove(0);
+          }
+          // 动态添加数据库查询结果中的订单号作为选项
+          for (var i = 0; i < orderList.length; i++) {
+            var option = document.createElement("option");
+            option.value = orderList[i];
+            option.text = orderList[i];
+            selectElement.add(option);
+          }
+        },
+        error: function (xhr, status, error) {
+          // 请求失败，处理错误
+          console.error(error);
+        }
+      });
+
+
     }
 
-    // 显示提交失败提示框
-    function showErrorMessage() {
-      document.getElementById("errorMessage").classList.remove("d-none");
-      document.getElementById("successMessage").classList.add("d-none");
-
-      // 2秒后跳转到errors页
-      setTimeout(function () {
-        window.location.href = '../404.html';
-      }, 2000);
-    }
   </script>
 
   <script>
+    $(function ($) {
+      $.ajax({
+        url: 'http://127.0.0.1:8080/spring-boot/refund/queryAll',
+        method: 'GET',
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function (response) {
+          // 请求成功，处理响应数据
+          getData(response.result);
+        },
+        error: function (xhr, status, error) {
+          // 请求失败，处理错误
+          console.error(error);
+        }
+      });
+      // AJAX请求函数
+      function getData(data) {
+        // 清空表格容器
+        $('#table-container').empty();
+        // 创建数据表格
+        var table = $('<table>').addClass('table');
+        // 创建表头
+        var thead = $('<thead>').append($('<tr>').append($('<th>').text('订单id')).append($('<th>').text('申请时间')).append($('<th>').text('申请处理时间')).append($('<th>').text('退货原因')).append($('<th>').text('退货状态')));
+        table.append(thead);
 
+        // 创建表体
+        var tbody = $('<tbody>');
+        $.each(data, function (index, item) {
+        // 使用 Date 对象将 value 转换为日期时间
+        var datetime = new Date(item.requestTime);
+        // 获取年、月、日、小时、分钟、秒
+        var year = datetime.getFullYear();
+        var month = String(datetime.getMonth() + 1).padStart(2, '0');
+        var day = String(datetime.getDate()).padStart(2, '0');
+        var hour = String(datetime.getHours()).padStart(2, '0');
+        var minute = String(datetime.getMinutes()).padStart(2, '0');
+        var second = String(datetime.getSeconds()).padStart(2, '0');
+        item.requestTime=year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        // 使用 Date 对象将 value 转换为日期时间
+        datetime = new Date(item.processingTime);
+        // 获取年、月、日、小时、分钟、秒
+        year = datetime.getFullYear();
+        month = String(datetime.getMonth() + 1).padStart(2, '0');
+        day = String(datetime.getDate()).padStart(2, '0');
+        hour = String(datetime.getHours()).padStart(2, '0');
+        minute = String(datetime.getMinutes()).padStart(2, '0');
+        second = String(datetime.getSeconds()).padStart(2, '0');
+        item.processingTime=year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+
+          var tr = $('<tr>').append($('<td>').text(item.orderId)).append($('<td>').text(item.requestTime)).append($('<td>').text(item.processingTime)).append($('<td>').text(item.reason)).append($('<td>').text(item.refundStatus));
+          tbody.append(tr);
+        });
+        table.append(tbody);
+        // 将数据表格添加到表格容器中
+        $('#table-container').append(table);
+      }
+      //以上内容是填充历史退货信息
+      // 提交申请表单的监听事件
+      document.getElementById("commentForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+
+        // 执行提交评论的逻辑
+        submitComment();
+      });
+      getCOrder();
+    });
 
 
   </script>

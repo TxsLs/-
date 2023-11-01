@@ -517,7 +517,29 @@ function loadTableData() {
                   }
                 });
 
+              },
+
+              'click .show-btn': function (event, value, row, index) {
+                event.stopPropagation();
+                window.modalInstance = $.modal({
+                  onShow: function () {
+                    // 将所选行的数据存储到 sessionStorage
+                    sessionStorage.setItem('ProductData', row.id);
+                  },
+                  url: 'product-show.html',
+                  title: '查看评价详情',
+                  //禁用掉底部的按钮区域
+                  buttons: [],
+                  modalDialogClass: 'modal-dialog-centered modal-lg',
+                  onHidden: function (obj, data) {
+                    // 使用完数据后清除 sessionStorage 中的数据
+                    sessionStorage.removeItem('ProductData');
+                  }
+                });
+
               }
+
+
             }
           }
         ]
@@ -651,12 +673,15 @@ function loadTableData() {
 
           //第二个按钮
           html += `<button type="button" class="btn btn-light mx-1 btn-sm up-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="上架商品"><i class="bi bi-arrow-up-circle"></i></button>`
+        data-bs-title="上架商品"><i class="bi bi-arrow-up-circle"></i></button>`;
 
 
           //第三个按钮
           html += `<button type="button" class="btn btn-light btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
+        data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`;
+
+          html += `<button type="button" class="btn btn-light btn-sm show-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="查看商品评价"><i class="bi bi-layout-text-sidebar-reverse"></i></button>`;
         } else if (rows.empStatus == 0) {
           //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
           html += `<button  type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -664,12 +689,15 @@ data-bs-title="修改商品信息"><i class="bi bi-pencil"></i></button>`;
 
           //第二个按钮
           html += `<button  type="button" class="btn btn-light mx-1 btn-sm unlock-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-data-bs-title="申请解封此商品"><i class="bi bi-unlock-fill"></i></button>`
+data-bs-title="申请解封此商品"><i class="bi bi-unlock-fill"></i></button>`;
 
 
           //第三个按钮
           html += `<button  type="button" class="btn btn-light btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
+data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`;
+
+          html += `<button type="button" class="btn btn-light btn-sm show-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="查看商品评价"><i class="bi bi-layout-text-sidebar-reverse"></i></button>`;
         } else if (rows.status == 1 && rows.empStatus == 1) {
           //第一个按钮(你可以在这里判断用户是否有修改权限来决定是否显示)
           html += `<button  type="button" class="btn btn-light btn-sm edit-btn" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -677,12 +705,15 @@ data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
 
           //第二个按钮
           html += `<button  type="button" class="btn btn-light mx-1 btn-sm dw-btn" data-bs-toggle="tooltip" data-bs-placement="top"
- data-bs-title="下架此商品"><i class="bi bi-bag-dash-fill"></i></button>`
+ data-bs-title="下架此商品"><i class="bi bi-bag-dash-fill"></i></button>`;
 
 
           //第三个按钮
           html += `<button  type="button" class="btn btn-light btn-sm del-btn" data-bs-toggle="tooltip" data-bs-placement="top"
- data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`
+ data-bs-title="删除商品"><i class="bi bi-trash-fill"></i></button>`;
+
+          html += `<button type="button" class="btn btn-light btn-sm show-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="查看商品评价"><i class="bi bi-layout-text-sidebar-reverse"></i></button>`;
         }
 
 

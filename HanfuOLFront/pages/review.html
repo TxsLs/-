@@ -22,8 +22,13 @@
 
         <div class="card-footer bg-body">
             <form id="commentForm">
-请选择要评论的商品：
 
+                <div class="form-group product-menu">
+                    <label for="searchProduct" class="control-label">请选择要评论的商品：</label>
+                    <input type="text" class="form-control" id="product" name="product" placeholder="请选择或输入商品名称"
+                        tabindex="1" autocomplete="off">
+                    <ul class="dropdown-menu w-100" role="menu" id="product-dropdown"></ul>
+                </div>
 
                 <div class="form-group">
                     <label for="reply-input">评论商品：</label>
@@ -39,21 +44,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="image-upload">上传图片：</label>
-                    <input type="file" class="form-control-file" id="image-upload" name="image">
-                </div>
                 <button type="submit" class="btn btn-primary">提交评论</button>
                 <a href="ordertable.html" class="btn btn-primary" style="float: right;">返回订单详情页</a> <!-- 添加返回首页的按钮 -->
             </form>
             <!-- 提交成功提示框 -->
             <div id="successMessage" class="alert alert-success d-none" role="alert">
-                提交评论成功！2s后关闭该窗口
+                提交评论成功！10s后关闭该窗口
             </div>
 
             <!-- 提交失败提示框 -->
             <div id="errorMessage" class="alert alert-danger d-none" role="alert">
-                提交评论失败！将返回错误页。
+                提交评论失败！，请检查填写项，5s后将返回错误页。
             </div>
         </div>
 
@@ -72,12 +73,14 @@
     <script src="../dist/js/bootstrap-admin.min.js"></script>
     <script src="../dist/js/app.js"></script>
     <script>
+        var selectedId = 0; // 保存选中商品的id值
+        var ratingscore = 5;//保存评分，默认五星好评
         $(document).ready(function (e) {
             $('#raty3').raty({
                 // 隐藏域字段
                 scoreName: 'score',
                 // 初始化值
-                score: 1,
+                score: 5,
                 // 数量
                 number: 5,
                 starType: 'i',
@@ -87,55 +90,177 @@
                 starOff: "bi bi-star fs-4 mx-1 text-secondary",
                 starOn: "bi bi-star-fill fs-4 mx-1 text-warning",
                 click: function (score, e) {
-                    alert('当前分值:' + score)
+                    ratingscore = score;
                 }
             });
+
+            getCProduct();
+            // 提交评论表单的监听事件
+            document.getElementById("commentForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // 阻止表单默认提交行为
+
+                // 执行提交评论的逻辑
+                submitComment();
+            });
+
         })
     </script>
-<script>
-    // 提交评论表单的监听事件
-    document.getElementById("commentForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // 阻止表单默认提交行为
-    
-      // 执行提交评论的逻辑
-      submitComment();
-    });
-    
-    // 提交评论的函数
-    function submitComment() {
-      // 模拟提交过程，此处可以替换为实际的提交逻辑
-    
-      // 假设提交成功
-      var isSuccess = true;
-    
-      if (isSuccess) {
-        showSuccessMessage();
-      } else {
-        showErrorMessage();
-      }
-    }
-    
-    // 显示提交成功提示框
-    function showSuccessMessage() {
-      document.getElementById("successMessage").classList.remove("d-none");
-      document.getElementById("errorMessage").classList.add("d-none");
-    
-      
-      setTimeout(function() {
-       parent.modalInstance.close();
-      }, 2000);
-    }
-    
-    // 显示提交失败提示框
-    function showErrorMessage() {
-      document.getElementById("errorMessage").classList.remove("d-none");
-      document.getElementById("successMessage").classList.add("d-none");
-    
-      // 2秒后跳转到errors页
-      setTimeout(function() {
-        window.location.href = 'errors.html';
-      }, 2000);
-    }
+    <script>
+
+        // 提交评论的函数
+        function submitComment() {
+            // 假设提交成功
+            var isSuccess = true;
+
+            if (selectedId == 0) {
+                isSuccess = false;
+            }
+            else {
+                var replyInput = document.getElementById("reply-input");
+                var replyValue = replyInput.value;
+                var reviewData = {
+                    "productId": selectedId,//商品id
+                    "reviewContent": replyValue,//评论内容
+                    "rating": ratingscore,//评分
+                };
+                $.ajax({
+                    url: 'http://127.0.0.1:8080/spring-boot/review/addreview',
+                    method: 'POST',
+                    data: JSON.stringify(reviewData),
+                    contentType: "application/json",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (response) {
+                       isSuccess = true;
+                    },
+                    error: function (xhr, status, error) {
+                        // 请求失败，处理错误
+                        console.error(error);
+                    }
+                });
+            }
+
+            if (isSuccess) {
+                showSuccessMessage();
+            } else {
+                showErrorMessage();
+            }
+        }
+
+        // 显示提交成功提示框
+        function showSuccessMessage() {
+            document.getElementById("successMessage").classList.remove("d-none");
+            document.getElementById("errorMessage").classList.add("d-none");
+
+
+            setTimeout(function () {
+                parent.modalInstance.close();
+            }, 10000);
+        }
+
+        // 显示提交失败提示框
+        function showErrorMessage() {
+            document.getElementById("errorMessage").classList.remove("d-none");
+            document.getElementById("successMessage").classList.add("d-none");
+
+            // 5秒后跳转到errors页
+            setTimeout(function () {
+                window.location.href = 'errors.html';
+            }, 5000);
+        }
+
+
+
+        //填充商品栏
+        function getCProduct() {
+            // 从 sessionStorage 中获取数据
+            var OrderID = sessionStorage.getItem('OrderData');
+            // 模拟商品列表
+            var productList;
+            $.ajax({
+                url: 'http://127.0.0.1:8080/spring-boot/orderdetail/queryAllByName',
+                method: 'GET',
+                data: {
+                    propName: "orderId",
+                    propValue: OrderID
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (response) {
+                    productList = [];
+                    // 遍历并提取商品数据
+                    response.result.forEach(function (item) {
+                        //productList.push(item.productName);
+                        //假设我有一个item.id,我想在商品输入框选中时候能准确获取到对应的id值
+                        //以便我后续提交表单使用id发送ajex请求怎么做?
+                        productList.push({
+                            name: item.productName,
+                            id: item.productId
+                        });
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // 请求失败的处理逻辑
+                    console.log('Error:', error);
+                }
+            });
+
+
+
+
+
+            // 监听商品输入框事件
+            $("#product").on("input", function () {
+                var inputValue = $(this).val().trim();
+                var dropdownMenu = $("#product-dropdown");
+                dropdownMenu.empty(); // 清空下拉列表
+                // 查找匹配的商品
+                var matches = productList.filter(function (product) {
+                    return product.name.includes(inputValue);
+                });
+
+                // 将匹配的商品添加到下拉提示框中
+                matches.forEach(function (match) {
+                    var itemHtml = "<li><a href='javascript:void(0)' data-id='" + match.id + "'>" + match.name + "</a></li>";
+                    dropdownMenu.append(itemHtml);
+                });
+            });
+            $("#product").on("focus", function () {
+                var inputValue = $(this).val().trim();
+                var dropdownMenu = $("#product-dropdown");
+                dropdownMenu.empty(); // 清空下拉列表
+                // 查找匹配的商品
+                var matches = productList.filter(function (product) {
+                    return product.name.includes(inputValue);
+                });
+
+                // 将匹配的商品添加到下拉提示框中
+                matches.forEach(function (match) {
+                    var itemHtml = "<li><a href='javascript:void(0)' data-id='" + match.id + "'>" + match.name + "</a></li>";
+                    dropdownMenu.append(itemHtml);
+                });
+                $("#product-dropdown").show(); // 选中输入框时展示下拉菜单
+            });
+            // 监听商品下拉提示框点击事件
+            $("#product-dropdown").on("mousedown", "a", function () {
+                var selectedProduct = $(this).text();
+                $("#product").val(selectedProduct);
+                $("#product-dropdown").hide(); // 隐藏下拉菜单
+                selectedId = $(this).data("id");// 点击下拉框中的商品时，获取对应的id值
+                console.log(selectedId);
+            });
+
+            $("#product").on("blur", function () {
+                // input框失去焦点，隐藏下拉框
+                $("#product-dropdown").hide(); // 失去焦点时隐藏下拉菜单
+
+            });
+
+
+
+        }
     </script>
 </body>
 
