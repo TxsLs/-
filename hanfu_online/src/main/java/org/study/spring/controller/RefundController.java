@@ -71,10 +71,12 @@ public class RefundController extends BaseController<Refund, RefundService> {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "searchCode", value = "代码(支持like)，允许null"),
 			@ApiImplicitParam(name = "searchName", value = "名称(支持like)，允许null"),
 			@ApiImplicitParam(name = "sort", value = "排序规则字符串"),
+			@ApiImplicitParam(name = "merchantId", value = "排序规则字符串", dataType = "long"),
 			@ApiImplicitParam(name = "pageNum", value = "页码", required = true, dataType = "long"),
 			@ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int") })
 	@RequestMapping(value = "/queryPage", method = { RequestMethod.GET })
-	public @ResponseBody Result<PageSet<? extends Entity>> queryPage(String searchCode, String searchName, String sort,
+	public @ResponseBody Result<PageSet<? extends Entity>> queryPage(String searchCode, String searchName,
+			Long merchantId, String sort, String joinTime, String endTime, String status,
 			@RequestParam("pageNum") long pageNum, @RequestParam int pageSize) {
 		log.debug("call queryPage");
 		Predicate where = DaoUtil.and();
@@ -84,6 +86,15 @@ public class RefundController extends BaseController<Refund, RefundService> {
 		if (StringUtils.isNotEmpty(searchName)) {
 			where.like("name", searchName);
 		}
+		if (merchantId != null)
+			where.equal(DataType.LONG, "merchantId", merchantId.toString());
+
+		if (StringUtils.isNotEmpty(status))
+			where.like("refundStatus", status);
+		if (StringUtils.isNotEmpty(joinTime) && StringUtils.isNotEmpty(endTime)) {
+			where.between("requestTime", joinTime, endTime); // created_time为时间字段名
+		}
+
 		PageSet<? extends Entity> ps = this.service().findPage(where, Sort.parse(sort), pageNum, pageSize);
 		return Result.toResult(ps);
 	}
