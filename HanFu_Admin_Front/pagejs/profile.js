@@ -100,7 +100,7 @@ $(function ($) {
                                 message: '电话号码不能为空'
                             },
                             regexp: {
-                                regexp: /^\d{11}/,
+                                regexp: /^\d{11}$/,
                                 message: '请输入有效的11位电话号码!'
                             }
                         }

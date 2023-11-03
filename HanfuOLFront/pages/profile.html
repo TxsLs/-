@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/css/bootstrap-admin.min.css">
     <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+    <style>
+        #hide_id {
+            visibility: hidden;
+        }
+    </style>
 </head>
 
 <body class="bg-body-tertiary py-3">
@@ -25,6 +30,17 @@
                 <div class="row">
                     <div class="col-md-5">
                         <form id="form">
+                            <div class="row mb-3" id="hide_id">
+                                <label for="username" class="col-sm-3 col-form-label text-sm-end">Id</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white"><i
+                                                class="bi bi-person-vcard"></i></span>
+                                        <input type="text" class="form-control" id="id" name="id" tabindex="1"
+                                            autocomplete="on" placeholder="" required data-bv-container="#err_username">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label for="username" class="col-sm-3 col-form-label text-sm-end">账号</label>
                                 <div class="col-sm-9">
@@ -34,10 +50,10 @@
                             <div class="row mb-3">
                                 <label for="username" class="col-sm-3 col-form-label text-sm-end">用户名</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="username" name="username">
+                                    <input type="text" class="form-control" id="name" name="name">
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
                                 <div class="col-sm-9">
                                     <div class="d-flex align-items-center h-100">
@@ -53,7 +69,22 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
+                            <div class="row mb-3">
+                                <label for="nickname" class="col-sm-3 col-form-label text-sm-end">性别</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white"><i
+                                                class="bi bi-gender-ambiguous"></i></span>
+                                        <select class="form-select" id="gender" name="gender" tabindex="6">
+                                            <option value="">请选择性别</option>
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="row mb-3">
                                 <label for="nickname" class="col-sm-3 col-form-label text-sm-end">头像</label>
                                 <div class="col-sm-9">
@@ -83,24 +114,23 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-9 offset-sm-3">
-                                    <button class="btn btn-primary" onclick="updateCustomer(event)">确认修改</button>
+                                    <button class="btn btn-primary" type="submit">确认修改</button>
                                 </div>
                             </div>
                         </form>
-                            <!-- 地址开始 -->
-                            <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label text-sm-end">地址</label>
-                                <div class="col-sm-9">
+                        <!-- 地址开始 -->
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label text-sm-end">地址</label>
+                            <div class="col-sm-9">
 
-                                    <!-- 地址列表 -->
-                                    <div id="addressListDiv">
-                                    </div>
-                                    <button type="button" class="btn btn-secondary"
-                                        onclick="addAddress(0,0)">添加地址</button>
+                                <!-- 地址列表 -->
+                                <div id="addressListDiv">
                                 </div>
+                                <button type="button" class="btn btn-secondary" onclick="addAddress(0,0)">添加地址</button>
                             </div>
-                            <!-- 地址结束 -->
-                   
+                        </div>
+                        <!-- 地址结束 -->
+
                     </div>
                 </div>
             </div>
@@ -139,8 +169,9 @@
                     console.log(ssoUser)
                     $("#loginUser").html(ssoUser.name);
                     //在此处加入信息填充逻辑
+                    $("#id").attr("value", ssoUser.id);
                     $("#ccode").attr("value", ssoUser.code);
-                    $("#username").attr("value", ssoUser.name);
+                    $("#name").attr("value", ssoUser.name);
                     $("#phone").attr("value", ssoUser.phone);
                     $("#email").attr("value", ssoUser.email);
                     //照片上传字段设置
@@ -164,14 +195,14 @@
                     }
                     //性别填充
                     // 获取所有的性别选项的 <input> 元素
-                    const genderInputs = document.getElementsByName("inlineRadioOptions");
-
+                    // const genderInputs = document.getElementsByName("inlineRadioOptions");
+                    $("#gender").val(ssoUser.gender);
                     // 根据 gender 的值设置选中状态
-                    if (ssoUser.gender == 1) {
-                        genderInputs[0].checked = true; // 设置第一个选项为选中状态
-                    } else if (ssoUser.gender == 0) {
-                        genderInputs[1].checked = true; // 设置第二个选项为选中状态
-                    }
+                    // if (ssoUser.gender == 1) {
+                    //     genderInputs[0].checked = true; // 设置第一个选项为选中状态
+                    // } else if (ssoUser.gender == 0) {
+                    //     genderInputs[1].checked = true; // 设置第二个选项为选中状态
+                    // }
 
                     //添加地址
                     var mvc = rock.initSvr(["address"]);
@@ -204,7 +235,114 @@
 
                 }
             })
+            //前端表单验证
+            $('#form').formValidation({
+                fields: {
+                    code: {
+                        validators: {
+                            notEmpty: {
+                                message: '账号不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 20,
+                                message: '用户名长度必须在1到20个字符之间'
+                            }
+                        }
+                    },
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: '姓名不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 20,
+                                message: '用户名长度必须在1到20个字符之间'
+                            }
+                        }
+                    },
 
+
+
+
+                    gender: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择性别'
+                            }
+                        }
+                    },
+                    phone: {
+                        validators: {
+                            notEmpty: {
+                                message: '电话号码不能为空'
+                            },
+                            regexp: {
+                                regexp: /^\d{11}$/,
+                                message: '请输入有效的11位电话号码!'
+                            }
+                        }
+                    },
+                    profileImage: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png',
+                                type: 'image/jpeg,image/png',
+                                maxSize: 5242880, // 5MB
+                                message: '请选择小于5MB的JPEG或PNG格式图片文件'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.fv', function (e) {
+                // 阻止表单的默认提交行为
+                e.preventDefault();
+                //得到表单对象
+                let $form = $(e.target);
+                //获取数据
+                let data = new FormData($form[0]); // 使用FormData对象
+
+                // 获取照片文件
+                let photoInput = document.getElementById('profileImage');
+                if (photoInput.files.length > 0) {
+                    let photo = photoInput.files[0];
+                    data.append('photo', photo); // 添加照片数据到FormData对象
+                }
+
+                $.ajax({
+                    url: "http://127.0.0.1:8080/spring-boot/customer/updateCustomer",
+                    type: 'POST', // 请求类型，可以是 GET、POST、PUT 等
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (response) {
+                        if (response.result) {
+                            $.toasts({
+                                type: 'success',
+                                content: '修改成功(*/ω＼*)',
+                                onHidden: function () {
+                                    // 刷新页面
+                                    top.location.reload();
+                                }
+                            })
+                        } else {
+                            $.toasts({
+                                type: 'danger',
+                                content: '修改失败',
+                            })
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // 请求失败的处理逻辑
+                        console.log('Error:', error);
+                    }
+                });
+
+            });
         })
     </script>
     <script>
@@ -341,20 +479,9 @@
             }
         }
 
-        //更新个人信息
-        function updateCustomer() {
-            // 阻止表单的默认提交行为
-            event.preventDefault();
-            $.toasts({
-                type: 'success',
-                content: '修改成功(*/ω＼*)',
-                onHidden: function () {
-                // 刷新当前页面
-                location.reload();
-              }
-            })
-            //发送ajax修改个人信息 
-        }
+
+
+
 
     </script>
 </body>
