@@ -918,20 +918,7 @@ data-bs-title="解封此商品"><i class="bi bi-unlock-fill"></i></button>`
                         $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
                     })
 
-                    //重置处理
-                    $('.bsa-reset-btn').on('click', function () {
 
-                        //把所有的字段都恢复默认值
-                        $('#name').val('');
-                        loadCategory();
-                        $('#price').val('');
-                        //$('#status').val('');
-                        $('#status').selectpicker('val', ['']).trigger("change");
-                        $('#empStatus').selectpicker('val', ['']).trigger("change");
-                        //刷新回到第一页
-                        $('#table').bootstrapTable('refresh');
-                        $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
-                    })
 
                     //==============================日期时间插件====================================
 
@@ -1098,6 +1085,21 @@ data-bs-title="解封此商品"><i class="bi bi-unlock-fill"></i></button>`
             })
 
         }
+
+        //重置处理
+        $('.bsa-reset-btn').on('click', function () {
+
+            //把所有的字段都恢复默认值
+            $('#name').val('');
+            loadCategory();
+            $('#price').val('');
+            //$('#status').val('');
+            $('#status').selectpicker('val', ['']).trigger("change");
+            $('#empStatus').selectpicker('val', ['']).trigger("change");
+            //刷新回到第一页
+            $('#table').bootstrapTable('refresh');
+            $('#table').bootstrapTable('selectPage', 1)//跳转到第一页
+        })
 
         $(document).ready(function () {
 
